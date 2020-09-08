@@ -1,27 +1,31 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Om bugs en fouten te melden
 title: ''
 labels: Bug
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+>Geef de issue een passende omschrijvende titel
+
+**Omschrijf de bug**
+> plaats hier een duidelijke omschrijving van de bug
 
 **To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+> Hoe reproduceer je de bug?
+Voorbeeld:
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+1. Ga naar '...'
+2. Klik op '....'
+3. Scroll naar '....'
+4. Error verschijnt
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Verwacht gedrag**
+> wat had je verwacht dat er zou gebeuren.
 
-**Additional context**
-Add any other context about the problem here.
+**Screenshots en Logs**
+> indien mogelijk plaats een screenshot, errorlog of stacktrace.
+
+**Extra info**
+> extra info welk van pas kan komen.
