@@ -12,4 +12,4 @@ jobs:
         with:
           project: ScrumBoard
           column: In progress
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.PERMISSION_TOKEN }}
