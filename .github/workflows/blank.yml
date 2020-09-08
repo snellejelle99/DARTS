@@ -1,0 +1,15 @@
+name: Move assigned issues into To do
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  automate-project-columns:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: alex-page/github-project-automation-plus@v0.2.4
+        with:
+          project: Scrumboard
+          column: In progress
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
