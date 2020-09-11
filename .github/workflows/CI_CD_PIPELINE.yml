@@ -107,7 +107,7 @@ jobs:
     - name: Remove the pfx
       run:
         $certificatePath = Join-Path -Path $env:Wap_Project_Directory -ChildPath GitHubActionsWorkflow.pfx
-        Remove-Item -path $certificatePath
+        Remove-Item -Path $certificatePath
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-artifact
     - name: Upload build artifacts
