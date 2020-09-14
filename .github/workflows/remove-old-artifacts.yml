@@ -16,4 +16,4 @@ jobs:
       with:
         age: '1 day'
         skip-tags: true
-        skip-recent: 3
+        skip-recent: 6

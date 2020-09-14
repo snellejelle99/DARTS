@@ -22,8 +22,8 @@ Geef je issue een label en een project
 
 **Risico's**
 
-> Zet hier de eventuele risico's van deze aanpassing neer
-Voorbeeld: 'Hoog risico, aanpassing kan er voor zorgen dat programma niet meer te starten is.' 
+> Zet hier het risiconiveau van de aanpassing neer.
+Voorbeeld: 'Hoog risico, Complexe aanpassing' 
 Of: 'Laag risico, UI aanpassing.'
 
 ---
