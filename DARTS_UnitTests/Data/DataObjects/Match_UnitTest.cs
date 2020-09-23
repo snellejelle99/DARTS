@@ -12,6 +12,7 @@ namespace DARTS_UnitTests.Datastructuur
         [TestMethod]
         public void CreateMatchTest()
         {
+            // Arrange
             string player1 = "Klaas";
             string player2 = "Pieter";
 
@@ -20,10 +21,12 @@ namespace DARTS_UnitTests.Datastructuur
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
+            // Act
             Match newMatch = new Match(player1, player2, numSets, numLegs, beginningPlayer);
 
+            // Assert
             Assert.IsNotNull(newMatch);
-            Assert.IsTrue(newMatch.Sets.Count.Equals(numSets));
+            Assert.AreEqual(numSets, newMatch.Sets.Count, "The number of sets created in the Match aren't equal to the given numer of sets.");
         }
     }
 }
