@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DARTS.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,14 @@ namespace DARTS
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        //TEMP: to show PlayersOverviewWindow
+        private void TempButtonToPlayersOverview_Click(object sender, RoutedEventArgs e)
+        {
+            var newWindow = new PlayersOverviewWindow(); //create your new window.
+            newWindow.Show(); //show the new window.
+            this.Close();
         }
     }
 }

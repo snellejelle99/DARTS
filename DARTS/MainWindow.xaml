@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="TempButtonToPlayersOverview" Content="Go to players overview" HorizontalAlignment="Left" Margin="360,276,0,0" VerticalAlignment="Top" Click="TempButtonToPlayersOverview_Click"/>
 
     </Grid>
 </Window>
