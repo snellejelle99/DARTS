@@ -8,9 +8,9 @@ namespace DARTS.Data.DataObjects
     {
         private List<Leg> _legs;
 
-        private PlayerEnum _winnningPlayer;
+        private PlayerEnum _winnningPlayer, _beginnningPlayer;
 
-        private int _player1LegsWon, _player2LegsWon;
+        private int _player1LegsWon, _player2LegsWon, _numLegs;
 
         public List<Leg> Legs
         {
@@ -22,6 +22,12 @@ namespace DARTS.Data.DataObjects
         {
             get => _winnningPlayer;
             set => _winnningPlayer = value;
+        }
+
+        public PlayerEnum BeginningPlayer
+        {
+            get => _beginnningPlayer;
+            set => _beginnningPlayer = value;
         }
 
         public int Player1LegsWon
@@ -36,14 +42,15 @@ namespace DARTS.Data.DataObjects
             set => _player2LegsWon = value;
         }
 
-        public Set(int numLegs, PlayerEnum beginningPlayer)
+        public int NumLegs
         {
-            Legs = new List<Leg>();
+            get => _numLegs;
+            set => _numLegs = value;
+        }
 
-            for (int i = 0; i < numLegs; i++)
-            {
-                Legs.Add(new Leg(beginningPlayer));
-            }
+        public Set()
+        {
+
         }
     }
 }
