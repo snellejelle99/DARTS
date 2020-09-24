@@ -9,7 +9,7 @@ namespace DARTS.Data.DataObjects
         #region BackingStores
         private List<Turn> _turns;
 
-        private PlayerEnum _winnningPlayer;
+        private PlayerEnum _winnningPlayer, _beginningPlayer;
 
         private int _player1LegScore, _player2LegScore;
         #endregion
@@ -27,6 +27,12 @@ namespace DARTS.Data.DataObjects
             set => _winnningPlayer = value;
         }
 
+        public PlayerEnum BeginningPlayer
+        {
+            get => _beginningPlayer;
+            set => _beginningPlayer = value;
+        }
+
         public int Player1LegScore
         {
             get => _player1LegScore;
@@ -42,9 +48,7 @@ namespace DARTS.Data.DataObjects
 
         public Leg(PlayerEnum beginningPlayer)
         {
-            Turns = new List<Turn>();
 
-            Turns.Add(new Turn(beginningPlayer));
         }
     }
 }
