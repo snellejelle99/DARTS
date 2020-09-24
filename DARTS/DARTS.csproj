@@ -20,4 +20,8 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
+  </ItemGroup>
+
 </Project>
