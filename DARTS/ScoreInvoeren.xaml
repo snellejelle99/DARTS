@@ -1,0 +1,15 @@
+﻿<Window x:Class="DARTS.ScoreInvoeren"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DARTS"
+        mc:Ignorable="d"
+        Title="ScoreInvoeren" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="scoreInputBox" MaxLength="2" HorizontalAlignment="Center" Margin="0,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="scoreInputBox_PreviewTextInput" />
+        <ComboBox HorizontalAlignment="Left" Margin="521,182,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding throwTypes}" SelectedIndex="0"/>
+        <Button x:Name="submitScore" Content="Save" HorizontalAlignment="Center" Margin="0,277,0,0" VerticalAlignment="Top" Height="21" Width="44" Click="submitScore_Click"/>
+        <Label Content="Score" HorizontalAlignment="Left" Margin="250,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+    </Grid>
+</Window>
