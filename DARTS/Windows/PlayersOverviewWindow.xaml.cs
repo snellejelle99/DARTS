@@ -62,15 +62,13 @@ namespace DARTS.Windows
         // TODO: Remove temporary function that is for test purposes.
         private void TempAddListItems()
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 3; i++)
             {
-                _displayedPlayers.Add(new Player("player1", PlayerEnum.Player1));
-                _displayedPlayers.Add(new Player("player2", PlayerEnum.Player1));
-                _displayedPlayers.Add(new Player("player3", PlayerEnum.Player2));
-            }
-            for (int i = 0; i < _displayedPlayers.Count; i++)
-            {
-                _displayedPlayers[i].ID = i;
+                Player p = new Player();
+                p.Name = "player" + Convert.ToString(i);
+                p.PlayerType = PlayerEnum.Player1;
+                p.ID = i;
+                _displayedPlayers.Add(p);
             }
 
             _unfilteredPlayers.AddRange(_displayedPlayers);
@@ -116,7 +114,11 @@ namespace DARTS.Windows
             string filterText = ((TextBox)e.Source).Text;
 
             // TODO: temp
-            _unfilteredPlayers.Add(new Player("cool username", PlayerEnum.Player2));
+            Player p = new Player();
+            p.Name = "cool username";
+            p.PlayerType = PlayerEnum.Player2;
+            p.ID = 2;
+            _unfilteredPlayers.Add(p);
 
             if (filterText == "" || filterText == string.Empty)
             {
