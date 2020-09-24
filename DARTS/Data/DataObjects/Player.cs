@@ -34,10 +34,9 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
-        public Player(string name, PlayerEnum playerType)
+        public Player()
         {
-            Name = name;
-            PlayerType = playerType;
+
         }
     }
 
