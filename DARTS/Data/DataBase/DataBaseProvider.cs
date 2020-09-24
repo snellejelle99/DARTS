@@ -42,7 +42,6 @@ namespace DARTS.Data.DataBase
             else if (_dbConnection.State != System.Data.ConnectionState.Open)
             {
                 _dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;").OpenAndReturn();
-                SQLiteCommand cmd =  _dbConnection.CreateCommand();
             }
             return _dbConnection;
         }
