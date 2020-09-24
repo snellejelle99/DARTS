@@ -46,7 +46,7 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
-        public Leg(PlayerEnum beginningPlayer)
+        public Leg()
         {
 
         }

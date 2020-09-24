@@ -48,7 +48,7 @@ namespace DARTS.Data.DataObjects
             set => _numLegs = value;
         }
 
-        public Set(int numLegs, PlayerEnum beginningPlayer)
+        public Set()
         {
 
         }
