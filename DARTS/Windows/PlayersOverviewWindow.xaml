@@ -15,10 +15,16 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Player Name" Width="400"></GridViewColumn>
                 </GridView>
             </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                </Style>
+            </ListView.ItemContainerStyle>
         </ListView>
         <Label Content="Filter:" HorizontalAlignment="Left" Margin="10,402,0,0" VerticalAlignment="Top" Width="53" Height="24" FontWeight="Normal" FontStyle="Normal"/>
         <TextBox x:Name="FilterTextBox" HorizontalAlignment="Left" Margin="63,406,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" TextChanged="FilterTextBox_TextChanged"/>
-        <Button x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" Margin="329,405,0,0" VerticalAlignment="Top" Click="ClearFilter_Click" Width="35"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="10"/>
+        <Button x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="329,405,0,0"  Click="ClearFilter_Click" Width="35"/>
         <Label Content="Amout of resulted players:" HorizontalAlignment="Left" Margin="588,400,0,0" VerticalAlignment="Top" Width="106"/>
         <Label x:Name="AmountOfResultsLabel" Content="Label" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="699,400,0,0" VerticalAlignment="Top" Width="91"/>
     </Grid>

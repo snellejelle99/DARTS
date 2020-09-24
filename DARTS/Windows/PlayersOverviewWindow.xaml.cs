@@ -89,13 +89,31 @@ namespace DARTS.Windows
             this.Close();
         }
 
+        /// <summary>
+        /// When list item is double-clicked, reate a new window with player information.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected && item.Content is Player)
+            {
+                Player p = (Player)item.Content;
+
+                //TODO: Create a new window for player information 
+                //var newPlayerWindow = new playerWindow(p.ID);
+                //newPlayerWindow.Show();
+                //this.Close();
+            }
+        }
+
         #region Filter
         private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!this.IsLoaded) return;
                 
             string filterText = ((TextBox)e.Source).Text;
-            Debug.WriteLine(filterText);
 
             // TODO: temp
             _unfilteredPlayers.Add(new Player("cool username", PlayerEnum.Player2));
