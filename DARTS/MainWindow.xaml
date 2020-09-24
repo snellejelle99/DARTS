@@ -5,8 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DARTS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Startscreen" Height="600" Width="1000" ResizeMode="NoResize"
+        Icon="D:\Documents\School\Jaar 4 Periode 1\Beheer\Dart Applicatie\DARTS\Resources\dartsicon.png">
+    <Window.DataContext>
+        <local:StartscreenValidation/>
+    </Window.DataContext>
+    <Window.Resources>
+        <local:LegRangeRule x:Key="data"/>
 
-    </Grid>
+        <Style x:Key="textBoxInError" TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                    Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Canvas>
+        <Label Content="Enter data" FontSize="40" Width="990" HorizontalContentAlignment="Center" Canvas.Top="40"/>
+        <Label Content="Enter player one name" Canvas.Left="62" Canvas.Top="150" FontSize="20"/>
+        <TextBox Text="{Binding Player1, ValidatesOnExceptions=True,
+                UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="221" Canvas.Left="62" Canvas.Top="184" Height="30"
+                 FontSize="20"/>
+
+        <Label Content="Enter player two name" Canvas.Left="338" Canvas.Top="150" FontSize="20"/>
+        <TextBox  Text="{Binding Player2, ValidatesOnExceptions=True,
+                UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="221" Canvas.Left="338" Canvas.Top="184" Height="30"
+                 FontSize="20"/>
+
+        <Label Content="Enter amount of legs in the match" Canvas.Top="255" FontSize="20" Canvas.Left="65" Width="320"/>
+        <TextBox Width="320" Canvas.Left="65" Canvas.Top="297" Height="30"
+                 FontSize="20">
+            <TextBox.Text>
+                <Binding Path="Leg" Source="{StaticResource data}"
+                         ValidatesOnExceptions="True"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label Content="Number between 1 and 99" Canvas.Left="65" Canvas.Top="327" Foreground="#5E5E5E" FontStyle="Italic"/>
+
+        <Label Content="Enter amount of set per leg" Canvas.Left="65" Canvas.Top="350" FontSize="20" Width="320"/>
+        <TextBox TextWrapping="Wrap" Width="320" Canvas.Left="65" Canvas.Top="392" Height="30"
+                 FontSize="20">
+            <TextBox.Text>
+                <Binding Path="Set" Source="{StaticResource data}"
+                         ValidatesOnExceptions="True"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label Content="Number between 1 and 99" Canvas.Left="65" Canvas.Top="422" Foreground="#5E5E5E" FontStyle="Italic"/>
+
+        <Button Content="Start match" Canvas.Left="65" Canvas.Top="492" Width="120"  FontSize="20"/>
+
+    </Canvas>
 </Window>
