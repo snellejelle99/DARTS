@@ -36,6 +36,13 @@
                 UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="221" Canvas.Left="338" Canvas.Top="184" Height="30"
                  FontSize="20"/>
 
+        <Label Content="Choose starting player" Canvas.Left="631" Canvas.Top="157" FontSize="15" Width="196"/>
+        <ComboBox IsEditable="False" x:Name="PlayersCombo" Canvas.Left="631" Canvas.Top="184" Width="150" Height="30">
+            <ComboBoxItem Content="Random" FontSize="15"></ComboBoxItem>
+            <ComboBoxItem Content="Player one" FontSize="15"></ComboBoxItem>
+            <ComboBoxItem Content="Player two" FontSize="15"></ComboBoxItem>
+        </ComboBox>
+
         <Label Content="Enter amount of legs in the match" Canvas.Top="255" FontSize="20" Canvas.Left="65" Width="320"/>
         <TextBox Width="320" Canvas.Left="65" Canvas.Top="297" Height="30"
                  FontSize="20">

@@ -43,16 +43,12 @@ namespace DARTS
                 if (name == "Leg")
                 {
                     if (this.leg < 1 || this.leg > 99)
-                    {
                         result = "Leg cannot be smaller than 1 or higher than 99.";
-                    }
                 }
                 else if (name == "Set")
                 {
                     if(this.set < 1 || this.set > 99)
-                    {
                         result = "Set cannot be smaller than 1 or higher than 99.";
-                    }
                 }
                 return result;
             }
