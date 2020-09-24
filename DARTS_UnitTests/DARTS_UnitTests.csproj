@@ -22,4 +22,8 @@
     <ProjectReference Include="..\DARTS\DARTS.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\DataFactories\" />
+  </ItemGroup>
+
 </Project>

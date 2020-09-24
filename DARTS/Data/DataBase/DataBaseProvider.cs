@@ -4,6 +4,7 @@ using System.Text;
 using System.Data.SQLite;
 using System.IO;
 using System.Data.Common;
+using System.Linq;
 
 namespace DARTS.Data.DataBase
 {
@@ -14,8 +15,13 @@ namespace DARTS.Data.DataBase
 
         private SQLiteConnection _dbConnection;
 
+        private static readonly bool IsRunningFromUnittest =
+        AppDomain.CurrentDomain.GetAssemblies().Any(
+            a => a.FullName.ToLowerInvariant().StartsWith("mstest.framework"));
+
         private DataBaseProvider()
         { 
+
         }
 
         public static DataBaseProvider Instance
@@ -35,13 +41,17 @@ namespace DARTS.Data.DataBase
 
         public SQLiteConnection GetDataBaseConnection()
         {
-            if (!File.Exists("DARTS_DATABASE.sqlite"))
+            if (!File.Exists("DARTS_DATABASE.sqlite") && IsRunningFromUnittest == false)
             {
                 SQLiteConnection.CreateFile("DARTS_DATABASE.sqlite");
             }
-            else if (_dbConnection.State != System.Data.ConnectionState.Open)
+            else if (_dbConnection == null || _dbConnection.State != System.Data.ConnectionState.Open)
             {
-                _dbConnection = new SQLiteConnection("Data Source=MyDatabase.sqlite;Version=3;").OpenAndReturn();
+                string datasource = IsRunningFromUnittest ? "MyDatabase.sqlite" : ":memory:";
+                string connectionstring = $"Data Source={datasource};Version=3;";
+
+                _dbConnection = new SQLiteConnection(connectionstring);
+                _dbConnection.Open();
             }
             return _dbConnection;
         }
