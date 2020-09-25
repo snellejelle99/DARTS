@@ -66,7 +66,7 @@
         </TextBlock>
 
         <Label Content="Choose starting player" Canvas.Left="631" Canvas.Top="157" FontSize="15" Width="196"/>
-        <ComboBox IsEditable="False" x:Name="PlayersCombo" Canvas.Left="631" Canvas.Top="184" Width="150" Height="30">
+        <ComboBox IsEditable="False" x:Name="PlayersCombo" Canvas.Left="631" Canvas.Top="184" Width="150" Height="30" SelectedIndex="0">
             <ComboBoxItem Content="Random" FontSize="15"></ComboBoxItem>
             <ComboBoxItem Content="Player one" FontSize="15"></ComboBoxItem>
             <ComboBoxItem Content="Player two" FontSize="15"></ComboBoxItem>
