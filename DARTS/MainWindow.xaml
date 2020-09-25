@@ -3,38 +3,67 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:common="using:Microsoft.Toolkit.Uwp.SampleApp.Common"
+        xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
         xmlns:local="clr-namespace:DARTS"
         mc:Ignorable="d"
         Title="Startscreen" Height="600" Width="1000" ResizeMode="NoResize"
         Icon="D:\Documents\School\Jaar 4 Periode 1\Beheer\Dart Applicatie\DARTS\Resources\dartsicon.png">
-    <Window.DataContext>
-        <local:StartscreenValidation/>
-    </Window.DataContext>
     <Window.Resources>
-        <local:LegRangeRule x:Key="data"/>
-
-        <Style x:Key="textBoxInError" TargetType="TextBox">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="ToolTip"
-                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
-                    Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Red" />
         </Style>
+        <local:ErrorCollectionToVisibility x:Key="ToVisibility"/>
     </Window.Resources>
-
-    <Canvas>
+    <!-- Name wordt gebruikt om Match aan te binden in MainWindow.xaml.cs-->
+    <Canvas Name="MainCanvas">
         <Label Content="Enter data" FontSize="40" Width="990" HorizontalContentAlignment="Center" Canvas.Top="40"/>
         <Label Content="Enter player one name" Canvas.Left="62" Canvas.Top="150" FontSize="20"/>
-        <TextBox Text="{Binding Player1, ValidatesOnExceptions=True,
-                UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="221" Canvas.Left="62" Canvas.Top="184" Height="30"
-                 FontSize="20"/>
+
+        <!-- Textbox voor invoer player 1 -->
+        <TextBox Name="tbPlayer1" TextWrapping="Wrap" Width="221" Canvas.Left="62" Canvas.Top="184" Height="30"
+                 FontSize="20">
+            <TextBox.Text>
+                <!-- Deze textbox bind aan het path van 'Player1', die aangemaakt wordt in de Match.cs -->
+                <Binding Path="Player1" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:TextBoxNotEmptyValidationRule x:Name="Player1Validation" ValidatesOnTargetUpdated="True"
+                                                             Message="You must enter a name for player one."/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <!-- Error message display, is gebind aan de textbox voor player 1, zodra dit is ingevuld verdwijnt de error message 
+            dit werkt voor alle textboxes hetzelfde -->
+        <TextBlock Visibility="{Binding ElementName=tbPlayer1, Path=(Validation.Errors), Converter={StaticResource ToVisibility}}" Width="276" Canvas.Left="62" Canvas.Top="214">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Player1 - {0}">
+                    <Binding ElementName="tbPlayer1" Path="(Validation.Errors)[0].ErrorContent"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
 
         <Label Content="Enter player two name" Canvas.Left="338" Canvas.Top="150" FontSize="20"/>
-        <TextBox  Text="{Binding Player2, ValidatesOnExceptions=True,
-                UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Width="221" Canvas.Left="338" Canvas.Top="184" Height="30"
-                 FontSize="20"/>
+        <TextBox Name="tbPlayer2" TextWrapping="Wrap" Width="221" Canvas.Left="338" Canvas.Top="184" Height="30"
+                 FontSize="20">
+            <TextBox.Text>
+                <!-- Deze textbox bind aan het path van 'Player2', die aangemaakt wordt in de Match.cs -->
+                <Binding Path="Player2" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:TextBoxNotEmptyValidationRule x:Name="Player2Validation" ValidatesOnTargetUpdated="True"
+                                                             Message="You must enter a name for player two."/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Visibility="{Binding ElementName=tbPlayer2, Path=(Validation.Errors), Converter={StaticResource ToVisibility}}" Width="276" Canvas.Left="338" Canvas.Top="214">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Player2 - {0}">
+                    <Binding ElementName="tbPlayer2" Path="(Validation.Errors)[0].ErrorContent"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
 
         <Label Content="Choose starting player" Canvas.Left="631" Canvas.Top="157" FontSize="15" Width="196"/>
         <ComboBox IsEditable="False" x:Name="PlayersCombo" Canvas.Left="631" Canvas.Top="184" Width="150" Height="30">
@@ -43,37 +72,68 @@
             <ComboBoxItem Content="Player two" FontSize="15"></ComboBoxItem>
         </ComboBox>
 
-        <Label Content="Enter amount of legs in the match" Canvas.Top="255" FontSize="20" Canvas.Left="65" Width="320"/>
-        <TextBox Width="320" Canvas.Left="65" Canvas.Top="297" Height="30"
+        <Label Content="Enter amount of sets in the match" Canvas.Top="255" FontSize="20" Canvas.Left="65" Width="320"/>
+        <TextBox Name="tbSetsInMatch" Width="320" Canvas.Left="65" Canvas.Top="297" Height="30"
                  FontSize="20">
             <TextBox.Text>
-                <Binding Path="Leg" Source="{StaticResource data}"
-                         ValidatesOnExceptions="True"
-                         UpdateSourceTrigger="PropertyChanged">
+                <!-- Deze textbox bind aan het path van 'Sets', die aangemaakt wordt in de Match.cs -->
+                <Binding Path="Sets" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <DataErrorValidationRule/>
+                        <local:SetsValidationRule x:Name="SetValidation" ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Label Content="Number between 1 and 99" Canvas.Left="65" Canvas.Top="327" Foreground="#5E5E5E" FontStyle="Italic"/>
+        <TextBlock Visibility="{Binding ElementName=tbSetsInMatch, Path=(Validation.Errors), Converter={StaticResource ToVisibility}}" Width="276" Canvas.Left="65" Canvas.Top="329">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Sets - {0}">
+                    <Binding ElementName="tbSetsInMatch" Path="(Validation.Errors)[0].ErrorContent"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
 
-        <Label Content="Enter amount of set per leg" Canvas.Left="65" Canvas.Top="350" FontSize="20" Width="320"/>
-        <TextBox TextWrapping="Wrap" Width="320" Canvas.Left="65" Canvas.Top="392" Height="30"
+        <!-- Hier gaat het mis -->
+        <Label Content="Enter amount of legs per set" Canvas.Left="65" Canvas.Top="350" FontSize="20" Width="320"/>
+        <TextBox Name="tbLegsInSet" TextWrapping="Wrap" Width="320" Canvas.Left="65" Canvas.Top="392" Height="30"
                  FontSize="20">
             <TextBox.Text>
-                <Binding Path="Set" Source="{StaticResource data}"
-                         ValidatesOnExceptions="True"
-                         UpdateSourceTrigger="PropertyChanged">
+                <!-- Er wordt net als in de textbox hierboven gebind aan het path 'Legs', maar deze bestaat niet, waar Sets wel bestaat
+                Deze wordt namelijk aangemaakt in de Match dataklasse. Als je hier 'Sets' ipv 'Legs' neerzet werkt hij wel -->
+                <Binding Path="Legs" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <DataErrorValidationRule/>
+                        <local:LegsValidationRule x:Name="LegValidation" ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Label Content="Number between 1 and 99" Canvas.Left="65" Canvas.Top="422" Foreground="#5E5E5E" FontStyle="Italic"/>
+        <!-- Verder is er niks mis met de error message en validation, gaat alleen mis omdat er geen object is voor het 'Legs' path. -->
+        <TextBlock Visibility="{Binding ElementName=tbLegsInSet, Path=(Validation.Errors), Converter={StaticResource ToVisibility}}" Width="276" Canvas.Left="65" Canvas.Top="422">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="Legs - {0}">
+                    <Binding ElementName="tbLegsInSet" Path="(Validation.Errors)[0].ErrorContent"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
 
-        <Button Content="Start match" Canvas.Left="65" Canvas.Top="492" Width="120"  FontSize="20"/>
-
+        <Button Name="startButton" Content="Start match" Canvas.Left="65" Canvas.Top="492" Width="120"  FontSize="20">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <!-- Hier worden de validation dingen verbonden aan de button, zodat de button alleen geactiveerd wordt 
+                        zodra alle vier de elementen met de juiste data zijn ingevuld. -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=tbPlayer1, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbPlayer2, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbSetsInMatch, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbLegsInSet, Path=(Validation.HasError)}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Canvas>
 </Window>
