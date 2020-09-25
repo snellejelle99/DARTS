@@ -131,7 +131,7 @@ namespace DARTS.Windows
         private void FilterMatches(string filterText)
         {
             _displayedMatches.Clear();
-            _displayedMatches.AddRange(_unfilteredMatches.Where(Match => Match.Player1.Name.Contains(filterText)));
+            _displayedMatches.AddRange(_unfilteredMatches.Where (Match => Match.Player1.Name.ToLower().Contains(filterText.ToLower()) || Match.Player2.Name.ToLower().Contains(filterText.ToLower()) || Match.Sets.Count.ToString().ToLower().Contains(filterText.ToLower())));
             ListViewMatchesOverview.ItemsSource = _displayedMatches;
         }
 

@@ -21,9 +21,9 @@
         <ListView x:Name="ListViewMatchesOverview"  ItemsSource="{Binding matches}" VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player 1" Width="200"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Player2.Name}" Header="Player 2" Width="200"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Sets.Count}" Header="Amount of sets" Width="200"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player 1" Width="266"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player2.Name}" Header="Player 2" Width="266"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Sets.Count}" Header="Amount of sets" Width="266"></GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.ItemContainerStyle>
