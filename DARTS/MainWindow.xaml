@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:common="using:Microsoft.Toolkit.Uwp.SampleApp.Common"
         xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         xmlns:local="clr-namespace:DARTS"
         mc:Ignorable="d"
         Title="Startscreen" Height="600" Width="1000" ResizeMode="NoResize"
         Icon="D:\Documents\School\Jaar 4 Periode 1\Beheer\Dart Applicatie\DARTS\Resources\dartsicon.png">
     <Window.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="Red" />
+            <Setter Property="Foreground" Value="Gray" />
         </Style>
         <local:ErrorCollectionToVisibility x:Key="ToVisibility"/>
     </Window.Resources>
@@ -22,7 +23,7 @@
 
         <!-- Textbox voor invoer player 1 -->
         <TextBox Name="tbPlayer1" TextWrapping="Wrap" Width="221" Canvas.Left="62" Canvas.Top="184" Height="30"
-                 FontSize="20">
+                 FontSize="20" MaxLength="30">
             <TextBox.Text>
                 <!-- Deze textbox bind aan het path van 'Player1', die aangemaakt wordt in de Match.cs -->
                 <Binding Path="Player1" UpdateSourceTrigger="PropertyChanged">
@@ -38,7 +39,7 @@
             dit werkt voor alle textboxes hetzelfde -->
         <TextBlock Visibility="{Binding ElementName=tbPlayer1, Path=(Validation.Errors), Converter={StaticResource ToVisibility}}" Width="276" Canvas.Left="62" Canvas.Top="214">
             <TextBlock.Text>
-                <MultiBinding StringFormat="Player1 - {0}">
+                <MultiBinding StringFormat=" {0}">
                     <Binding ElementName="tbPlayer1" Path="(Validation.Errors)[0].ErrorContent"/>
                 </MultiBinding>
             </TextBlock.Text>
@@ -46,7 +47,7 @@
 
         <Label Content="Enter player two name" Canvas.Left="338" Canvas.Top="150" FontSize="20"/>
         <TextBox Name="tbPlayer2" TextWrapping="Wrap" Width="221" Canvas.Left="338" Canvas.Top="184" Height="30"
-                 FontSize="20">
+                 FontSize="20" MaxLength="30">
             <TextBox.Text>
                 <!-- Deze textbox bind aan het path van 'Player2', die aangemaakt wordt in de Match.cs -->
                 <Binding Path="Player2" UpdateSourceTrigger="PropertyChanged">
@@ -59,14 +60,14 @@
         </TextBox>
         <TextBlock Visibility="{Binding ElementName=tbPlayer2, Path=(Validation.Errors), Converter={StaticResource ToVisibility}}" Width="276" Canvas.Left="338" Canvas.Top="214">
             <TextBlock.Text>
-                <MultiBinding StringFormat="Player2 - {0}">
+                <MultiBinding StringFormat=" {0}">
                     <Binding ElementName="tbPlayer2" Path="(Validation.Errors)[0].ErrorContent"/>
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
 
-        <Label Content="Choose starting player" Canvas.Left="631" Canvas.Top="157" FontSize="15" Width="196"/>
-        <ComboBox IsEditable="False" x:Name="PlayersCombo" Canvas.Left="631" Canvas.Top="184" Width="150" Height="30" SelectedIndex="0">
+        <Label Content="Choose starting player" Canvas.Left="631" Canvas.Top="150" FontSize="20" Width="226"/>
+        <ComboBox IsEditable="False" x:Name="PlayersCombo" Canvas.Left="631" Canvas.Top="183" Width="221" Height="30" SelectedIndex="0">
             <ComboBoxItem Content="Random" FontSize="15"></ComboBoxItem>
             <ComboBoxItem Content="Player one" FontSize="15"></ComboBoxItem>
             <ComboBoxItem Content="Player two" FontSize="15"></ComboBoxItem>
@@ -74,7 +75,7 @@
 
         <Label Content="Enter amount of sets in the match" Canvas.Top="255" FontSize="20" Canvas.Left="65" Width="320"/>
         <TextBox Name="tbSetsInMatch" Width="320" Canvas.Left="65" Canvas.Top="297" Height="30"
-                 FontSize="20">
+                 FontSize="20" MaxLength="2">
             <TextBox.Text>
                 <!-- Deze textbox bind aan het path van 'Sets', die aangemaakt wordt in de Match.cs -->
                 <Binding Path="Sets" UpdateSourceTrigger="PropertyChanged">
@@ -86,7 +87,7 @@
         </TextBox>
         <TextBlock Visibility="{Binding ElementName=tbSetsInMatch, Path=(Validation.Errors), Converter={StaticResource ToVisibility}}" Width="276" Canvas.Left="65" Canvas.Top="329">
             <TextBlock.Text>
-                <MultiBinding StringFormat="Sets - {0}">
+                <MultiBinding StringFormat=" {0}">
                     <Binding ElementName="tbSetsInMatch" Path="(Validation.Errors)[0].ErrorContent"/>
                 </MultiBinding>
             </TextBlock.Text>
@@ -95,7 +96,7 @@
         <!-- Hier gaat het mis -->
         <Label Content="Enter amount of legs per set" Canvas.Left="65" Canvas.Top="350" FontSize="20" Width="320"/>
         <TextBox Name="tbLegsInSet" TextWrapping="Wrap" Width="320" Canvas.Left="65" Canvas.Top="392" Height="30"
-                 FontSize="20">
+                 FontSize="20" MaxLength="2" >
             <TextBox.Text>
                 <!-- Er wordt net als in de textbox hierboven gebind aan het path 'Legs', maar deze bestaat niet, waar Sets wel bestaat
                 Deze wordt namelijk aangemaakt in de Match dataklasse. Als je hier 'Sets' ipv 'Legs' neerzet werkt hij wel -->
@@ -109,7 +110,7 @@
         <!-- Verder is er niks mis met de error message en validation, gaat alleen mis omdat er geen object is voor het 'Legs' path. -->
         <TextBlock Visibility="{Binding ElementName=tbLegsInSet, Path=(Validation.Errors), Converter={StaticResource ToVisibility}}" Width="276" Canvas.Left="65" Canvas.Top="422">
             <TextBlock.Text>
-                <MultiBinding StringFormat="Legs - {0}">
+                <MultiBinding StringFormat=" {0}">
                     <Binding ElementName="tbLegsInSet" Path="(Validation.Errors)[0].ErrorContent"/>
                 </MultiBinding>
             </TextBlock.Text>

@@ -22,7 +22,7 @@ namespace DARTS
                     return new ValidationResult(false, "You must enter a number between 1 and 99.");
                 }
 
-                if (set > 1 || set < 99)
+                if (set > 0)
                     return ValidationResult.ValidResult;
 
             }

@@ -15,6 +15,9 @@ namespace DARTS.Data.DataObjects
         private Player _player2;
 
         private List<Set> _sets;
+
+        //To Do: placeholder legs weghalen (alleen toegevoegd om validatie te checken)
+        private List<Leg> _legs;
         #endregion
 
         #region Properties
@@ -41,6 +44,13 @@ namespace DARTS.Data.DataObjects
             get => _sets;
             set => _sets = value;
         }
+
+        // To Do: " "
+        public List<Leg> Legs
+        {
+            get => _legs;
+            set => _legs = value;
+        }
         #endregion
 
         public Match(string player1Name, string player2Name, int numSets, int numLegs, PlayerEnum beginningPlayer)
@@ -48,6 +58,8 @@ namespace DARTS.Data.DataObjects
             Player1 = new Player(player1Name, PlayerEnum.Player1);
             Player2 = new Player(player2Name, PlayerEnum.Player2);
             Sets = new List<Set>();
+            // To Do: " "
+            Legs = new List<Leg>();
 
             for(int i = 0; i < numSets; i++)
             {
