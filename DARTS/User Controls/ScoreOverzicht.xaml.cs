@@ -22,16 +22,19 @@ namespace DARTS.User_Controls
         {
             InitializeComponent();
             this.DataContext = this;
-
-    
-
         }
         
         public string Player1 { get; set; }
+        public string ScorePlayer1 { get; set; }
+        public string ScoreNeedPlayer1 { get; set; }
+        public string SetsPlayer1 { get; set; }
+        public string LegsPlayer1 { get; set; }
+
         public string Player2 { get; set; }
-
-        public int MaxLength { get; set; }
+        public string ScorePlayer2 { get; set; }
+        public string ScoreNeedPlayer2 { get; set; }
+        public string SetsPlayer2 { get; set; }
+        public string LegsPlayer2 { get; set; }
        
-
     }
 }

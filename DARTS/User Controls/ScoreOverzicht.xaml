@@ -6,14 +6,30 @@
              xmlns:local="clr-namespace:DARTS.User_Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid Width="400" HorizontalAlignment="Left">
+            <Rectangle HorizontalAlignment="Left" Height="30" Stroke="Black" VerticalAlignment="Top" Width="400" Fill="Red"/>
 
-            <Grid>
-                <Rectangle HorizontalAlignment="Left" Height="30" Stroke="Black" VerticalAlignment="Top" Width="800" Fill="Red" Grid.ColumnSpan="2"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="Player1_name" Content="{Binding Player1}"  Foreground="White" FontSize="18" />
+            <Label Content="{Binding SetsPlayer1}" ContentStringFormat="Sets: {0}" HorizontalAlignment="Center" Margin="40,50,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding LegsPlayer1}" ContentStringFormat="Legs: {0}" HorizontalAlignment="Center" Margin="-40,50,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding ScorePlayer1}" ContentStringFormat="Score: {0}" HorizontalAlignment="Center" FontSize="36" Margin="0,80,0,0"/>
+            <Label Content="{Binding ScoreNeedPlayer1}" ContentStringFormat="Benodigde score: {0}" HorizontalAlignment="Center" FontSize="24" Margin="0,140,0,0"/>
 
-                <Label HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="Player1_name" Content="{Binding Player1}"  Foreground="White" Height="30" Width="40" FontSize="20" />
-        <Label HorizontalAlignment="Right" VerticalAlignment="Top" x:Name="Player2_name" Content="{Binding Player2}"  Foreground="White"  Height="30" Width="40" FontSize="20" />
+        </Grid>
+
+        <Grid Width="400" HorizontalAlignment="Right">
+            <Rectangle HorizontalAlignment="Left" Height="30" Stroke="Black" VerticalAlignment="Top" Width="400" Fill="Red"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="Player2_name" Content="{Binding Player2}"  Foreground="White" FontSize="18" />
+            <Label Content="{Binding SetsPlayer2}" ContentStringFormat="Sets: {0}" HorizontalAlignment="Center" Margin="40,50,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding LegsPlayer2}" ContentStringFormat="Legs: {0}" HorizontalAlignment="Center" Margin="-40,50,0,0" VerticalAlignment="Top"/>
+            <Label Content="{Binding ScorePlayer2}" ContentStringFormat="Score: {0}" HorizontalAlignment="Center" FontSize="36" Margin="0,80,0,0"/>
+            <Label Content="{Binding ScoreNeedPlayer2}" ContentStringFormat="Benodigde score: {0}" HorizontalAlignment="Center" FontSize="24" Margin="0,140,0,0"/>
+
+        </Grid>
+
     </Grid>
-     
 
-    
+
+
 </UserControl>

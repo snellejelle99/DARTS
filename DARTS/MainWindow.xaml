@@ -10,7 +10,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <uc:ScoreOverzicht Player1="Jan" Player2="Jan2"  MaxLength="30" />
+        <uc:ScoreOverzicht Player1="Jan" Player2="Jan2" SetsPlayer1="2"  SetsPlayer2="2" LegsPlayer1="1" LegsPlayer2="2" ScorePlayer1="220" ScorePlayer2="150" ScoreNeedPlayer1="281" ScoreNeedPlayer2="351" />
        
     </Grid>
 </Window>

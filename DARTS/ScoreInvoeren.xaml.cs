@@ -19,11 +19,11 @@ namespace DARTS
     /// </summary>
     public partial class ScoreInvoeren : Window
     {
-        public string[] throwTypes { get; set; }
+        public string[] ThrowTypes { get; set; }
         public ScoreInvoeren()
         {
             InitializeComponent();
-            throwTypes = new string[] { "Single", "Double", "Triple", "Misser" };
+            ThrowTypes = new string[] { "Single", "Double", "Triple", "Misser" };
             DataContext = this;
         }
 
@@ -34,9 +34,9 @@ namespace DARTS
 
         private void scoreInputBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            //accept only numbers 0-9
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
-
         }
         
     }

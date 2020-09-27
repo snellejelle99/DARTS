@@ -1,0 +1,15 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DARTS"
+        xmlns:User_Controls="clr-namespace:DARTS.User_Controls" x:Class="DARTS.test"
+        mc:Ignorable="d"
+        Title="test" Height="450" Width="800">
+    <Grid>
+
+        <User_Controls:ScoreOverzicht Player1="s" Player2="Test" HorizontalAlignment="Center" Height="208" Margin="0,77,0,0" VerticalAlignment="Top" Width="800"/>
+
+    </Grid>
+</Window>
