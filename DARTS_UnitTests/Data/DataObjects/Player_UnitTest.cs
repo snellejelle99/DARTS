@@ -15,7 +15,7 @@ namespace DARTS_UnitTests.Data.DataObjects
         public void PlayerEnumTest()
         {
             // Assert
-            Assert.AreEqual(PlayerEnum.Player2, PlayerEnum.Player1 + 1);
+            Assert.AreEqual(PlayerEnum.Player2, PlayerEnum.Player1 + 1, "PlayerEnum.Player2 isn't the Enum value after PlayerEnum.Player1.");
         }
     }
 }
