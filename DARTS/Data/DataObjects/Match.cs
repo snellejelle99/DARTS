@@ -8,7 +8,7 @@ namespace DARTS.Data.DataObjects
     public class Match
     {
         #region BackingStores
-        private PlayerEnum _winnningPlayer;
+        private PlayerEnum _winnningPlayer, _beginningPlayer;
 
         private Player _player1;
 
@@ -16,8 +16,7 @@ namespace DARTS.Data.DataObjects
 
         private List<Set> _sets;
 
-        //To Do: placeholder legs weghalen (alleen toegevoegd om validatie te checken)
-        private List<Leg> _legs;
+        private int _numSets, _numLegs;
         #endregion
 
         #region Properties
@@ -37,7 +36,13 @@ namespace DARTS.Data.DataObjects
         {
             get => _winnningPlayer;
             set => _winnningPlayer = value;
-        }        
+        }
+
+        public PlayerEnum BeginningPlayer
+        {
+            get => _beginningPlayer;
+            set => _beginningPlayer = value;
+        }
 
         public List<Set> Sets
         {
@@ -45,26 +50,22 @@ namespace DARTS.Data.DataObjects
             set => _sets = value;
         }
 
-        // To Do: " "
-        public List<Leg> Legs
+        public int NumSets
         {
-            get => _legs;
-            set => _legs = value;
+            get => _numSets;
+            set => _numSets = value;
+        }
+
+        public int NumLegs
+        {
+            get => _numLegs;
+            set => _numLegs = value;
         }
         #endregion
 
-        public Match(string player1Name, string player2Name, int numSets, int numLegs, PlayerEnum beginningPlayer)
+        public Match()
         {
-            Player1 = new Player(player1Name, PlayerEnum.Player1);
-            Player2 = new Player(player2Name, PlayerEnum.Player2);
-            Sets = new List<Set>();
-            // To Do: " "
-            Legs = new List<Leg>();
 
-            for(int i = 0; i < numSets; i++)
-            {
-                Sets.Add(new Set(numLegs, beginningPlayer));
-            }
         }
     }
 }

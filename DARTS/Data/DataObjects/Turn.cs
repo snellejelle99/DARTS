@@ -34,9 +34,9 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
-        public Turn(PlayerEnum player)
+        public Turn()
         {
-            PlayerTurn = player;
+            
         }        
     }
 
