@@ -47,11 +47,9 @@ namespace DARTS_UnitTests.Datastructuur
             for (int i = 0; i < 20; i++)
             {
                 Player player1 = new Player();
-                player1.PlayerType = PlayerEnum.Player1;
                 player1.Name = "Klaas";
 
                 Player player2 = new Player();
-                player2.PlayerType = PlayerEnum.Player2;
                 player2.Name = "Pieter";
 
                 int numSets = 22;
@@ -87,11 +85,9 @@ namespace DARTS_UnitTests.Datastructuur
         {
             // Arrange
             Player player1 = new Player();
-            player1.PlayerType = PlayerEnum.Player1;
             player1.Name = "Klaas";
 
             Player player2 = new Player();
-            player2.PlayerType = PlayerEnum.Player2;
             player2.Name = "Pieter";
 
             int numSets = 22;
