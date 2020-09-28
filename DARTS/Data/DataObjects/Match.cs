@@ -63,6 +63,35 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
+        public void Start()
+        {
+            Sets = new List<Set>();
+
+            if (BeginningPlayer.Equals(PlayerEnum.None))
+            {
+                BeginningPlayer = ChooseRandomPlayer();
+            }
+
+            // TODO: impement factory pattern.
+            Set firstSet = new Set();
+            firstSet.BeginningPlayer = BeginningPlayer;
+            firstSet.NumLegs = NumLegs;
+
+            Sets.Add(firstSet);
+            firstSet.Start();
+        }
+
+        private PlayerEnum ChooseRandomPlayer()
+        {
+            // Store the values of PlayerEnum in a list and remove the Player.None entry.
+            List<PlayerEnum> values = new List<PlayerEnum>((PlayerEnum[])Enum.GetValues(typeof(PlayerEnum)));
+            values.Remove(PlayerEnum.None);
+
+            // Choose random index of values list.
+            Random random = new Random();
+            return values[random.Next(values.Count)];
+        }
+
         public Match()
         {
 

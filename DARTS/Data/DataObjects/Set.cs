@@ -48,6 +48,20 @@ namespace DARTS.Data.DataObjects
             set => _numLegs = value;
         }
 
+        public void Start()
+        {
+            Legs = new List<Leg>();
+
+            // TODO: impement factory pattern.
+            Leg firstLeg = new Leg();
+            firstLeg.BeginningPlayer = BeginningPlayer;
+            firstLeg.Player1LegScore = 501;
+            firstLeg.Player2LegScore = 501;
+
+            Legs.Add(firstLeg);
+            firstLeg.Start();
+        }
+
         public Set()
         {
 

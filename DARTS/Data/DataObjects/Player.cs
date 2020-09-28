@@ -43,6 +43,7 @@ namespace DARTS.Data.DataObjects
     #region Enums
     public enum PlayerEnum
     {
+        None,
         Player1,
         Player2
     }
