@@ -83,13 +83,9 @@ namespace DARTS.Data.DataObjects
 
         private PlayerEnum ChooseRandomPlayer()
         {
-            // Store the values of PlayerEnum in a list and remove the Player.None entry.
-            List<PlayerEnum> values = new List<PlayerEnum>((PlayerEnum[])Enum.GetValues(typeof(PlayerEnum)));
-            values.Remove(PlayerEnum.None);
-
-            // Choose random index of values list.
+            // Choose randomly between PlayerEnum.Player1 and PlayerEnum.Player2.
             Random random = new Random();
-            return values[random.Next(values.Count)];
+            return (PlayerEnum)random.Next((int)PlayerEnum.Player1, (int)PlayerEnum.Player2 + 1);
         }
 
         public Match()
