@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DARTS.Data.DataBase
 {
-    public sealed class DataBaseProvider
+    public sealed class DataBaseProvider : IDisposable
     {
         private static DataBaseProvider _instance = null;
         private static readonly object padLock = new object();
@@ -54,6 +54,14 @@ namespace DARTS.Data.DataBase
                 _dbConnection.Open();
             }
             return _dbConnection;
+        }
+
+        public void Dispose()
+        {
+            lock (padLock)
+            {
+                _instance = null;
+            }
         }
     }
 }

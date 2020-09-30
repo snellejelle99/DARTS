@@ -10,17 +10,30 @@ namespace DARTS_UnitTests.Data
     [TestClass]
     public class DataBase_Unittest
     {
+        static SQLiteConnection _dbconnection;
+
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
+        {
+            _dbconnection = DataBaseProvider.Instance.GetDataBaseConnection();
+        }
+
         [TestMethod]
         public void TestConnection()
         {
-            SQLiteConnection dbconnection = DataBaseProvider.Instance.GetDataBaseConnection();
-
-            SQLiteCommand cmd = dbconnection.CreateCommand();
+            SQLiteCommand cmd = _dbconnection.CreateCommand();
             cmd.CommandText = "SELECT SQLITE_VERSION()";
 
             string version = cmd.ExecuteScalar().ToString();
 
-            Assert.AreEqual("3.32.1",version);
+            Assert.AreEqual("3.32.1", version);
+        }
+
+        [ClassCleanup]
+        public static void TestCleanup()
+        {
+            _dbconnection.Close();
+            DataBaseProvider.Instance.Dispose();
         }
     }
 }
