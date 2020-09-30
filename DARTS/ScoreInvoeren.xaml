@@ -9,7 +9,7 @@
     <Grid>
         <TextBox x:Name="scoreInputBox" MaxLength="2" HorizontalAlignment="Center" Margin="0,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="scoreInputBox_PreviewTextInput" />
         <ComboBox HorizontalAlignment="Left" Margin="521,182,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ThrowTypes}" SelectedIndex="0"/>
-        <Button x:Name="submitScore" Content="Save" HorizontalAlignment="Center" Margin="0,277,0,0" VerticalAlignment="Top" Height="21" Width="44" Click="submitScore_Click"/>
+        <Button x:Name="submitScore" Content="Save" HorizontalAlignment="Left" Margin="597,272,0,0" VerticalAlignment="Top" Height="21" Width="44" Click="submitScore_Click"/>
         <Label Content="Score" HorizontalAlignment="Left" Margin="250,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
     </Grid>
 </Window>
