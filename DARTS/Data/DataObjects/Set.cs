@@ -64,6 +64,37 @@ namespace DARTS.Data.DataObjects
             firstLeg.Start();
         }
 
+        public PlayerEnum CheckWin()
+        {
+            PlayerEnum winner = Legs[Legs.Count - 1].CheckWin();
+
+            if (winner != PlayerEnum.None)
+            {
+                if (winner == PlayerEnum.Player1)
+                    Player1LegsWon++;
+
+                else if (winner == PlayerEnum.Player2)
+                    Player2LegsWon++;
+
+
+                if (Player1LegsWon > (NumLegs / 2))
+                {
+                    WinningPlayer = PlayerEnum.Player1;
+                }
+
+                else if (Player2LegsWon > (NumLegs / 2))
+                {
+                    WinningPlayer = PlayerEnum.Player2;
+                }
+
+                else WinningPlayer = PlayerEnum.None;
+            }
+
+            else WinningPlayer = PlayerEnum.None;
+
+            return WinningPlayer;  
+        }
+
         public void ChangeTurn()
         {
             if(Legs.Count > 0)
