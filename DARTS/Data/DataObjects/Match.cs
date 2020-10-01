@@ -8,13 +8,15 @@ namespace DARTS.Data.DataObjects
     public class Match
     {
         #region BackingStores
-        private PlayerEnum _winnningPlayer;
+        private PlayerEnum _winnningPlayer, _beginningPlayer;
 
         private Player _player1;
 
         private Player _player2;
 
         private List<Set> _sets;
+
+        private int _numSets, _numLegs;
         #endregion
 
         #region Properties
@@ -34,25 +36,61 @@ namespace DARTS.Data.DataObjects
         {
             get => _winnningPlayer;
             set => _winnningPlayer = value;
-        }        
+        }
+
+        public PlayerEnum BeginningPlayer
+        {
+            get => _beginningPlayer;
+            set => _beginningPlayer = value;
+        }
 
         public List<Set> Sets
         {
             get => _sets;
             set => _sets = value;
         }
+
+        public int NumSets
+        {
+            get => _numSets;
+            set => _numSets = value;
+        }
+
+        public int NumLegs
+        {
+            get => _numLegs;
+            set => _numLegs = value;
+        }
         #endregion
 
-        public Match(string player1Name, string player2Name, int numSets, int numLegs, PlayerEnum beginningPlayer)
+        public void Start()
         {
-            Player1 = new Player(player1Name, PlayerEnum.Player1);
-            Player2 = new Player(player2Name, PlayerEnum.Player2);
             Sets = new List<Set>();
 
-            for(int i = 0; i < numSets; i++)
+            if (BeginningPlayer.Equals(PlayerEnum.None))
             {
-                Sets.Add(new Set(numLegs, beginningPlayer));
+                BeginningPlayer = ChooseRandomPlayer();
             }
+
+            // TODO: impement factory pattern.
+            Set firstSet = new Set();
+            firstSet.BeginningPlayer = BeginningPlayer;
+            firstSet.NumLegs = NumLegs;
+
+            Sets.Add(firstSet);
+            firstSet.Start();
+        }
+
+        private PlayerEnum ChooseRandomPlayer()
+        {
+            // Choose randomly between PlayerEnum.Player1 and PlayerEnum.Player2.
+            Random random = new Random();
+            return (PlayerEnum)random.Next((int)PlayerEnum.Player1, (int)PlayerEnum.Player2 + 1);
+        }
+
+        public Match()
+        {
+
         }
     }
 }
