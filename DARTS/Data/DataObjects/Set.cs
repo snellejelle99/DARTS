@@ -64,6 +64,31 @@ namespace DARTS.Data.DataObjects
             firstLeg.Start();
         }
 
+        public void ChangeTurn()
+        {
+            if(Legs.Count > 0)
+            {
+                //If nobody has won the leg yet change the turn.
+                if (Legs[Legs.Count - 1].WinningPlayer == PlayerEnum.None)
+                {
+                    Legs[Legs.Count - 1].ChangeTurn(); 
+                }
+
+                //If someone has won it start a new Leg and let the other player begin. Then start the leg.
+                else
+                {
+                    // TODO: impement factory pattern.
+                    Leg nextLeg = new Leg();
+                    nextLeg.BeginningPlayer = Legs[Legs.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                    nextLeg.Player1LegScore = PlayerPoints;
+                    nextLeg.Player2LegScore = PlayerPoints;
+
+                    Legs.Add(nextLeg);
+                    nextLeg.Start();
+                }
+            }
+        }
+
         public Set()
         {
 

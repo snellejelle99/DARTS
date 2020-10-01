@@ -81,6 +81,27 @@ namespace DARTS.Data.DataObjects
             firstSet.Start();
         }
 
+        public void ChangeTurn()
+        {
+            if(Sets.Count > 0)
+            {
+                if(Sets[Sets.Count - 1].WinningPlayer == PlayerEnum.None)
+                {
+                    Sets[Sets.Count - 1].ChangeTurn();
+                }
+
+                else
+                {
+                    Set nextSet = new Set();
+                    nextSet.BeginningPlayer = Sets[Sets.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                    nextSet.NumLegs = NumLegs;
+
+                    Sets.Add(nextSet);
+                    nextSet.Start();
+                }
+            }
+        }
+
         private PlayerEnum ChooseRandomPlayer()
         {
             // Choose randomly between PlayerEnum.Player1 and PlayerEnum.Player2.
