@@ -11,7 +11,7 @@ namespace DARTS.Data.DataObjects
 
         private PlayerEnum _winnningPlayer, _beginningPlayer;
 
-        private int _player1LegScore, _player2LegScore;
+        private uint _player1LegScore, _player2LegScore;
         #endregion
 
         #region Properties
@@ -33,13 +33,13 @@ namespace DARTS.Data.DataObjects
             set => _beginningPlayer = value;
         }
 
-        public int Player1LegScore
+        public uint Player1LegScore
         {
             get => _player1LegScore;
             set => _player1LegScore = value;
         }
 
-        public int Player2LegScore
+        public uint Player2LegScore
         {
             get => _player2LegScore;
             set => _player2LegScore = value;
@@ -55,6 +55,18 @@ namespace DARTS.Data.DataObjects
             firstTurn.PlayerTurn = BeginningPlayer;
 
             Turns.Add(firstTurn);
+        }
+
+        public void ChangeTurn()
+        { 
+            if(Turns.Count > 0) 
+            {
+                // Create the next turn and assign the other player.
+                Turn nextTurn = new Turn();
+                nextTurn.PlayerTurn = Turns[Turns.Count - 1].PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+
+                Turns.Add(nextTurn);
+            }
         }
 
         public Leg()
