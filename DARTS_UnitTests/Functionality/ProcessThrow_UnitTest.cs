@@ -61,5 +61,23 @@ namespace DARTS_UnitTests.Functionality
             Assert.AreEqual(483, newlegscore);
         }
 
+        [TestMethod]
+        public void TestValidateScoreDecreaseNegative()
+        {
+           
+            // Arrange
+            int Throwscore = 18;
+            ScoreType type = ScoreType.Single;
+            int legscore = 9;
+            ProcessThrow processThrow = new ProcessThrow();
+
+            //Act
+            int newlegscore = processThrow.ValidateScore(Throwscore, type, legscore);
+
+            //Assert
+            Assert.AreEqual(-9, newlegscore);
+
+        }
+
     }
 }
