@@ -2,7 +2,9 @@
 ![CI/CD Pipeline](https://github.com/snellejelle99/DARTS/workflows/CI/CD%20Pipeline/badge.svg)
 
 ## Description
+project info
 
+### Used Rules & Requirements
 This dart tracking application is build with the following rules and requirements in mind:
 - Prioritized (MoSCoW) requirements drawn up by the product owner 
 - [PDC](https://www.pdc.tv/players/rules-darts)
@@ -12,6 +14,8 @@ This dart tracking application is build with the following rules and requirement
   - 5.4. Scoring
 
 ## Getting started
+
+setup & run info
 
 ## Contributors
 - [Jelle Jan Bleeker](https://github.com/snellejelle99)
