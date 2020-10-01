@@ -16,9 +16,6 @@ namespace DARTS.Data.DataObjects
 
         private List<Set> _sets;
 
-        //To Do: placeholder legs weghalen (alleen toegevoegd om validatie te checken)
-        private List<Leg> _legs;
-
         private int _numSets, _numLegs;
         #endregion
 
@@ -51,13 +48,6 @@ namespace DARTS.Data.DataObjects
         {
             get => _sets;
             set => _sets = value;
-        }
-
-        // To Do: " "
-        public List<Leg> Legs
-        {
-            get => _legs;
-            set => _legs = value;
         }
 
         public int NumSets

@@ -10,13 +10,16 @@ namespace DARTS
     {
         public StartMatch()
         {
-            InitializeComponent();
-            // Placeholder match object om validation te testen
-            Match m = new Match();
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
-            // Matchobject wordt gebind aan main canvas in MainWindow.xaml
-            MainCanvas.DataContext = m;
+            InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.DataContext = this;
         }
+
+        public string Player1 { get; set; }
+        public string Player2 { get; set; }
+        public int NumSets { get; set; }
+        public int NumLegs { get; set; }
+
     }
 }
