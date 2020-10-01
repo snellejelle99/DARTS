@@ -19,13 +19,15 @@ namespace DARTS.Windows
     /// <summary>
     /// Interaction logic for PlayersOverviewWindow.xaml
     /// </summary>
+    ///
     public partial class PlayersOverviewWindow : Window
     {
-        private List<Player> _displayedPlayers = new List<Player>();
+        public List<Player> _displayedPlayers = new List<Player>();
         private List<Player> _unfilteredPlayers = new List<Player>();
 
-        public PlayersOverviewWindow()
+        public PlayersOverviewWindow(List<Player> players)
         {
+            this._unfilteredPlayers = players;
             InitializeComponent();
             ListViewPlayersOverview.ItemsSource = _displayedPlayers;
 
@@ -56,12 +58,6 @@ namespace DARTS.Windows
             //_displayedPlayers.AddRange(_unfilteredPlayers);
 
             // TODO: Temporary until data retrieval implementation is finished.
-            TempAddListItems();
-        }
-
-        // TODO: Remove temporary function that is for test purposes.
-        private void TempAddListItems()
-        {
             for (int i = 0; i < 3; i++)
             {
                 Player p = new Player();
@@ -70,8 +66,13 @@ namespace DARTS.Windows
                 p.ID = i;
                 _displayedPlayers.Add(p);
             }
+            SetListItems(_displayedPlayers);
+        }
 
-            _unfilteredPlayers.AddRange(_displayedPlayers);
+        // TODO: Remove temporary function that is for test purposes.
+        private void SetListItems(List<Player> player)
+        {
+            _unfilteredPlayers.AddRange(player);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace DARTS.Windows
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             // Return to main window
-            var newMainWindow = new MainWindow();
+            MainWindow newMainWindow = new MainWindow();
             newMainWindow.Show();
             this.Close();
         }
@@ -94,10 +95,10 @@ namespace DARTS.Windows
         /// <param name="e"></param>
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var item = sender as ListViewItem;
+            ListViewItem item = sender as ListViewItem;
             if (item != null && item.IsSelected && item.Content is Player)
             {
-                Player p = (Player)item.Content;
+                Player player = (Player)item.Content;
 
                 //TODO: Create a new window for player information 
                 //var newPlayerWindow = new playerWindow(p.ID);
@@ -113,30 +114,36 @@ namespace DARTS.Windows
                 
             string filterText = ((TextBox)e.Source).Text;
 
+            Filter(filterText);
+        }
+
+        public void Filter(string filterText)
+        {
             // TODO: temp
-            Player p = new Player();
-            p.Name = "cool username";
-            p.PlayerType = PlayerEnum.Player2;
-            p.ID = 2;
-            _unfilteredPlayers.Add(p);
+            //Player player = new Player();
+            //player.Name = "cool username";
+            //player.PlayerType = PlayerEnum.Player2;
+            //player.ID = 2;
+            //_unfilteredPlayers.Add(player);
 
             if (filterText == "" || filterText == string.Empty)
             {
                 _displayedPlayers.Clear();
                 _displayedPlayers.AddRange(_unfilteredPlayers);
                 ListViewPlayersOverview.ItemsSource = _displayedPlayers;
-            } else
+            }
+            else
             {
                 FilterPlayers(filterText);
             }
-            
+
             UpdatePlayersOverviewWindow();
         }
 
         private void FilterPlayers(string filterText)
         {
             _displayedPlayers.Clear();
-            _displayedPlayers.AddRange(_unfilteredPlayers.Where(player => player.Name.Contains(filterText)));
+            _displayedPlayers.AddRange(_unfilteredPlayers.Where(player => player.Name.ToLower().Contains(filterText.ToLower())));
             ListViewPlayersOverview.ItemsSource = _displayedPlayers;
         }
 
