@@ -38,7 +38,15 @@ namespace DARTS_UnitTests.Windows
             int playerAmount = newOverview.DisplayedPlayers.Count;
 
             // Assert
-            Assert.AreEqual(playerAmount, 3);
+            if ("player".Contains(character))
+            {
+                Assert.AreEqual(playerAmount, 3);
+            }
+            else 
+            {
+                Assert.AreEqual(playerAmount, 0);
+            }
+           
         }
     }
 }
