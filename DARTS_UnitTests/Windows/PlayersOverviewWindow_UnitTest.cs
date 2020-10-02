@@ -27,8 +27,7 @@ namespace DARTS_UnitTests.Windows
                 players.Add(p);
             }
 
-            PlayersOverviewViewModel newOverview = new PlayersOverviewViewModel();
-            newOverview.Show();
+            PlayersOverviewViewModel newOverview = new PlayersOverviewViewModel(players);
 
             // Act
             string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -36,7 +35,7 @@ namespace DARTS_UnitTests.Windows
             int index = random.Next(0, chars.Length);
             char character = chars[index];
             newOverview.Filter(character.ToString());
-            int playerAmount = newOverview._displayedPlayers.Count;
+            int playerAmount = newOverview.DisplayedPlayers.Count;
 
             // Assert
             Assert.AreEqual(playerAmount, 3);

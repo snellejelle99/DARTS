@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace DARTS.ViewModel
 {
-    class PlayersOverviewViewModel
+    public class PlayersOverviewViewModel
     {
 
         private List<Player> _displayedPlayers = new List<Player>();
@@ -63,11 +63,14 @@ namespace DARTS.ViewModel
 
         //private bool CanExecuteClearFilterClick()
 
-        public PlayersOverviewViewModel()
+        public PlayersOverviewViewModel(List<Player> players)
         {
             // view commands:
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(), canExecute => CanExecuteBackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
+
+            // SetListItems
+            SetListItems(players);
 
             // get view data:
             GetPlayersOverviewData();
