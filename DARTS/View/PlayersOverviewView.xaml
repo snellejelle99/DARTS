@@ -1,20 +1,20 @@
-﻿<Window x:Class="DARTS.Windows.PlayersOverviewWindow"
+﻿<Window x:Class="DARTS.View.PlayersOverviewView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DARTS.Windows"
+        xmlns:local="clr-namespace:DARTS.View"
         mc:Ignorable="d"
         Title="PlayersOverviewWindow" Height="455" Width="800">
     <DockPanel Margin="10,0,10,0">
         <DockPanel DockPanel.Dock="Top" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button DockPanel.Dock="Left" Height="24" x:Name="BackButton" Content="Back to main menu" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Stretch" Click="BackButton_Click"/>
+            <Button DockPanel.Dock="Left" Height="24" x:Name="BackButton" Content="Back to main menu" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Stretch"/>
             <Label VerticalContentAlignment="Center" Height="40" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Players Overview" HorizontalContentAlignment="Center" FontSize="18" FontWeight="Bold"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40">
             <Label VerticalContentAlignment="Center" Content="Filter:" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="53" Height="30" FontWeight="Normal" FontStyle="Normal"/>
-            <TextBox VerticalContentAlignment="Center" x:Name="FilterTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="24" Width="261" TextChanged="FilterTextBox_TextChanged"/>
-            <Button Margin="5,0,0,0" x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="24" Click="ClearFilter_Click" Width="35"/>
+            <TextBox VerticalContentAlignment="Center" x:Name="FilterTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="24" Width="261"/>
+            <Button Margin="5,0,0,0" x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="24" Width="35"/>
             <Label VerticalContentAlignment="Center" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" Content="Label" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Height="30" VerticalAlignment="Stretch" Width="91"/>
             <Label VerticalContentAlignment="Center" DockPanel.Dock="Right" Content="Amout of resulted players:" HorizontalAlignment="Right" Width="150" VerticalAlignment="Stretch" Height="30"/>
         </DockPanel>
@@ -24,11 +24,6 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Player Name" Width="400"></GridViewColumn>
                 </GridView>
             </ListView.View>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
-                </Style>
-            </ListView.ItemContainerStyle>
         </ListView>
     </DockPanel>
 </Window>

@@ -1,53 +1,74 @@
 ﻿using DARTS.Data.DataObjects;
+using DARTS.View;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace DARTS.Windows
+namespace DARTS.ViewModel
 {
-    /// <summary>
-    /// Interaction logic for PlayersOverviewWindow.xaml
-    /// </summary>
-    ///
-    public partial class PlayersOverviewWindow : Window
+    class PlayerOverviewViewModel
     {
-        public List<Player> _displayedPlayers = new List<Player>();
+        private PlayersOverviewView _view; 
+
+        private List<Player> _displayedPlayers = new List<Player>();
         private List<Player> _unfilteredPlayers = new List<Player>();
 
-        public PlayersOverviewWindow(List<Player> players)
+        public List<Player> DisplayedPlayers
         {
-            this._unfilteredPlayers = players;
-            InitializeComponent();
-            ListViewPlayersOverview.ItemsSource = _displayedPlayers;
+            get { return _displayedPlayers; }
+        }
+
+        public ICommand BackButtonClickCommand
+        {
+            get;
+            set;
+        }
+
+        public PlayerOverviewViewModel()
+        {
+            BackButtonClickCommand = new RelayCommand
+
+
+            //List<Player> players
+            //this._unfilteredPlayers = players;
+            //ListViewPlayersOverview.ItemsSource = _displayedPlayers;
 
             GetPlayersOverviewData();
 
-            UpdatePlayersOverviewWindow();
+            // UpdatePlayersOverviewWindow();
+
+            
         }
 
+        /*
+         view.DataContext = this;
+        _view = view;
+
+        _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
+
+        _view.BackButton.Click += BackButton_Click;
+        _view.ClearFilterButton.Click += ClearFilter_Click;
+        _view.FilterTextBox.TextChanged += FilterTextBox_TextChanged;
+        _view.ListViewPlayersOverview.PreviewMouseLeftButtonDown += ListViewItem_PreviewMouseLeftButtonDown;
+
+        _view.Show();
+        */
         /// <summary>
         /// Updates window for changes in player items to showcase.
         /// </summary>
         private void UpdatePlayersOverviewWindow()
         {
             // AmountOfResultsLabel
-            AmountOfResultsLabel.Content = Convert.ToString(_displayedPlayers.Count);
-            if (_displayedPlayers.Count != _unfilteredPlayers.Count) 
-                AmountOfResultsLabel.Content += "-" + Convert.ToString(_unfilteredPlayers.Count);
-            
+            _view.AmountOfResultsLabel.Content = Convert.ToString(_displayedPlayers.Count);
+            if (_displayedPlayers.Count != _unfilteredPlayers.Count)
+                _view.AmountOfResultsLabel.Content += "-" + Convert.ToString(_unfilteredPlayers.Count);
+
             // ListView
-            ListViewPlayersOverview.Items.Refresh();
+            _view.ListViewPlayersOverview.Items.Refresh();
         }
 
         private void GetPlayersOverviewData()
@@ -75,17 +96,20 @@ namespace DARTS.Windows
             _unfilteredPlayers.AddRange(player);
         }
 
+
         /// <summary>
         /// Whene back button is pressed, returns user to main window. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        private void BackButtonClick(object sender, RoutedEventArgs e)
         {
-            // Return to main window
-            MainWindow newMainWindow = new MainWindow();
-            newMainWindow.Show();
-            this.Close();
+
+        }
+
+        private bool CanExecuteBackButtonClick()
+        {
+            return true;
         }
 
         /// <summary>
@@ -93,7 +117,7 @@ namespace DARTS.Windows
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ListViewItemPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             ListViewItem item = sender as ListViewItem;
             if (item != null && item.IsSelected && item.Content is Player)
@@ -107,11 +131,15 @@ namespace DARTS.Windows
             }
         }
 
-        #region Filter
+        private bool CanExecuteListViewItemPreviewMouseLeftButtonDown()
+        {
+            return true;
+        }
+
         private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!this.IsLoaded) return;
-                
+            if (!_view.IsLoaded) return;
+
             string filterText = ((TextBox)e.Source).Text;
 
             Filter(filterText);
@@ -130,7 +158,7 @@ namespace DARTS.Windows
             {
                 _displayedPlayers.Clear();
                 _displayedPlayers.AddRange(_unfilteredPlayers);
-                ListViewPlayersOverview.ItemsSource = _displayedPlayers;
+                _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
             }
             else
             {
@@ -144,18 +172,21 @@ namespace DARTS.Windows
         {
             _displayedPlayers.Clear();
             _displayedPlayers.AddRange(_unfilteredPlayers.Where(player => player.Name.ToLower().Contains(filterText.ToLower())));
-            ListViewPlayersOverview.ItemsSource = _displayedPlayers;
+            _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
         }
 
         private void ClearFilter_Click(object sender, RoutedEventArgs e)
         {
-            FilterTextBox.Clear();
+            _view.FilterTextBox.Clear();
             _displayedPlayers.Clear();
             _displayedPlayers.AddRange(_unfilteredPlayers);
-            ListViewPlayersOverview.ItemsSource = _displayedPlayers;
+            _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
             UpdatePlayersOverviewWindow();
         }
-        #endregion
-    }
 
+        private bool CanExecuteClearFilterClick()
+        {
+            return true;
+        }
+    }
 }

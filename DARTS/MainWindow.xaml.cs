@@ -1,5 +1,6 @@
 ﻿using DARTS.Data.DataObjects;
-using DARTS.Windows;
+using DARTS.ViewModel;
+using DARTS.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,10 @@ namespace DARTS
 
         //TEMP: to show PlayersOverviewWindow
         private void TempButtonToPlayersOverview_Click(object sender, RoutedEventArgs e)
-        { 
-            var newWindow = new PlayersOverviewWindow(new List<Player>()); //create your new window.
-            newWindow.Show(); //show the new window.
+        {
+            PlayersOverviewView window = new PlayersOverviewView(); //create your new window.
+            PlayerOverviewViewModel viewModel = new PlayerOverviewViewModel(window);
+            window.Show(); //show the new window.
             this.Close();
         }
     }
