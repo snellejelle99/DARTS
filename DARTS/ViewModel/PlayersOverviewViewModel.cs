@@ -25,7 +25,6 @@ namespace DARTS.ViewModel
 
         public ICommand BackButtonClickCommand { get; }
         public ICommand ClearFilterButtonClickCommand { get; }
-        public ICommand OpenPlayerDetailsClickCommand { get; }
 
         public List<Player> DisplayedPlayers
         {
@@ -34,6 +33,11 @@ namespace DARTS.ViewModel
             {
                 _displayedPlayers = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DisplayedPlayers"));
+
+                string newAmountOfResultsLabelText = Convert.ToString(_displayedPlayers.Count);
+                if (_displayedPlayers.Count != _unfilteredPlayers.Count)
+                    newAmountOfResultsLabelText += " out of " + Convert.ToString(_unfilteredPlayers.Count);
+                AmountOfResultsLabelText = newAmountOfResultsLabelText;
             }
         }
 
@@ -43,7 +47,8 @@ namespace DARTS.ViewModel
             set
             {
                 _selectedItem = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedItem"));
+                if (_selectedItem != null && _displayedPlayers.Count() > 0)
+                    OpenPlayerDetailsViewClick();
             }
         }
 
@@ -72,35 +77,22 @@ namespace DARTS.ViewModel
             // view commands:
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(), canExecute => CanExecuteBackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
-            OpenPlayerDetailsClickCommand = new RelayCommand(execute => OpenPlayerDetailsClick(), canExecute => CanExecuteOpenPlayerDetailsClick());
 
-            // SetListItems
-            SetListItems(players);
+            // TEMP: SetListItems #29
+            _unfilteredPlayers.AddRange(players);
+            DisplayedPlayers = players;
 
-            // get view data:
+            // view data:
             GetPlayersOverviewData();
-
-            UpdateAmountOfResultsLabelText();
-        }
-
-        /// <summary>
-        /// Updates window for changes in player items to showcase.
-        /// </summary>
-        private void UpdateAmountOfResultsLabelText()
-        {
-            AmountOfResultsLabelText = Convert.ToString(_displayedPlayers.Count);
-            if (_displayedPlayers.Count != _unfilteredPlayers.Count)
-                AmountOfResultsLabelText += " - " + Convert.ToString(_unfilteredPlayers.Count);
-        }
-
-        private void GetPlayersOverviewData()
-        {
-            // TODO: Retrieve players to display.
+            // TODO: Retrieve players to display #29:
             //_unfilteredPlayers = get list of players to display...;
-            //_displayedPlayers.Clear();
-            //_displayedPlayers.AddRange(_unfilteredPlayers);
+            //DisplayedPlayers = _unfilteredPlayers;
+        }
 
-            // TODO: Temporary until data retrieval implementation is finished.
+        // TEMP: until data retrieval implementation is finished.
+        private void GetPlayersOverviewData()
+        {    
+
             for (int i = 0; i < 3; i++)
             {
                 Player p = new Player();
@@ -108,18 +100,9 @@ namespace DARTS.ViewModel
                 p.ID = i;
                 _displayedPlayers.Add(p);
             }
-            SetListItems(_displayedPlayers);
+            _unfilteredPlayers.AddRange( _displayedPlayers);
         }
 
-        // TODO: Remove temporary function that is for test purposes.
-        private void SetListItems(List<Player> player)
-        {
-            _unfilteredPlayers.AddRange(player);
-        }
-
-        /// <summary>
-        /// Whene back button is pressed, returns user to main window. 
-        /// </summary>
         private void BackButtonClick()
         {
             //TODO: Go to main menu
@@ -129,14 +112,10 @@ namespace DARTS.ViewModel
         {
             return true;
         }
-        private void OpenPlayerDetailsClick()
-        {
-            //TODO: Create a new window for player detail information, with _selectedItem as argument
-        }
 
-        private bool CanExecuteOpenPlayerDetailsClick()
+        private void OpenPlayerDetailsViewClick()
         {
-            return _selectedItem != null && _displayedPlayers.Count() > 0;
+            //TODO: Create a new window for player detail information, with _selectedItem as argument #28
         }
 
         private void FilterTextBoxTextChanged()
@@ -152,22 +131,13 @@ namespace DARTS.ViewModel
             }
             else
             {
-                FilterPlayers(filterText);
+                DisplayedPlayers = _unfilteredPlayers.Where(player => player.Name.ToLower().Contains(filterText.ToLower())).ToList();
             }
-
-            UpdateAmountOfResultsLabelText();
-        }
-
-        private void FilterPlayers(string filterText)
-        {
-            DisplayedPlayers = _unfilteredPlayers.Where(player => player.Name.ToLower().Contains(filterText.ToLower())).ToList();
         }
 
         private void ClearFilterButtonClick()
         {
             DisplayedPlayers = _unfilteredPlayers;
-
-            UpdateAmountOfResultsLabelText();
         }
 
         private bool CanExecuteClearFilterButtonClick()

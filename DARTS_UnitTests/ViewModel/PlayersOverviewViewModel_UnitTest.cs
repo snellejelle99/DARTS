@@ -8,16 +8,17 @@ using System.Windows.Controls;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace DARTS_UnitTests.Windows
+namespace DARTS_UnitTests.ViewModel
 {
     [TestClass]
-    public class PlayersOverviewWindow_UnitTest
+    public class PlayersOverviewViewModel_UnitTest
     {
         [TestMethod]
 
         public void CreatePlayerOverviewFilterTests()
         {
             // Arrange
+            //TEMP: should be done with database system and TestInitialize
             List<Player> players = new List<Player>();
             for (int i = 0; i < 3; i++)
             {
@@ -46,7 +47,6 @@ namespace DARTS_UnitTests.Windows
             {
                 Assert.AreEqual(playerAmount, 0);
             }
-           
         }
     }
 }
