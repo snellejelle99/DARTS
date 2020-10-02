@@ -30,7 +30,8 @@ namespace DARTS
         private void MatchesOverview_Click(object sender, RoutedEventArgs e)
         {
             MatchesOverviewView matchesOverviewView= new MatchesOverviewView();
-            MatchesOverviewViewModel viewModel = new MatchesOverviewViewModel(matchesOverviewView);
+            MatchesOverviewViewModel viewModel = new MatchesOverviewViewModel();
+            matchesOverviewView.DataContext = viewModel;
             matchesOverviewView.Show();
             this.Close();
         }

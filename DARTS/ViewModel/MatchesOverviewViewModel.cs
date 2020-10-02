@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -8,99 +9,141 @@ using System.Windows.Input;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
 using DARTS.View;
+using DARTS.ViewModel.Command;
+
 
 namespace DARTS.ViewModel
 {
-    class MatchesOverviewViewModel
+    class MatchesOverviewViewModel : INotifyPropertyChanged
     {
-        private MatchesOverviewView _view;
 
         private List<Match> _displayedMatches = new List<Match>();
         private List<Match> _unfilteredMatches = new List<Match>();
 
+        private string _filterText = "";
+        private Match _selectedItem;
+        private int _amountOfDisplayedMatches;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ICommand BackButtonClickCommand { get; }
+        public ICommand ClearFilterButtonClickCommand { get; }
+        public ICommand OpenMatchClickCommand { get; }
+
+        public string FilterText
+        {
+            get { return _filterText; }
+            set
+            {
+                if (_filterText != value)
+                {
+                    _filterText = value;
+                    FilterTextBox_TextChanged(_filterText);
+                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterText"));
+            }
+        }
+
         public List<Match> DisplayedMatches
         {
             get { return _displayedMatches; }
-            set { _displayedMatches = value; }
+            set
+            {
+                _displayedMatches = value;
+                AmountOfDisplayedMatches = _displayedMatches.Count();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DisplayedMatches"));
+            }
         }
 
-        public MatchesOverviewViewModel(MatchesOverviewView view)
+        public Match SelectedItem
         {
-            view.DataContext = this;
-            _view = view;
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedItem"));
+            }
+        }
 
-            _view.BackButton.Click += BackButton_Click;
-            _view.FilterTextBox.TextChanged += FilterTextBox_TextChanged;
-            _view.ClearFilterButton.Click += ClearFilter_Click;
-            _view.ListViewMatchesOverview.PreviewMouseLeftButtonDown += ListViewItem_PreviewMouseLeftButtonDown;
+        public int AmountOfDisplayedMatches
+        {
+            get { return _amountOfDisplayedMatches; }
+            set
+            {
+                _amountOfDisplayedMatches = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AmountOfDisplayedMatches"));
+            }
+        }
+        public MatchesOverviewViewModel()
+        {
+
+            BackButtonClickCommand = new RelayCommand(execute => BackButton_Click(), canExecute => CanExecuteBackButtonClick());
+            ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilter_Click(), canExecute => CanExecuteClearFilterButtonClick());
+            OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
             GetMatchesOverviewData();
-            UpdateMatchesOverviewWindow();
-        }
-
-        private void UpdateMatchesOverviewWindow()
-        {
-            _view.AmountOfResultsLabel.Content = Convert.ToString(_displayedMatches.Count);
-            if (_displayedMatches.Count != _unfilteredMatches.Count)
-                _view.AmountOfResultsLabel.Content += "-" + Convert.ToString(_unfilteredMatches.Count);
-
-            _view.ListViewMatchesOverview.Items.Refresh();
         }
 
         private void GetMatchesOverviewData()
         {
             //TODO: To be changed to get data from database: Function to add dummy data to matches overview:
-            _displayedMatches.AddRange(DummyData.TempAddListItems());
-            _unfilteredMatches.AddRange(_displayedMatches);
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            var item = sender as ListViewItem;
-            if (item != null && item.IsSelected && item.Content is Match)
-            {
-                Match m = (Match)item.Content;
-            }
+            DisplayedMatches = DummyData.TempAddListItems();
+            _unfilteredMatches = _displayedMatches;
         }
 
         #region Filter
-        private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void FilterTextBox_TextChanged(string filterText)
         {
-            if (!_view.IsLoaded) return;
-
-            string filterText = ((TextBox)e.Source).Text.ToLower();
-
             if (filterText == "" || filterText == string.Empty)
             {
-                _displayedMatches.Clear();
-                _displayedMatches.AddRange(_unfilteredMatches);
+                DisplayedMatches = _unfilteredMatches;
             }
             else
             {
                 FilterMatches(filterText);
             }
-
-            UpdateMatchesOverviewWindow();
         }
 
         private void FilterMatches(string filterText)
         {
-            _displayedMatches.Clear();
-            _displayedMatches.AddRange(_unfilteredMatches.Where(Match => Match.Player1.Name.ToLower().Contains(filterText) || Match.Player2.Name.ToLower().Contains(filterText) || Match.Sets.Count.ToString().ToLower().Contains(filterText)));
+            string loweredFilterText = filterText.ToLower();
+            DisplayedMatches = new List<Match>(_unfilteredMatches.Where(Match => Match.Player1.Name.ToLower().Contains(loweredFilterText) || Match.Player2.Name.ToLower().Contains(loweredFilterText) || Match.Sets.Count.ToString().ToLower().Contains(loweredFilterText)));
         }
 
-        private void ClearFilter_Click(object sender, RoutedEventArgs e)
+        private void ClearFilter_Click()
         {
-            _view.FilterTextBox.Clear();
-            _displayedMatches.Clear();
-            _displayedMatches.AddRange(_unfilteredMatches);
-            UpdateMatchesOverviewWindow();
+            FilterText = "";
+            DisplayedMatches = _unfilteredMatches;
         }
+        private bool CanExecuteClearFilterButtonClick()
+        {
+            return (_filterText != null && _filterText != "");
+        }
+
+        private void BackButton_Click()
+        {
+
+        }
+
+        private bool CanExecuteBackButtonClick()
+        {
+            return true;
+        }
+
+        private void OpenMatchButton_Click()
+        {
+
+        }
+
+        private bool CanExecuteOpenMatchButtonClick()
+        {
+
+            if (_selectedItem != null)
+                return true;
+            else
+                return false;
+        }
+
         #endregion
     }
 }
