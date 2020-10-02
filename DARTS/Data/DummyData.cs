@@ -14,7 +14,6 @@ namespace DARTS.Data
             Player playerKoos = new Player();
             playerKoos.ID = 12;
             playerKoos.Name = "Koos";
-            playerKoos.PlayerType = PlayerEnum.Player1;
             Player playerJan = new Player();
             playerJan.ID = 11;
             playerJan.Name = "Jan";
