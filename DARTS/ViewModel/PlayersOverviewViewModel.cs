@@ -3,6 +3,7 @@ using DARTS.View;
 using DARTS.ViewModel.Command;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -12,22 +13,48 @@ using System.Windows.Input;
 
 namespace DARTS.ViewModel
 {
-    public class PlayersOverviewViewModel
+    public class PlayersOverviewViewModel : INotifyPropertyChanged
     {
-
         private List<Player> _displayedPlayers = new List<Player>();
         private List<Player> _unfilteredPlayers = new List<Player>();
+        private Player _selectedItem;
         private string _amountOfResultsLabelText = "";
         private string _filterTextBoxText = "";
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public ICommand BackButtonClickCommand { get; }
+        public ICommand ClearFilterButtonClickCommand { get; }
+        public ICommand OpenPlayerDetailsClickCommand { get; }
 
         public List<Player> DisplayedPlayers
         {
             get { return _displayedPlayers; }
+            set
+            {
+                _displayedPlayers = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DisplayedPlayers"));
+            }
+        }
+
+        public Player SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedItem"));
+            }
         }
 
         public string AmountOfResultsLabelText
         {
             get { return _amountOfResultsLabelText; }
+            set
+            {
+                _amountOfResultsLabelText = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AmountOfResultsLabelText"));
+            }
         }
 
         public string FilterTextBoxText
@@ -38,36 +65,14 @@ namespace DARTS.ViewModel
                 _filterTextBoxText = value;
                 FilterTextBoxTextChanged();
             }
-        }
-
-        public ICommand BackButtonClickCommand
-        {
-            get;
-        }
-
-        public ICommand ClearFilterButtonClickCommand
-        {
-            get;
-        }
-
-
-
-        //private void ClearFilter_Click(object sender, RoutedEventArgs e)
-        //{
-        //    _view.FilterTextBox.Clear();
-        //    _displayedPlayers.Clear();
-        //    _displayedPlayers.AddRange(_unfilteredPlayers);
-        //    _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
-        //    UpdatePlayersOverviewWindow();
-        //}
-
-        //private bool CanExecuteClearFilterClick()
+        } 
 
         public PlayersOverviewViewModel(List<Player> players)
         {
             // view commands:
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(), canExecute => CanExecuteBackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
+            OpenPlayerDetailsClickCommand = new RelayCommand(execute => OpenPlayerDetailsClick(), canExecute => CanExecuteOpenPlayerDetailsClick());
 
             // SetListItems
             SetListItems(players);
@@ -83,9 +88,9 @@ namespace DARTS.ViewModel
         /// </summary>
         private void UpdateAmountOfResultsLabelText()
         {
-            _amountOfResultsLabelText = Convert.ToString(_displayedPlayers.Count);
+            AmountOfResultsLabelText = Convert.ToString(_displayedPlayers.Count);
             if (_displayedPlayers.Count != _unfilteredPlayers.Count)
-                _amountOfResultsLabelText += "-" + Convert.ToString(_unfilteredPlayers.Count);
+                AmountOfResultsLabelText += " - " + Convert.ToString(_unfilteredPlayers.Count);
         }
 
         private void GetPlayersOverviewData()
@@ -112,7 +117,6 @@ namespace DARTS.ViewModel
             _unfilteredPlayers.AddRange(player);
         }
 
-
         /// <summary>
         /// Whene back button is pressed, returns user to main window. 
         /// </summary>
@@ -125,29 +129,14 @@ namespace DARTS.ViewModel
         {
             return true;
         }
-
-        /// <summary>
-        /// When list item is double-clicked, reate a new window with player information.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListViewItemPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OpenPlayerDetailsClick()
         {
-            ListViewItem item = sender as ListViewItem;
-            if (item != null && item.IsSelected && item.Content is Player)
-            {
-                Player player = (Player)item.Content;
-
-                //TODO: Create a new window for player information 
-                //var newPlayerWindow = new playerWindow(p.ID);
-                //newPlayerWindow.Show();
-                //this.Close();
-            }
+            //TODO: Create a new window for player detail information, with _selectedItem as argument
         }
 
-        private bool CanExecuteListViewItemPreviewMouseLeftButtonDown()
+        private bool CanExecuteOpenPlayerDetailsClick()
         {
-            return true;
+            return _selectedItem != null && _displayedPlayers.Count() > 0;
         }
 
         private void FilterTextBoxTextChanged()
@@ -159,8 +148,7 @@ namespace DARTS.ViewModel
         {
             if (filterText == "" || filterText == string.Empty)
             {
-                _displayedPlayers.Clear();
-                _displayedPlayers.AddRange(_unfilteredPlayers);
+                DisplayedPlayers = _unfilteredPlayers;
             }
             else
             {
@@ -172,21 +160,19 @@ namespace DARTS.ViewModel
 
         private void FilterPlayers(string filterText)
         {
-            _displayedPlayers.Clear();
-            _displayedPlayers.AddRange(_unfilteredPlayers.Where(player => player.Name.ToLower().Contains(filterText.ToLower())));
+            DisplayedPlayers = _unfilteredPlayers.Where(player => player.Name.ToLower().Contains(filterText.ToLower())).ToList();
         }
 
         private void ClearFilterButtonClick()
         {
-            _displayedPlayers.Clear();
-            _displayedPlayers.AddRange(_unfilteredPlayers);
+            DisplayedPlayers = _unfilteredPlayers;
 
             UpdateAmountOfResultsLabelText();
         }
 
         private bool CanExecuteClearFilterButtonClick()
         {
-            return _displayedPlayers.Count != _unfilteredPlayers.Count;
+            return _displayedPlayers.Count != _unfilteredPlayers.Count || _filterTextBoxText != "";
         }
     }
 }
