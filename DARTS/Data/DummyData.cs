@@ -17,7 +17,6 @@ namespace DARTS.Data
             Player playerJan = new Player();
             playerJan.ID = 11;
             playerJan.Name = "Jan";
-            playerJan.PlayerType = PlayerEnum.Player2;
             dummyMatch.Player1 = playerKoos;
             dummyMatch.Player2 = playerJan;
             dummyMatch.NumSets = 10;
