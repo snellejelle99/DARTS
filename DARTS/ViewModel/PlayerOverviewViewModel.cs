@@ -1,7 +1,9 @@
 ﻿using DARTS.Data.DataObjects;
 using DARTS.View;
+using DARTS.ViewModel.Command;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -12,63 +14,75 @@ namespace DARTS.ViewModel
 {
     class PlayerOverviewViewModel
     {
-        private PlayersOverviewView _view; 
 
         private List<Player> _displayedPlayers = new List<Player>();
         private List<Player> _unfilteredPlayers = new List<Player>();
+        private string _amountOfResultsLabelText = "";
+        private string _filterTextBoxText = "";
 
         public List<Player> DisplayedPlayers
         {
             get { return _displayedPlayers; }
         }
 
+        public string AmountOfResultsLabelText
+        {
+            get { return _amountOfResultsLabelText; }
+        }
+
+        public string FilterTextBoxText
+        {
+            get { return _filterTextBoxText; }
+            set 
+            { 
+                _filterTextBoxText = value;
+                FilterTextBoxTextChanged();
+            }
+        }
+
         public ICommand BackButtonClickCommand
         {
             get;
-            set;
         }
+
+        public ICommand ClearFilterButtonClickCommand
+        {
+            get;
+        }
+
+
+
+        //private void ClearFilter_Click(object sender, RoutedEventArgs e)
+        //{
+        //    _view.FilterTextBox.Clear();
+        //    _displayedPlayers.Clear();
+        //    _displayedPlayers.AddRange(_unfilteredPlayers);
+        //    _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
+        //    UpdatePlayersOverviewWindow();
+        //}
+
+        //private bool CanExecuteClearFilterClick()
 
         public PlayerOverviewViewModel()
         {
-            BackButtonClickCommand = new RelayCommand
+            // view commands:
+            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(), canExecute => CanExecuteBackButtonClick());
+            ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
 
-
-            //List<Player> players
-            //this._unfilteredPlayers = players;
-            //ListViewPlayersOverview.ItemsSource = _displayedPlayers;
-
+            // get view data:
             GetPlayersOverviewData();
 
-            // UpdatePlayersOverviewWindow();
-
-            
+            UpdateAmountOfResultsLabelText();
         }
 
-        /*
-         view.DataContext = this;
-        _view = view;
-
-        _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
-
-        _view.BackButton.Click += BackButton_Click;
-        _view.ClearFilterButton.Click += ClearFilter_Click;
-        _view.FilterTextBox.TextChanged += FilterTextBox_TextChanged;
-        _view.ListViewPlayersOverview.PreviewMouseLeftButtonDown += ListViewItem_PreviewMouseLeftButtonDown;
-
-        _view.Show();
-        */
         /// <summary>
         /// Updates window for changes in player items to showcase.
         /// </summary>
-        private void UpdatePlayersOverviewWindow()
+        private void UpdateAmountOfResultsLabelText()
         {
-            // AmountOfResultsLabel
-            _view.AmountOfResultsLabel.Content = Convert.ToString(_displayedPlayers.Count);
+            _amountOfResultsLabelText = Convert.ToString(_displayedPlayers.Count);
             if (_displayedPlayers.Count != _unfilteredPlayers.Count)
-                _view.AmountOfResultsLabel.Content += "-" + Convert.ToString(_unfilteredPlayers.Count);
-
-            // ListView
-            _view.ListViewPlayersOverview.Items.Refresh();
+                _amountOfResultsLabelText += "-" + Convert.ToString(_unfilteredPlayers.Count);
         }
 
         private void GetPlayersOverviewData()
@@ -83,7 +97,6 @@ namespace DARTS.ViewModel
             {
                 Player p = new Player();
                 p.Name = "player" + Convert.ToString(i);
-                p.PlayerType = PlayerEnum.Player1;
                 p.ID = i;
                 _displayedPlayers.Add(p);
             }
@@ -100,11 +113,9 @@ namespace DARTS.ViewModel
         /// <summary>
         /// Whene back button is pressed, returns user to main window. 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BackButtonClick(object sender, RoutedEventArgs e)
+        private void BackButtonClick()
         {
-
+            //TODO: Go to main menu
         }
 
         private bool CanExecuteBackButtonClick()
@@ -136,57 +147,43 @@ namespace DARTS.ViewModel
             return true;
         }
 
-        private void FilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void FilterTextBoxTextChanged()
         {
-            if (!_view.IsLoaded) return;
-
-            string filterText = ((TextBox)e.Source).Text;
-
-            Filter(filterText);
+            Filter(_filterTextBoxText);
         }
 
         public void Filter(string filterText)
         {
-            // TODO: temp
-            //Player player = new Player();
-            //player.Name = "cool username";
-            //player.PlayerType = PlayerEnum.Player2;
-            //player.ID = 2;
-            //_unfilteredPlayers.Add(player);
-
             if (filterText == "" || filterText == string.Empty)
             {
                 _displayedPlayers.Clear();
                 _displayedPlayers.AddRange(_unfilteredPlayers);
-                _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
             }
             else
             {
                 FilterPlayers(filterText);
             }
 
-            UpdatePlayersOverviewWindow();
+            UpdateAmountOfResultsLabelText();
         }
 
         private void FilterPlayers(string filterText)
         {
             _displayedPlayers.Clear();
             _displayedPlayers.AddRange(_unfilteredPlayers.Where(player => player.Name.ToLower().Contains(filterText.ToLower())));
-            _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
         }
 
-        private void ClearFilter_Click(object sender, RoutedEventArgs e)
+        private void ClearFilterButtonClick()
         {
-            _view.FilterTextBox.Clear();
             _displayedPlayers.Clear();
             _displayedPlayers.AddRange(_unfilteredPlayers);
-            _view.ListViewPlayersOverview.ItemsSource = _displayedPlayers;
-            UpdatePlayersOverviewWindow();
+
+            UpdateAmountOfResultsLabelText();
         }
 
-        private bool CanExecuteClearFilterClick()
+        private bool CanExecuteClearFilterButtonClick()
         {
-            return true;
+            return _displayedPlayers.Count != _unfilteredPlayers.Count;
         }
     }
 }
