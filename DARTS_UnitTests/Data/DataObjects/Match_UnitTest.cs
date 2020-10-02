@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjects;
+﻿using DARTS.Data.DataObjectFactory;
+using DARTS.Data.DataObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace DARTS_UnitTests.Datastructuur
         public void TestInitialize()
         {
             // Arrange
-            Player player1 = new Player();
+            PlayerObjectFactory factory = new PlayerObjectFactory();
+
+            Player player1 = (Player)factory.Spawn();
             player1.Name = "Klaas";
 
-            Player player2 = new Player();
+            Player player2 = (Player)factory.Spawn();
             player2.Name = "Pieter";
 
             int numSets = 11;
