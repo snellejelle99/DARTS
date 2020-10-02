@@ -12,6 +12,8 @@ namespace DARTS.Data.DataObjects
 
         private int _player1LegsWon, _player2LegsWon, _numLegs;
 
+        private const int PlayerPoints = 501;
+
         public List<Leg> Legs
         {
             get => _legs;
@@ -46,6 +48,20 @@ namespace DARTS.Data.DataObjects
         {
             get => _numLegs;
             set => _numLegs = value;
+        }
+
+        public void Start()
+        {
+            Legs = new List<Leg>();
+
+            // TODO: impement factory pattern.
+            Leg firstLeg = new Leg();
+            firstLeg.BeginningPlayer = BeginningPlayer;
+            firstLeg.Player1LegScore = PlayerPoints;
+            firstLeg.Player2LegScore = PlayerPoints;
+
+            Legs.Add(firstLeg);
+            firstLeg.Start();
         }
 
         public Set()

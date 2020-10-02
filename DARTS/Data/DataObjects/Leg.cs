@@ -46,6 +46,17 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
+        public void Start()
+        {
+            Turns = new List<Turn>();
+
+            // TODO: impement factory pattern.
+            Turn firstTurn = new Turn();
+            firstTurn.PlayerTurn = BeginningPlayer;
+
+            Turns.Add(firstTurn);
+        }
+
         public Leg()
         {
 

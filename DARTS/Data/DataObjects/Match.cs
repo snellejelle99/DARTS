@@ -64,6 +64,31 @@ namespace DARTS.Data.DataObjects
             set => _numLegs = value;
         }
 
+        public void Start()
+        {
+            Sets = new List<Set>();
+
+            if (BeginningPlayer.Equals(PlayerEnum.None))
+            {
+                BeginningPlayer = ChooseRandomPlayer();
+            }
+
+            // TODO: impement factory pattern.
+            Set firstSet = new Set();
+            firstSet.BeginningPlayer = BeginningPlayer;
+            firstSet.NumLegs = NumLegs;
+
+            Sets.Add(firstSet);
+            firstSet.Start();
+        }
+
+        private PlayerEnum ChooseRandomPlayer()
+        {
+            // Choose randomly between PlayerEnum.Player1 and PlayerEnum.Player2.
+            Random random = new Random();
+            return (PlayerEnum)random.Next((int)PlayerEnum.Player1, (int)PlayerEnum.Player2 + 1);
+        }
+
         public Player WinningPlayerObject
         {
             get
