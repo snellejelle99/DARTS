@@ -32,7 +32,7 @@ namespace DARTS
         private void TempButtonToPlayersOverview_Click(object sender, RoutedEventArgs e)
         {
             PlayersOverviewView window = new PlayersOverviewView(); //create your new window.
-            PlayerOverviewViewModel viewModel = new PlayerOverviewViewModel();
+            PlayersOverviewViewModel viewModel = new PlayersOverviewViewModel();
             window.DataContext = viewModel;
             window.Show(); //show the new window.
             this.Close();
