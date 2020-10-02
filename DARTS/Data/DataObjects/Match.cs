@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows.Media;
 
@@ -61,11 +63,26 @@ namespace DARTS.Data.DataObjects
             get => _numLegs;
             set => _numLegs = value;
         }
+
+        public Player WinningPlayerObject
+        {
+            get
+            {
+                switch (WinningPlayer)
+                {
+                    case PlayerEnum.Player1:
+                        return Player1;
+                    case PlayerEnum.Player2:
+                        return Player2;
+                    default:
+                        return null;
+                }
+            }
+        }
         #endregion
 
         public Match()
-        {
-
+        {  
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DARTS.View;
+using DARTS.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,14 @@ namespace DARTS
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MatchesOverview_Click(object sender, RoutedEventArgs e)
+        {
+            MatchesOverviewView matchesOverviewView= new MatchesOverviewView();
+            MatchesOverviewViewModel viewModel = new MatchesOverviewViewModel(matchesOverviewView);
+            matchesOverviewView.Show();
+            this.Close();
         }
     }
 }
