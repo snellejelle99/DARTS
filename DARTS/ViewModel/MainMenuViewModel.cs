@@ -8,7 +8,6 @@ namespace DARTS.ViewModel
 {
     public class MainMenuViewModel
     {
-
         private MainMenuView _view;
 
         public MainMenuViewModel(MainMenuView view)

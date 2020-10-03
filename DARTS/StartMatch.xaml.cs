@@ -8,18 +8,16 @@ namespace DARTS
     /// </summary>
     public partial class StartMatch : Window
     {
-        public StartMatch()
-        {
-
-            InitializeComponent();
-            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            this.DataContext = this;
-        }
-
         public string Player1 { get; set; }
         public string Player2 { get; set; }
         public int NumSets { get; set; }
         public int NumLegs { get; set; }
-
+       
+        public StartMatch()
+        {
+            InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.DataContext = this;
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace DARTS
         // Checks if textboxes are not empty
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
-            // If value is string str
+            // If value is string enteredString
             if (value is string enteredString)
             {
                 // If a string entered
