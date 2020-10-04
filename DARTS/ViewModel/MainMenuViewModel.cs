@@ -15,20 +15,15 @@ namespace DARTS.ViewModel
 {
     class MainMenuViewModel
     {
-        private MainMenuView _view;
         public ICommand StartMatchButtonClickCommand { get; }
         public ICommand PlayerOverviewButtonClickCommand { get; }
         public ICommand MatchOverviewButtonClickCommand { get; }
 
-        public MainMenuViewModel(MainMenuView view)
+        public MainMenuViewModel()
         {
             StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(), canExecute => CanExecuteStartMatchButtonClick());
             PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(), canExecute => CanExecutePlayerOverviewButtonClick());
             MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(), canExecute => CanExecuteMatchOverviewButtonClick());
-
-            view.DataContext = this;
-            _view = view;
-            _view.Show();
         }
 
         private void StartMatchButton_Click()

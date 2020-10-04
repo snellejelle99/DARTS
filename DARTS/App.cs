@@ -12,7 +12,9 @@ namespace DARTS
         protected override void OnStartup(StartupEventArgs e)
         {
             MainMenuView window = new MainMenuView();
-            MainMenuViewModel viewModel = new MainMenuViewModel(window);
+            MainMenuViewModel viewModel = new MainMenuViewModel();
+            window.DataContext = viewModel;
+            window.Show();
         }
     }
 }
