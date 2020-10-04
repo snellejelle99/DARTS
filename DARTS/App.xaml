@@ -1,7 +1,8 @@
 ﻿<Application x:Class="DARTS.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:DARTS">
+             xmlns:local="clr-namespace:DARTS"
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <!--Change StartupUri to StartupUri="MainWindow.xaml" when commiting> -->
     </Application.Resources>
