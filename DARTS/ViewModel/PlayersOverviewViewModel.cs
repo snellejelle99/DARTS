@@ -32,7 +32,7 @@ namespace DARTS.ViewModel
             set
             {
                 _displayedPlayers = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DisplayedPlayers"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedPlayers)));
 
                 string newAmountOfResultsLabelText = Convert.ToString(_displayedPlayers.Count);
                 if (_displayedPlayers.Count != _unfilteredPlayers.Count)
@@ -58,7 +58,7 @@ namespace DARTS.ViewModel
             set
             {
                 _amountOfResultsLabelText = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AmountOfResultsLabelText"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AmountOfResultsLabelText)));
             }
         }
 
