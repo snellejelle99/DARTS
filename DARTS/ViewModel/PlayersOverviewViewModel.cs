@@ -144,7 +144,7 @@ namespace DARTS.ViewModel
 
         private bool CanExecuteClearFilterButtonClick()
         {
-            return _displayedPlayers.Count != _unfilteredPlayers.Count || _filterTextBoxText != "";
+            return _filterTextBoxText != "";
         }
     }
 }
