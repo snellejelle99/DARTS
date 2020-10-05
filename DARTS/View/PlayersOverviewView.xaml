@@ -8,17 +8,17 @@
         Title="PlayersOverviewWindow" Height="455" Width="800">
     <DockPanel Margin="10,0,10,0">
         <DockPanel DockPanel.Dock="Top" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button DockPanel.Dock="Left" Height="24" x:Name="BackButton" Content="Back to main menu" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Stretch" Command="{Binding BackButtonClickCommand}"/>
-            <Label VerticalContentAlignment="Center" Height="40" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Players Overview" HorizontalContentAlignment="Center" FontSize="18" FontWeight="Bold"/>
+            <Button Command="{Binding BackButtonClickCommand}" DockPanel.Dock="Left" Height="24" x:Name="BackButton" Content="Back to main menu" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Stretch"/>
+            <Label Content="Players Overview" VerticalContentAlignment="Center" Height="40" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="18" FontWeight="Bold"/>
         </DockPanel>
         <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40">
-            <Label VerticalContentAlignment="Center" Content="Filter:" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="53" Height="30" FontWeight="Normal" FontStyle="Normal"/>
-            <TextBox Text="{Binding FilterTextBoxText}" VerticalContentAlignment="Center" x:Name="FilterTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="24" Width="261"/>
-            <Button Margin="5,0,0,0" x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="24" Width="35" Command="{Binding ClearFilterButtonClickCommand}"/>
-            <Label VerticalContentAlignment="Center" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" Content="{Binding AmountOfResultsLabelText}" HorizontalAlignment="Right" HorizontalContentAlignment="Left" Height="30" VerticalAlignment="Stretch" Width="91"/>
-            <Label VerticalContentAlignment="Center" DockPanel.Dock="Right" Content="Amout of resulted players:" HorizontalAlignment="Right" Width="150" VerticalAlignment="Stretch" Height="30"/>
+            <Label Content="Filter:" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="53" Height="30" FontWeight="Normal" FontStyle="Normal"/>
+            <TextBox Text="{Binding FilterTextBoxText, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" x:Name="FilterTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="24" Width="261"/>
+            <Button Command="{Binding ClearFilterButtonClickCommand}" Margin="5,0,0,0" x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="24" Width="35"/>
+            <Label Content="{Binding AmountOfResultsLabelText}" VerticalContentAlignment="Center" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel"  HorizontalAlignment="Right" HorizontalContentAlignment="Left" Height="30" VerticalAlignment="Stretch" Width="91"/>
+            <Label Content="Amout of displayed players:" VerticalContentAlignment="Center" DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="150" VerticalAlignment="Stretch" Height="30"/>
         </DockPanel>
-        <ListView x:Name="ListViewPlayersOverview" ItemsSource="{Binding DisplayedPlayers}" VerticalAlignment="Stretch">
+        <ListView ItemsSource="{Binding DisplayedPlayers}" SelectedItem="{Binding SelectedItem}" x:Name="ListViewPlayersOverview"  VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Player Name" Width="400"></GridViewColumn>
