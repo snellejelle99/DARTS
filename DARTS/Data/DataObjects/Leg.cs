@@ -11,6 +11,8 @@ namespace DARTS.Data.DataObjects
 
         private PlayerEnum _winnningPlayer, _beginningPlayer;
 
+        private ObjectState _legState = ObjectState.NotStarted;
+
         private uint _player1LegScore, _player2LegScore;
         #endregion
 
@@ -31,6 +33,12 @@ namespace DARTS.Data.DataObjects
         {
             get => _beginningPlayer;
             set => _beginningPlayer = value;
+        }
+
+        public ObjectState LegState
+        {
+            get => _legState;
+            set => _legState = value;
         }
 
         public uint Player1LegScore
@@ -62,10 +70,12 @@ namespace DARTS.Data.DataObjects
             if (Player1LegScore == 0)
             {
                 WinningPlayer = PlayerEnum.Player1;
+                LegState = ObjectState.Finished;
             }
             else if (Player2LegScore == 0)
             {
                 WinningPlayer = PlayerEnum.Player2;
+                LegState = ObjectState.Finished;
             }
             else
             {
@@ -81,6 +91,8 @@ namespace DARTS.Data.DataObjects
             // Create the next turn and assign the other player.
             Turn nextTurn = new Turn();
             nextTurn.PlayerTurn = Turns[Turns.Count - 1].PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+
+            Turns.Add(nextTurn);
         }
 
         public Leg()

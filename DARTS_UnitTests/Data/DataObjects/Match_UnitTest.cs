@@ -32,6 +32,7 @@ namespace DARTS_UnitTests.Datastructuur
             match.NumSets = numSets;
             match.NumLegs = numLegs;
             match.BeginningPlayer = beginningPlayer;
+            match.MatchState = ObjectState.InProgress;
 
             this.match = match;
         }

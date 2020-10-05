@@ -10,6 +10,8 @@ namespace DARTS.Data.DataObjects
         #region BackingStores
         private PlayerEnum _winnningPlayer, _beginningPlayer;
 
+        private ObjectState _matchState = ObjectState.NotStarted;
+
         private Player _player1;
 
         private Player _player2;
@@ -47,6 +49,12 @@ namespace DARTS.Data.DataObjects
             set => _beginningPlayer = value;
         }
 
+        public ObjectState MatchState
+        {
+            get => _matchState;
+            set => _matchState = value;
+        }
+
         public List<Set> Sets
         {
             get => _sets;
@@ -60,7 +68,7 @@ namespace DARTS.Data.DataObjects
             {
                 if (value % 2 == 0)
                 {
-                    throw new ArgumentException("Number of sets cannot be an even number.");
+                    throw new ArgumentOutOfRangeException("Number of sets cannot be an even number.");
                 }
                 else _numSets = value;
             }
@@ -73,7 +81,7 @@ namespace DARTS.Data.DataObjects
             {
                 if (value % 2 == 0)
                 {
-                    throw new ArgumentException("Number of legs cannot be an even number.");
+                    throw new ArgumentOutOfRangeException("Number of legs cannot be an even number.");
                 }
                 else _numLegs = value;
             }
@@ -86,7 +94,7 @@ namespace DARTS.Data.DataObjects
             {
                 if (value > NumSets)
                 {
-                    throw new ArgumentException("Sets won by a player can not be bigger than the number of sets in the match.");
+                    throw new ArgumentOutOfRangeException("Sets won by a player can not be bigger than the number of sets in the match.");
                 }
                 else _player1SetsWon = value;
             }
@@ -99,7 +107,7 @@ namespace DARTS.Data.DataObjects
             {
                 if (value > NumSets)
                 {
-                    throw new ArgumentException("Sets won by a player can not be bigger than the number of sets in the match.");
+                    throw new ArgumentOutOfRangeException("Sets won by a player can not be bigger than the number of sets in the match.");
                 }
                 else _player2SetsWon = value;
             }
@@ -119,6 +127,7 @@ namespace DARTS.Data.DataObjects
             Set firstSet = new Set();
             firstSet.BeginningPlayer = BeginningPlayer;
             firstSet.NumLegs = NumLegs;
+            firstSet.SetState = ObjectState.InProgress;
 
             Sets.Add(firstSet);
             firstSet.Start();
@@ -145,11 +154,13 @@ namespace DARTS.Data.DataObjects
                 if (Player1SetsWon > (NumSets / 2))
                 {
                     WinningPlayer = PlayerEnum.Player1;
+                    MatchState = ObjectState.Finished;
                 }
 
                 else if (Player2SetsWon > (NumSets / 2))
                 {
                     WinningPlayer = PlayerEnum.Player2;
+                    MatchState = ObjectState.Finished;
                 }
 
                 else WinningPlayer = PlayerEnum.None;
@@ -167,7 +178,7 @@ namespace DARTS.Data.DataObjects
         {
             if (CheckWin() == PlayerEnum.None)
             {
-                if (Sets[Sets.Count - 1].WinningPlayer == PlayerEnum.None) //If newest set still in progress, change the turn.
+                if (Sets[Sets.Count - 1].SetState == ObjectState.InProgress) //If newest set still in progress, change the turn.
                 {
                     Sets[Sets.Count - 1].ChangeTurn();
                 }
@@ -177,6 +188,7 @@ namespace DARTS.Data.DataObjects
                     Set nextSet = new Set();
                     nextSet.BeginningPlayer = Sets[Sets.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
                     nextSet.NumLegs = NumLegs;
+                    nextSet.SetState = ObjectState.InProgress;
 
                     Sets.Add(nextSet);
                     nextSet.Start();
