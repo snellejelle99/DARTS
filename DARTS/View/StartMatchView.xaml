@@ -12,13 +12,6 @@
         Title="Startscreen" Height="600" Width="1000" ResizeMode="NoResize"
         Icon="D:\Documents\School\Jaar 4 Periode 1\Beheer\Dart Applicatie\DARTS\Resources\dartsicon.png">
     <Window.Resources>
-        <ControlTemplate x:Key="validationErrorTemplate">
-            <DockPanel>
-                <TextBlock Foreground="Red" 
-                           DockPanel.Dock="Right"> !</TextBlock>
-                <AdornedElementPlaceholder x:Name="ErrorAdorner"></AdornedElementPlaceholder>
-            </DockPanel>
-        </ControlTemplate>
     </Window.Resources>
     <Canvas>
         <Label Content="Enter data" FontSize="40" Width="990" HorizontalContentAlignment="Center" Canvas.Top="40"/>
