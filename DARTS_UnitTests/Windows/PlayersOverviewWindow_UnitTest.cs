@@ -32,7 +32,7 @@ namespace DARTS_UnitTests.Windows
             // Act
             string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             Random random = new Random();
-            int index = random.Next(0, chars.Length);
+            int index = random.Next(0, chars.Length - 1);
             char character = chars[index];
             newOverview.Filter(character.ToString());
             int playerAmount = newOverview.DisplayedPlayers.Count;
