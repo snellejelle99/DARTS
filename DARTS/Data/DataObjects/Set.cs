@@ -32,23 +32,45 @@ namespace DARTS.Data.DataObjects
             set => _beginnningPlayer = value;
         }
 
+        public int NumLegs
+        {
+            get => _numLegs;
+            set
+            {
+                if (value % 2 == 0)
+                {
+                    throw new ArgumentException("Number of legs cannot be an even number.");
+                }
+                else _numLegs = value;
+            }
+        }
+
         public int Player1LegsWon
         {
             get => _player1LegsWon;
-            set => _player1LegsWon = value;
+            set
+            {
+                if (value > NumLegs)
+                {
+                    throw new ArgumentException("Legs won by a player can not be bigger than the number of legs in the set.");
+                }
+                else _player1LegsWon = value;
+            }
         }
 
         public int Player2LegsWon
         {
             get => _player2LegsWon;
-            set => _player2LegsWon = value;
+            set
+            {
+                if (value > NumLegs)
+                {
+                    throw new ArgumentException("Legs won by a player can not be bigger than the number of legs in the set.");
+                }
+                else _player2LegsWon = value;
+            }
         }
 
-        public int NumLegs
-        {
-            get => _numLegs;
-            set => _numLegs = value;
-        }
 
         public void Start()
         {
@@ -92,31 +114,28 @@ namespace DARTS.Data.DataObjects
 
             else WinningPlayer = PlayerEnum.None;
 
-            return WinningPlayer;  
+            return WinningPlayer;
         }
 
         public void ChangeTurn()
         {
-            if(Legs.Count > 0)
+            //If nobody has won the leg yet change the turn.
+            if (Legs[Legs.Count - 1].WinningPlayer == PlayerEnum.None)
             {
-                //If nobody has won the leg yet change the turn.
-                if (Legs[Legs.Count - 1].WinningPlayer == PlayerEnum.None)
-                {
-                    Legs[Legs.Count - 1].ChangeTurn(); 
-                }
+                Legs[Legs.Count - 1].ChangeTurn();
+            }
 
-                //If someone has won it start a new Leg and let the other player begin. Then start the leg.
-                else
-                {
-                    // TODO: impement factory pattern.
-                    Leg nextLeg = new Leg();
-                    nextLeg.BeginningPlayer = Legs[Legs.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-                    nextLeg.Player1LegScore = PlayerPoints;
-                    nextLeg.Player2LegScore = PlayerPoints;
+            //If someone has won it start a new Leg and let the other player begin. Then start the leg.
+            else
+            {
+                // TODO: impement factory pattern.
+                Leg nextLeg = new Leg();
+                nextLeg.BeginningPlayer = Legs[Legs.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                nextLeg.Player1LegScore = PlayerPoints;
+                nextLeg.Player2LegScore = PlayerPoints;
 
-                    Legs.Add(nextLeg);
-                    nextLeg.Start();
-                }
+                Legs.Add(nextLeg);
+                nextLeg.Start();
             }
         }
 

@@ -61,12 +61,12 @@ namespace DARTS.Data.DataObjects
         {
             if (Player1LegScore == 0)
             {
-                WinningPlayer = PlayerEnum.Player1;             
+                WinningPlayer = PlayerEnum.Player1;
             }
             else if (Player2LegScore == 0)
             {
-                WinningPlayer = PlayerEnum.Player2;           
-            }             
+                WinningPlayer = PlayerEnum.Player2;
+            }
             else
             {
                 WinningPlayer = PlayerEnum.None;
@@ -76,16 +76,11 @@ namespace DARTS.Data.DataObjects
         }
 
         public void ChangeTurn()
-        { 
-            if(Turns.Count > 0) 
-            {
-                // TODO: impement factory pattern.(?)
-                // Create the next turn and assign the other player.
-                Turn nextTurn = new Turn();
-                nextTurn.PlayerTurn = Turns[Turns.Count - 1].PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-
-                Turns.Add(nextTurn);
-            }
+        {
+            // TODO: impement factory pattern.(?)
+            // Create the next turn and assign the other player.
+            Turn nextTurn = new Turn();
+            nextTurn.PlayerTurn = Turns[Turns.Count - 1].PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
         }
 
         public Leg()

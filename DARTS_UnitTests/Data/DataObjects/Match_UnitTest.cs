@@ -37,19 +37,7 @@ namespace DARTS_UnitTests.Datastructuur
         }
 
         [TestMethod]
-        public void CreateMatchTest()
-        {
-            // Arrange
-            int numSets = 13;
-            match.NumSets = numSets;
-
-            // Assert
-            Assert.IsNotNull(match);
-            Assert.AreEqual(numSets, match.NumSets, "The number of sets created in the Match aren't equal to the given numer of sets.");
-        }
-
-        [TestMethod]
-        public void ChooseRandomPlayer()
+        public void Should_Choose_Random_Player_On_Match_Start()
         {
             // Arrange
             match.BeginningPlayer = PlayerEnum.None;
@@ -63,7 +51,7 @@ namespace DARTS_UnitTests.Datastructuur
         }
 
         [TestMethod]
-        public void StartMatch()
+        public void Should_Start_Match_With_Given_Player()
         {
             // Arrange
             PlayerEnum beginningPlayer = PlayerEnum.Player2;
@@ -77,7 +65,7 @@ namespace DARTS_UnitTests.Datastructuur
         }
 
         [TestMethod()]
-        public void CheckWinTest()
+        public void Should_Win_Leg_When_LegScore_Is_Zero()
         {
             // Arrange
             match.Start();
@@ -93,7 +81,7 @@ namespace DARTS_UnitTests.Datastructuur
 
 
         [TestMethod()]
-        public void CheckNewTurnCreation()
+        public void Should_Create_New_Turn_On_ChangeTurn_Call()
         {
             //Arrange
             match.Start();
@@ -107,7 +95,7 @@ namespace DARTS_UnitTests.Datastructuur
         }
 
         [TestMethod()]
-        public void CheckNewLegCreation()
+        public void Should_Create_New_Leg_On_Leg_Win()
         {
             //Arrange
             match.Start();
@@ -118,17 +106,16 @@ namespace DARTS_UnitTests.Datastructuur
 
             //Assert
             Assert.AreEqual(match.Sets[0].Legs.Count, 2, "New Leg was not created.");
-            Assert.AreEqual(PlayerEnum.Player1, match.Sets[0].Legs[0].WinningPlayer, "Expected Player 1 to be the winner but this is not the case.");
             Assert.AreEqual(match.Sets[0].Legs[1].BeginningPlayer, PlayerEnum.Player2, "Expected Player2 to be the BeginningPlayer for this leg, but this was not the case.");
         }
 
         [TestMethod()]
-        public void CheckNewSetCreation()
+        public void Should_Create_New_Set_On_Set_Win()
         {
             //Arrange
             match.Start();
             match.Sets[0].Legs[0].Player1LegScore = 0;
-            match.Sets[0].Player1LegsWon = 10;
+            match.Sets[0].Player1LegsWon = 2;
            
             //Act
             match.ChangeTurn();

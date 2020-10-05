@@ -20,7 +20,7 @@ namespace DARTS.Data.DataObjects
 
         private int _player1SetsWon, _player2SetsWon;
         #endregion
-        
+
 
         #region Properties
         public Player Player1
@@ -56,25 +56,53 @@ namespace DARTS.Data.DataObjects
         public int NumSets
         {
             get => _numSets;
-            set => _numSets = value;
+            set
+            {
+                if (value % 2 == 0)
+                {
+                    throw new ArgumentException("Number of sets cannot be an even number.");
+                }
+                else _numSets = value;
+            }
         }
 
         public int NumLegs
         {
             get => _numLegs;
-            set => _numLegs = value;
+            set
+            {
+                if (value % 2 == 0)
+                {
+                    throw new ArgumentException("Number of legs cannot be an even number.");
+                }
+                else _numLegs = value;
+            }
         }
 
         public int Player1SetsWon
         {
             get => _player1SetsWon;
-            set => _player1SetsWon = value;
+            set
+            {
+                if (value > NumSets)
+                {
+                    throw new ArgumentException("Sets won by a player can not be bigger than the number of sets in the match.");
+                }
+                else _player1SetsWon = value;
+            }
         }
 
         public int Player2SetsWon
         {
             get => _player2SetsWon;
-            set => _player2SetsWon = value;
+            set
+            {
+                if (value > NumSets)
+                {
+                    throw new ArgumentException("Sets won by a player can not be bigger than the number of sets in the match.");
+                }
+                else _player2SetsWon = value;
+            }
         }
         #endregion
 
@@ -139,22 +167,19 @@ namespace DARTS.Data.DataObjects
         {
             if (CheckWin() == PlayerEnum.None)
             {
-                if (Sets.Count > 0)
+                if (Sets[Sets.Count - 1].WinningPlayer == PlayerEnum.None) //If newest set still in progress, change the turn.
                 {
-                    if (Sets[Sets.Count - 1].WinningPlayer == PlayerEnum.None) //If newest set still in progress, change the turn.
-                    {
-                        Sets[Sets.Count - 1].ChangeTurn();
-                    }
+                    Sets[Sets.Count - 1].ChangeTurn();
+                }
 
-                    else //If newest set already finished, start another one 
-                    {
-                        Set nextSet = new Set();
-                        nextSet.BeginningPlayer = Sets[Sets.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-                        nextSet.NumLegs = NumLegs;
+                else //If newest set already finished, start another one 
+                {
+                    Set nextSet = new Set();
+                    nextSet.BeginningPlayer = Sets[Sets.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                    nextSet.NumLegs = NumLegs;
 
-                        Sets.Add(nextSet);
-                        nextSet.Start();
-                    }
+                    Sets.Add(nextSet);
+                    nextSet.Start();
                 }
             }
         }
