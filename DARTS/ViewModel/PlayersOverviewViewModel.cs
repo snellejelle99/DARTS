@@ -69,6 +69,7 @@ namespace DARTS.ViewModel
             { 
                 _filterTextBoxText = value;
                 FilterTextBoxTextChanged();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilterTextBoxText)));
             }
         } 
 
@@ -138,6 +139,7 @@ namespace DARTS.ViewModel
         private void ClearFilterButtonClick()
         {
             DisplayedPlayers = _unfilteredPlayers;
+            FilterTextBoxText = "";
         }
 
         private bool CanExecuteClearFilterButtonClick()
