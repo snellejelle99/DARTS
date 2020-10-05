@@ -40,7 +40,7 @@ namespace DARTS.ViewModel
                     _filterText = value;
                     FilterTextBox_TextChanged(_filterText);
                 }
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("FilterText"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FilterText)));
             }
         }
 
@@ -51,7 +51,7 @@ namespace DARTS.ViewModel
             {
                 _displayedMatches = value;
                 AmountOfDisplayedMatches = _displayedMatches.Count();
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DisplayedMatches"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedMatches)));
             }
         }
 
@@ -61,7 +61,7 @@ namespace DARTS.ViewModel
             set
             {
                 _selectedItem = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("SelectedItem"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
             }
         }
 
@@ -71,7 +71,7 @@ namespace DARTS.ViewModel
             set
             {
                 _amountOfDisplayedMatches = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("AmountOfDisplayedMatches"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AmountOfDisplayedMatches)));
             }
         }
         public MatchesOverviewViewModel()
