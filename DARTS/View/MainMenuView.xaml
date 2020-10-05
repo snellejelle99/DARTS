@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+<<<<<<< HEAD
         xmlns:local="clr-namespace:DARTS"
         mc:Ignorable="d"
         Title="Startscreen" Height="450" Width="800"
@@ -12,3 +13,15 @@
         <Button Name="StartMatchButton" Content="Start Match" HorizontalAlignment="Center" Margin="0,189,0,0" VerticalAlignment="Top" Height="28" Width="120"/>
     </Grid>
 </Window>
+=======
+        mc:Ignorable="d"
+        Title="Startscreen" Height="450" Width="800"
+        Icon="D:\Documents\School\Jaar 4 Periode 1\Beheer\Dart Applicatie\DARTS\Resources\dartsicon.png">
+
+    <Grid Name="TestName">
+        <Button Name="StartMatchButton" Content="Open Start Match screen" HorizontalAlignment="Center" Margin="0,127,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding StartMatchButtonClickCommand}"/>
+        <Button Name="PlayerOverviewButton" Content="Open Player Overview screen" HorizontalAlignment="Center" Margin="0,189,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding PlayerOverviewButtonClickCommand}"/>
+        <Button Name="MatchOverviewButton" Content="Open Match Overview screen" HorizontalAlignment="Center" Margin="0,252,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding MatchOverviewButtonClickCommand}" />
+    </Grid>
+</Window>
+>>>>>>> master
