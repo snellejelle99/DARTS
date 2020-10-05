@@ -84,7 +84,7 @@ namespace DARTS.ViewModel
             DisplayedPlayers = players;
 
             // view data:
-            GetPlayersOverviewData();
+            if (players.Count == 0) GetPlayersOverviewData();
             // TODO: Retrieve players to display #29:
             //_unfilteredPlayers = get list of players to display...;
             //DisplayedPlayers = _unfilteredPlayers;
@@ -93,12 +93,12 @@ namespace DARTS.ViewModel
         // TEMP: until data retrieval implementation is finished.
         private void GetPlayersOverviewData()
         {    
-
             for (int i = 0; i < 3; i++)
             {
                 Player p = new Player();
                 p.Name = "player" + Convert.ToString(i);
                 p.ID = i;
+                _displayedPlayers.Add(p);
                 _displayedPlayers.Add(p);
             }
             _unfilteredPlayers.AddRange( _displayedPlayers);
