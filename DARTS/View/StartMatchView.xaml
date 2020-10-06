@@ -9,8 +9,7 @@
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         xmlns:local="clr-namespace:DARTS"
         mc:Ignorable="d"
-        Title="Startscreen" Height="600" Width="1000" ResizeMode="NoResize"
-        Icon="D:\Documents\School\Jaar 4 Periode 1\Beheer\Dart Applicatie\DARTS\Resources\dartsicon.png">
+        Title="Startscreen" Height="600" Width="1000" ResizeMode="NoResize">
     <Window.Resources>
     </Window.Resources>
     <Canvas>
