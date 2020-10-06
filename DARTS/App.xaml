@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:DARTS"
              Startup="Application_Startup">
     <Application.Resources>
-         
+        <!--Change StartupUri to StartupUri="MainWindow.xaml" when commiting> -->
     </Application.Resources>
 </Application>

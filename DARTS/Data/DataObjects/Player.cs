@@ -11,7 +11,6 @@ namespace DARTS.Data.DataObjects
 
         private int _id;
 
-        PlayerEnum _playerEnum;
         #endregion
 
         #region Properties
@@ -27,23 +26,18 @@ namespace DARTS.Data.DataObjects
             set => _id = value;
         }
 
-        public PlayerEnum PlayerType
-        {
-            get => _playerEnum;
-            set => _playerEnum = value;
-        }
         #endregion
 
-        public Player(string name, PlayerEnum playerType)
+        public Player()
         {
-            Name = name;
-            PlayerType = playerType;
+
         }
     }
 
     #region Enums
     public enum PlayerEnum
     {
+        None,
         Player1,
         Player2
     }
