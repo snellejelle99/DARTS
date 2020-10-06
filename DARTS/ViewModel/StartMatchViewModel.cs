@@ -37,11 +37,7 @@ namespace DARTS.ViewModel
 
         private bool CanExecuteStartMatchButtonClick()
         {
-            // Return true if all elements are filled
-            if (Player1 != null && Player2 != null && NumSets != 0 && NumLegs != 0)
-                return true;
-            else
-                return false;
+            return Player1 != null && Player2 != null && NumSets != 0 && NumLegs != 0;
         }
 
         private void BackToMainMenuButton_Click(object parameter)
