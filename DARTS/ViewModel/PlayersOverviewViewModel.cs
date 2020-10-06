@@ -76,7 +76,7 @@ namespace DARTS.ViewModel
         public PlayersOverviewViewModel(List<Player> players)
         {
             // view commands:
-            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(), canExecute => CanExecuteBackButtonClick());
+            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(execute), canExecute => CanExecuteBackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
 
             // TEMP: SetListItems #29
@@ -104,9 +104,17 @@ namespace DARTS.ViewModel
             _unfilteredPlayers.AddRange( _displayedPlayers);
         }
 
-        private void BackButtonClick()
+        private void BackButtonClick(object parameter)
         {
-            //TODO: Go to main menu
+            MainMenuView MainMenuWindow = new MainMenuView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            MainMenuViewModel MainMenuViewModel = new MainMenuViewModel();
+            MainMenuWindow.DataContext = MainMenuViewModel;
+            MainMenuWindow.Show();
+
+            (parameter as Window)?.Close();
         }
 
         private bool CanExecuteBackButtonClick()
