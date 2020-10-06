@@ -5,8 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Startscreen" Height="450" Width="800"
-        Icon="D:\Documents\School\Jaar 4 Periode 1\Beheer\Dart Applicatie\DARTS\Resources\dartsicon.png">
+        Title="Startscreen" Height="450" Width="800">
     <Grid>
         <Button Name="StartMatchButton" Content="Open Start Match screen" HorizontalAlignment="Center" Margin="0,127,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding StartMatchButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
         <Button Name="PlayerOverviewButton" Content="Open Player Overview screen" HorizontalAlignment="Center" Margin="0,189,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding PlayerOverviewButtonClickCommand}"/>
