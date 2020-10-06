@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DARTS.Data
 {
-    class DummyData
+    public class DummyData
     {
         public static List<Match> TempAddListItems()
         {

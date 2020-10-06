@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
-using DARTS.View;
 using DARTS.ViewModel.Command;
 
 
 namespace DARTS.ViewModel
 {
-    class MatchesOverviewViewModel : INotifyPropertyChanged
+    public class MatchesOverviewViewModel : INotifyPropertyChanged
     {
 
         private List<Match> _displayedMatches = new List<Match>();
@@ -74,14 +69,17 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AmountOfDisplayedMatches)));
             }
         }
-        public MatchesOverviewViewModel()
+        public MatchesOverviewViewModel(List<Match> matches)
         {
 
             BackButtonClickCommand = new RelayCommand(execute => BackButton_Click(), canExecute => CanExecuteBackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilter_Click(), canExecute => CanExecuteClearFilterButtonClick());
             OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
-            GetMatchesOverviewData();
+            _unfilteredMatches.AddRange(matches);
+            DisplayedMatches = matches;
+
+            if (matches.Count == 0) GetMatchesOverviewData();
         }
 
         private void GetMatchesOverviewData()

@@ -1,4 +1,5 @@
-﻿using DARTS.View;
+﻿using DARTS.Data.DataObjects;
+using DARTS.View;
 using DARTS.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace DARTS
         private void MatchesOverview_Click(object sender, RoutedEventArgs e)
         {
             MatchesOverviewView matchesOverviewView= new MatchesOverviewView();
-            MatchesOverviewViewModel viewModel = new MatchesOverviewViewModel();
+            MatchesOverviewViewModel viewModel = new MatchesOverviewViewModel(new List<Match>());
             matchesOverviewView.DataContext = viewModel;
             matchesOverviewView.Show();
             this.Close();
