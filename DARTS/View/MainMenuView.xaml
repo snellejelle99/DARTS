@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Startscreen" Height="450" Width="800"
-        Icon="D:\Documents\School\Jaar 4 Periode 1\Beheer\Dart Applicatie\DARTS\Resources\dartsicon.png">
+        >
 
     <Grid Name="TestName">
         <Button Name="StartMatchButton" Content="Open Start Match screen" HorizontalAlignment="Center" Margin="0,127,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding StartMatchButtonClickCommand}"/>
