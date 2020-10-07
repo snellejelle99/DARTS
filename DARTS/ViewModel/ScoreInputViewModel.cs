@@ -33,10 +33,7 @@ namespace DARTS.ViewModel
 
         private bool CanExecuteSubmitScoreButtonClick()
         {
-            if (ScoreInput >= 0)
-                return true;
-            else
-                return false;
+            return ScoreInput >= 0;
         }
     }
 }

@@ -19,20 +19,4 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Update="View\ScoreInputView - Copy %282%29.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>ScoreInputView.xaml.cs</DependentUpon>
-    </Compile>
-    <Compile Update="View\ScoreInputView - Copy - Copy.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>ScoreInputView - Copy.xaml.cs</DependentUpon>
-    </Compile>
-    <Compile Update="View\ScoreInputView - Copy.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>ScoreInputView.xaml.cs</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
 </Project>
