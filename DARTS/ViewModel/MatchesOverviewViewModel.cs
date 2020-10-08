@@ -116,6 +116,7 @@ namespace DARTS.ViewModel
             FilterText = "";
             DisplayedMatches = _unfilteredMatches;
         }
+
         private bool CanExecuteClearFilterButtonClick()
         {
             return _filterText != null && _filterText != "";

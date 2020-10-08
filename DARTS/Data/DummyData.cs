@@ -10,7 +10,7 @@ namespace DARTS.Data
     {
         public static List<Match> TempAddListItems()
         {
-            Random rnd = new Random();
+            Random random = new Random();
             Array playerEnumsValues = Enum.GetValues(typeof(PlayerEnum));
             List<Player> dummyPlayers = new List<Player>();
 
@@ -64,9 +64,9 @@ namespace DARTS.Data
                 match.Player2 = dummyPlayers[i + 3];
                 match.NumSets = i;
                 match.NumLegs = i;
-                match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(rnd.Next(1, playerEnumsValues.Length));
+                match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
                 List<Set> dummySetList = new List<Set>();
-                for (int j = 0; j < rnd.Next(1,5); j++)
+                for (int j = 0; j < random.Next(1,5); j++)
                 {
                     dummySetList.Add(dummySet);
                 }
