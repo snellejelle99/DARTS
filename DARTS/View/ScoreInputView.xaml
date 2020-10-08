@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Score Input" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="tbScoreInput" MaxLength="2" HorizontalAlignment="Center" Margin="0,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+        <TextBox x:Name="tbScoreInput3" MaxLength="2" HorizontalAlignment="Center" Margin="0,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
             <Binding Path="ScoreInput" UpdateSourceTrigger="PropertyChanged">
                 <Binding.ValidationRules>
                     <local:ScoreInputValidationRule ValidatesOnTargetUpdated="True"/>
@@ -16,6 +16,24 @@
         </TextBox>
         <ComboBox HorizontalAlignment="Left" Margin="521,182,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ThrowTypes}" SelectedItem="{Binding SelectedThrowType, Mode=OneWayToSource}" SelectedIndex="0"/>
         <Button x:Name="SubmitScore" Content="Save" HorizontalAlignment="Left" Margin="597,272,0,0" VerticalAlignment="Top" Height="21" Width="44" Command="{Binding SubmitScoreButtonClickCommand}" />
-        <Label Content="Score" HorizontalAlignment="Left" Margin="250,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label Content="Worp 3&#xD;&#xA;" HorizontalAlignment="Left" Margin="250,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox x:Name="tbScoreInput2" MaxLength="2" HorizontalAlignment="Center" Margin="0,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+            <Binding Path="ScoreInput" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <local:ScoreInputValidationRule ValidatesOnTargetUpdated="True"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <ComboBox HorizontalAlignment="Left" Margin="521,156,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ThrowTypes}" SelectedItem="{Binding SelectedThrowType, Mode=OneWayToSource}" SelectedIndex="0"/>
+        <Label Content="Worp 2&#xD;&#xA;" HorizontalAlignment="Left" Margin="250,152,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox x:Name="tbScoreInput" MaxLength="2" HorizontalAlignment="Center" Margin="0,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+            <Binding Path="ScoreInput" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <local:ScoreInputValidationRule ValidatesOnTargetUpdated="True"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <ComboBox HorizontalAlignment="Left" Margin="521,130,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ThrowTypes}" SelectedItem="{Binding SelectedThrowType, Mode=OneWayToSource}" SelectedIndex="0"/>
+        <Label Content="Worp 1&#xD;&#xA;" HorizontalAlignment="Left" Margin="250,126,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="26"/>
     </Grid>
 </Window>
