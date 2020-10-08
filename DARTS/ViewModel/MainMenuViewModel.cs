@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,7 @@ namespace DARTS.ViewModel
         public MainMenuViewModel()
         {
             StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(execute), canExecute => CanExecuteStartMatchButtonClick());
-            PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(), canExecute => CanExecutePlayerOverviewButtonClick());
+            PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(execute), canExecute => CanExecutePlayerOverviewButtonClick());
             MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(), canExecute => CanExecuteMatchOverviewButtonClick());
         }
 
@@ -43,9 +44,17 @@ namespace DARTS.ViewModel
             return true;
         }
 
-        private void PlayerOverviewButton_Click()
+        private void PlayerOverviewButton_Click(object parameter)
         {
+            PlayersOverviewView playerOverviewWindow = new PlayersOverviewView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            PlayersOverviewViewModel playerOverviewViewModel = new PlayersOverviewViewModel(new List<Player>());
+            playerOverviewWindow.DataContext = playerOverviewViewModel;
+            playerOverviewWindow.Show();
 
+            (parameter as Window)?.Close();
         }
 
         private bool CanExecutePlayerOverviewButtonClick()
