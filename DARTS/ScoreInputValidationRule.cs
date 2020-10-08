@@ -12,17 +12,17 @@ namespace DARTS
         {
             if (value != null)
             {
-                int ScoreInput;
+                int scoreInput;
 
                 try
                 {
-                    ScoreInput = Convert.ToInt32(value);
+                    scoreInput = Convert.ToInt32(value);
                 }
                 catch
                 {
                     return new ValidationResult(false, "You must enter a number between 0 and 60");
                 }
-                if (ScoreInput > 0 && ScoreInput <= 60)
+                if (scoreInput > 0 && scoreInput <= 60)
                 {
                     return ValidationResult.ValidResult;
                 }
