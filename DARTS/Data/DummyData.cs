@@ -10,16 +10,16 @@ namespace DARTS.Data
     {
         public static List<Match> TempAddListItems()
         {
-            Random r = new Random();
+            Random rnd = new Random();
             Array playerEnumsValues = Enum.GetValues(typeof(PlayerEnum));
             List<Player> dummyPlayers = new List<Player>();
 
             for (int i = 0; i < 6; i++)
             {
-                Player p = new Player();
-                p.Name = "player" + Convert.ToString(i);
-                p.ID = i;
-                dummyPlayers.Add(p);
+                Player player = new Player();
+                player.Name = "player" + Convert.ToString(i);
+                player.ID = i;
+                dummyPlayers.Add(player);
             }
 
             Set dummySet = new Set();
@@ -28,11 +28,13 @@ namespace DARTS.Data
             dummySet.Player1LegsWon = 66;
             dummySet.Player2LegsWon = 666;
             dummySet.WinningPlayer = PlayerEnum.Player1;
+
             Leg dummyLeg = new Leg();
             dummyLeg.BeginningPlayer = PlayerEnum.Player1;
             dummyLeg.Player1LegScore = 66;
             dummyLeg.Player2LegScore = 66;
             dummyLeg.WinningPlayer = PlayerEnum.Player1;
+
             Turn dummyTurn = new Turn();
             dummyTurn.PlayerTurn = PlayerEnum.Player1;
             dummyTurn.ThrownPoints = 66;
@@ -44,29 +46,32 @@ namespace DARTS.Data
             dummyTuples.Add(dummyTuple2);
             dummyTuples.Add(dummyTuple3);
             dummyTurn.Throws = dummyTuples;
+
             List<Turn> dummyTurnList = new List<Turn>();
             dummyTurnList.Add(dummyTurn);
             dummyLeg.Turns = dummyTurnList;
+
             List<Leg> dummyLegList = new List<Leg>();
             dummyLegList.Add(dummyLeg);
             dummySet.Legs = dummyLegList;
+
             List<Match> dummyMatches = new List<Match>();
 
             for (int i = 0; i < 3; i++)
             {
-                Match m = new Match();
-                m.Player1 = dummyPlayers[i];
-                m.Player2 = dummyPlayers[i + 3];
-                m.NumSets = i;
-                m.NumLegs = i;
-                m.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(r.Next(1, playerEnumsValues.Length));
+                Match match = new Match();
+                match.Player1 = dummyPlayers[i];
+                match.Player2 = dummyPlayers[i + 3];
+                match.NumSets = i;
+                match.NumLegs = i;
+                match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(rnd.Next(1, playerEnumsValues.Length));
                 List<Set> dummySetList = new List<Set>();
-                for (int j = 0; j < r.Next(1,5); j++)
+                for (int j = 0; j < rnd.Next(1,5); j++)
                 {
                     dummySetList.Add(dummySet);
                 }
-                m.Sets = dummySetList;
-                dummyMatches.Add(m);
+                match.Sets = dummySetList;
+                dummyMatches.Add(match);
             }
 
             return dummyMatches;

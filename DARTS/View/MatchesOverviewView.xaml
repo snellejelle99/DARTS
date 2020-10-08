@@ -30,6 +30,5 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
     </DockPanel>
 </Window>

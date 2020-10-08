@@ -9,12 +9,10 @@ using DARTS.Data.DataObjects;
 using DARTS.View;
 using DARTS.ViewModel.Command;
 
-
 namespace DARTS.ViewModel
 {
     public class MatchesOverviewViewModel : INotifyPropertyChanged
     {
-
         private List<Match> _displayedMatches = new List<Match>();
         private List<Match> _unfilteredMatches = new List<Match>();
 
@@ -74,12 +72,11 @@ namespace DARTS.ViewModel
         }
         public MatchesOverviewViewModel(List<Match> matches)
         {
-
             BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute), canExecute => CanExecuteBackToMainMenuButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
             OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
-            _unfilteredMatches= matches;
+            _unfilteredMatches = matches;
             DisplayedMatches = _unfilteredMatches;
 
             if (matches.Count == 0) GetMatchesOverviewData();
@@ -95,7 +92,7 @@ namespace DARTS.ViewModel
         private void FilterTextBox_TextChanged(string filterText)
         {
             if (filterText == "" || filterText == string.Empty)
-           {
+            {
                 DisplayedMatches = _unfilteredMatches;
             }
             else
@@ -144,7 +141,7 @@ namespace DARTS.ViewModel
 
         private void OpenMatchButton_Click()
         {
-
+            //TODO: Create a new window for match detail information
         }
 
         private bool CanExecuteOpenMatchButtonClick()
