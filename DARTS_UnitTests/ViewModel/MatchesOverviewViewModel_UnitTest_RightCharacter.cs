@@ -21,17 +21,17 @@ namespace DARTS_UnitTests.ViewModel
         }
 
         [TestMethod]
-        [DataRow("a", 5)]
+        [DataRow("a", 3)]
         [DataRow("x", 0)]
-        [DataRow("Jan", 5)]
-        [DataRow("1", 5)]
+        [DataRow("PLAYER", 3)]
+        [DataRow("0", 1)]
         [DataRow("草", 0)]
         public void Set_FilterText_Should_Return_Filtered_Matches(string filterInput, int expectedAmount)
         {
             // Act
             overview.FilterText = filterInput;
 
-            // Assert 
+            // Assert
             Assert.AreEqual(expectedAmount, overview.DisplayedMatches.Count);
         }
 

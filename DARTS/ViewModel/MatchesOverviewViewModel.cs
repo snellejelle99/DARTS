@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
+using DARTS.View;
 using DARTS.ViewModel.Command;
 
 
@@ -21,7 +24,7 @@ namespace DARTS.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public ICommand BackButtonClickCommand { get; }
+        public ICommand BackToMainMenuButtonClickCommand { get; }
         public ICommand ClearFilterButtonClickCommand { get; }
         public ICommand OpenMatchClickCommand { get; }
 
@@ -72,12 +75,12 @@ namespace DARTS.ViewModel
         public MatchesOverviewViewModel(List<Match> matches)
         {
 
-            BackButtonClickCommand = new RelayCommand(execute => BackButton_Click(), canExecute => CanExecuteBackButtonClick());
-            ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilter_Click(), canExecute => CanExecuteClearFilterButtonClick());
+            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute), canExecute => CanExecuteBackToMainMenuButtonClick());
+            ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
             OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
-            _unfilteredMatches.AddRange(matches);
-            DisplayedMatches = matches;
+            _unfilteredMatches= matches;
+            DisplayedMatches = _unfilteredMatches;
 
             if (matches.Count == 0) GetMatchesOverviewData();
         }
@@ -89,11 +92,10 @@ namespace DARTS.ViewModel
             _unfilteredMatches = _displayedMatches;
         }
 
-        #region Filter
         private void FilterTextBox_TextChanged(string filterText)
         {
             if (filterText == "" || filterText == string.Empty)
-            {
+           {
                 DisplayedMatches = _unfilteredMatches;
             }
             else
@@ -105,25 +107,37 @@ namespace DARTS.ViewModel
         private void FilterMatches(string filterText)
         {
             string loweredFilterText = filterText.ToLower();
-            DisplayedMatches = new List<Match>(_unfilteredMatches.Where(Match => Match.Player1.Name.ToLower().Contains(loweredFilterText) || Match.Player2.Name.ToLower().Contains(loweredFilterText) || Match.Sets.Count.ToString().ToLower().Contains(loweredFilterText)));
+            DisplayedMatches = _unfilteredMatches.Where(Match =>
+                Match.Player1.Name.ToLower().Contains(loweredFilterText) || 
+                Match.Player2.Name.ToLower().Contains(loweredFilterText) || 
+                Match.Sets.Count.ToString().ToLower().Contains(loweredFilterText)
+            ).ToList();
         }
 
-        private void ClearFilter_Click()
+        private void ClearFilterButton_Click()
         {
             FilterText = "";
             DisplayedMatches = _unfilteredMatches;
         }
         private bool CanExecuteClearFilterButtonClick()
         {
-            return (_filterText != null && _filterText != "");
+            return _filterText != null && _filterText != "";
         }
 
-        private void BackButton_Click()
+        private void BackToMainMenuButton_Click(object parameter)
         {
+            MainMenuView mainMenuWindow = new MainMenuView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            MainMenuViewModel mainMenuWindowModel = new MainMenuViewModel();
+            mainMenuWindow.DataContext = mainMenuWindowModel;
+            mainMenuWindow.Show();
 
+            (parameter as Window).Close();
         }
 
-        private bool CanExecuteBackButtonClick()
+        private bool CanExecuteBackToMainMenuButtonClick()
         {
             return true;
         }
@@ -135,13 +149,7 @@ namespace DARTS.ViewModel
 
         private bool CanExecuteOpenMatchButtonClick()
         {
-
-            if (_selectedItem != null)
-                return true;
-            else
-                return false;
+            return _selectedItem != null;
         }
-
-        #endregion
     }
 }
