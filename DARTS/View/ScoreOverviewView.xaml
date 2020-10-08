@@ -1,0 +1,31 @@
+﻿<Window x:Class="DARTS.View.ScoreOverviewView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DARTS"
+        xmlns:uc="clr-namespace:DARTS.View"
+        mc:Ignorable="d"
+
+        Title="Score overview" Height="450" Width="800">
+    <Grid>
+        <Grid Width="400" HorizontalAlignment="Left">
+            <Rectangle HorizontalAlignment="Left" Height="30" Stroke="Black" VerticalAlignment="Top" Width="400" Fill="Red"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="Player1_name" Content="{Binding Player1}"  Foreground="White" FontSize="18" />
+            <Label Content="{Binding SetsPlayer1}" ContentStringFormat="Sets: {0}" HorizontalAlignment="Center" Margin="75,50,0,0" VerticalAlignment="Top" FontSize="18" />
+            <Label Content="{Binding LegsPlayer1}" ContentStringFormat="Legs: {0}" HorizontalAlignment="Center" Margin="-75,50,0,0" VerticalAlignment="Top"  FontSize="18"/>
+            <Label Content="{Binding ScorePlayer1}" ContentStringFormat="Score: {0}" HorizontalAlignment="Center" FontSize="36" Margin="0,80,0,0"/>
+            <Label Content="{Binding ScoreNeedPlayer1}" ContentStringFormat="Benodigde score: {0}" HorizontalAlignment="Center" FontSize="18" Margin="0,140,0,0"/>
+        </Grid>
+
+        <Grid Width="400" HorizontalAlignment="Right">
+            <Rectangle HorizontalAlignment="Left" Height="30" Stroke="Black" VerticalAlignment="Top" Width="400" Fill="Red"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Top" x:Name="Player2_name" Content="{Binding Player2}"  Foreground="White" FontSize="18" />
+            <Label Content="{Binding SetsPlayer2}" ContentStringFormat="Sets: {0}" HorizontalAlignment="Center" Margin="75,50,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label Content="{Binding LegsPlayer2}" ContentStringFormat="Legs: {0}" HorizontalAlignment="Center" Margin="-75,50,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label Content="{Binding ScorePlayer2}" ContentStringFormat="Score: {0}" HorizontalAlignment="Center" FontSize="36" Margin="0,80,0,0"/>
+            <Label Content="{Binding ScoreNeedPlayer2}" ContentStringFormat="Benodigde score: {0}" HorizontalAlignment="Center" FontSize="18" Margin="0,140,0,0"/>
+        </Grid>
+    </Grid>
+</Window>
+
