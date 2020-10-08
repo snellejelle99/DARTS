@@ -65,13 +65,12 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.AreEqual(match.Sets[0].Legs[0].Turns[0].PlayerTurn, beginningPlayer, "The given PlayerEnum isn't equal to the PlayerEnum in the first turn object.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Should_Win_Leg_When_LegScore_Is_Zero()
         {
             // Arrange
             match.Start();
             match.Sets[0].Legs[0].Player1LegScore = 0;
-
 
             // Act
             match.ChangeTurn();
@@ -80,8 +79,7 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.AreEqual(PlayerEnum.Player1, match.Sets[0].Legs[0].WinningPlayer, "Expected Player 1 to win, but this was not the case.");
         }
 
-
-        [TestMethod()]
+        [TestMethod]
         public void Should_Create_New_Turn_On_ChangeTurn_Call()
         {
             //Arrange
@@ -95,7 +93,7 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.AreEqual(match.Sets[0].Legs[0].Turns[1].PlayerTurn, PlayerEnum.Player2, "It should be Player 2's turn now but it is not.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Should_Create_New_Leg_On_Leg_Win()
         {
             //Arrange
@@ -110,7 +108,7 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.AreEqual(match.Sets[0].Legs[1].BeginningPlayer, PlayerEnum.Player2, "Expected Player2 to be the BeginningPlayer for this leg, but this was not the case.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Should_Create_New_Set_On_Set_Win()
         {
             //Arrange

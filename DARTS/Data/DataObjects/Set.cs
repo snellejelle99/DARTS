@@ -103,7 +103,6 @@ namespace DARTS.Data.DataObjects
             {
                 if (winner == PlayerEnum.Player1)
                     Player1LegsWon++;
-
                 else if (winner == PlayerEnum.Player2)
                     Player2LegsWon++;
 
@@ -113,16 +112,13 @@ namespace DARTS.Data.DataObjects
                     WinningPlayer = PlayerEnum.Player1;
                     SetState = ObjectState.Finished;
                 }
-
                 else if (Player2LegsWon > (NumLegs / 2))
                 {
                     WinningPlayer = PlayerEnum.Player2;
                     SetState = ObjectState.Finished;
                 }
-
                 else WinningPlayer = PlayerEnum.None;
             }
-
             else WinningPlayer = PlayerEnum.None;
 
             return WinningPlayer;
