@@ -21,15 +21,22 @@ namespace DARTS.ViewModel
 
         public MainMenuViewModel()
         {
-            StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(), canExecute => CanExecuteStartMatchButtonClick());
-            PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(), canExecute => CanExecutePlayerOverviewButtonClick());
+            StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(execute), canExecute => CanExecuteStartMatchButtonClick());
+            PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(execute), canExecute => CanExecutePlayerOverviewButtonClick());
             MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(), canExecute => CanExecuteMatchOverviewButtonClick());
-
         }
 
-        private void StartMatchButton_Click()
+        private void StartMatchButton_Click(object parameter)
         {
+            StartMatchView startMatchWindow = new StartMatchView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            StartMatchViewModel startMatchViewModel = new StartMatchViewModel();
+            startMatchWindow.DataContext = startMatchViewModel;
+            startMatchWindow.Show();
 
+            (parameter as Window)?.Close();
         }
 
         private bool CanExecuteStartMatchButtonClick()
@@ -37,9 +44,17 @@ namespace DARTS.ViewModel
             return true;
         }
 
-        private void PlayerOverviewButton_Click()
+        private void PlayerOverviewButton_Click(object parameter)
         {
+            PlayersOverviewView playerOverviewWindow = new PlayersOverviewView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            PlayersOverviewViewModel playerOverviewViewModel = new PlayersOverviewViewModel(new List<Player>());
+            playerOverviewWindow.DataContext = playerOverviewViewModel;
+            playerOverviewWindow.Show();
 
+            (parameter as Window)?.Close();
         }
 
         private bool CanExecutePlayerOverviewButtonClick()
