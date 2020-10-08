@@ -1,0 +1,21 @@
+﻿<Window x:Class="DARTS.View.ScoreInputView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DARTS"
+        mc:Ignorable="d"
+        Title="Score Input" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="tbScoreInput" MaxLength="2" HorizontalAlignment="Center" Margin="0,182,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+            <Binding Path="ScoreInput" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <local:ScoreInputValidationRule ValidatesOnTargetUpdated="True"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <ComboBox HorizontalAlignment="Left" Margin="521,182,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding ThrowTypes}" SelectedItem="{Binding SelectedThrowType, Mode=OneWayToSource}" SelectedIndex="0"/>
+        <Button x:Name="SubmitScore" Content="Save" HorizontalAlignment="Left" Margin="597,272,0,0" VerticalAlignment="Top" Height="21" Width="44" Command="{Binding SubmitScoreButtonClickCommand}" />
+        <Label Content="Score" HorizontalAlignment="Left" Margin="250,178,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+    </Grid>
+</Window>
