@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DARTS_UnitTests
 {
     [TestClass]
-    class LegsAndSets_UnitTest
+    public class LegsAndSets_UnitTest
     {
         private readonly LegsValidationRule legValidator = new LegsValidationRule();
         private readonly SetsValidationRule setValidator = new SetsValidationRule();
