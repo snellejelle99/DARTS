@@ -23,7 +23,7 @@ namespace DARTS.ViewModel
         {
             StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(execute), canExecute => CanExecuteStartMatchButtonClick());
             PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(execute), canExecute => CanExecutePlayerOverviewButtonClick());
-            MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(), canExecute => CanExecuteMatchOverviewButtonClick());
+            MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(execute), canExecute => CanExecuteMatchOverviewButtonClick());
         }
 
         private void StartMatchButton_Click(object parameter)
@@ -62,9 +62,17 @@ namespace DARTS.ViewModel
             return true;
         }
 
-        private void MatchOverviewButton_Click()
+        private void MatchOverviewButton_Click(object parameter)
         {
+            MatchesOverviewView matchesOverviewWindow = new MatchesOverviewView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            MatchesOverviewViewModel matchesOverviewViewModel = new MatchesOverviewViewModel(new List<Match>());
+            matchesOverviewWindow.DataContext = matchesOverviewViewModel;
+            matchesOverviewWindow.Show();
 
+            (parameter as Window)?.Close();
         }
 
         private bool CanExecuteMatchOverviewButtonClick()
