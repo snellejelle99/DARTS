@@ -10,6 +10,8 @@ namespace DARTS.Data.DataObjects
 
         private PlayerEnum _winnningPlayer, _beginnningPlayer;
 
+        private ObjectState _setState = ObjectState.NotStarted;
+
         private int _player1LegsWon, _player2LegsWon, _numLegs;
 
         private const int PlayerPoints = 501;
@@ -32,23 +34,51 @@ namespace DARTS.Data.DataObjects
             set => _beginnningPlayer = value;
         }
 
-        public int Player1LegsWon
+        public ObjectState SetState
         {
-            get => _player1LegsWon;
-            set => _player1LegsWon = value;
-        }
-
-        public int Player2LegsWon
-        {
-            get => _player2LegsWon;
-            set => _player2LegsWon = value;
+            get => _setState;
+            set => _setState = value;
         }
 
         public int NumLegs
         {
             get => _numLegs;
-            set => _numLegs = value;
+            set
+            {
+                if (value % 2 == 0)
+                {
+                    throw new ArgumentOutOfRangeException("Number of legs cannot be an even number.");
+                }
+                else _numLegs = value;
+            }
         }
+
+        public int Player1LegsWon
+        {
+            get => _player1LegsWon;
+            set
+            {
+                if (value > NumLegs)
+                {
+                    throw new ArgumentOutOfRangeException("Legs won by a player can not be bigger than the number of legs in the set.");
+                }
+                else _player1LegsWon = value;
+            }
+        }
+
+        public int Player2LegsWon
+        {
+            get => _player2LegsWon;
+            set
+            {
+                if (value > NumLegs)
+                {
+                    throw new ArgumentOutOfRangeException("Legs won by a player can not be bigger than the number of legs in the set.");
+                }
+                else _player2LegsWon = value;
+            }
+        }
+
 
         public void Start()
         {
@@ -59,9 +89,62 @@ namespace DARTS.Data.DataObjects
             firstLeg.BeginningPlayer = BeginningPlayer;
             firstLeg.Player1LegScore = PlayerPoints;
             firstLeg.Player2LegScore = PlayerPoints;
+            firstLeg.LegState = ObjectState.InProgress;
 
             Legs.Add(firstLeg);
             firstLeg.Start();
+        }
+
+        public PlayerEnum CheckWin()
+        {
+            PlayerEnum winner = Legs[Legs.Count - 1].CheckWin();
+
+            if (winner != PlayerEnum.None)
+            {
+                if (winner == PlayerEnum.Player1)
+                    Player1LegsWon++;
+                else if (winner == PlayerEnum.Player2)
+                    Player2LegsWon++;
+
+
+                if (Player1LegsWon > (NumLegs / 2))
+                {
+                    WinningPlayer = PlayerEnum.Player1;
+                    SetState = ObjectState.Finished;
+                }
+                else if (Player2LegsWon > (NumLegs / 2))
+                {
+                    WinningPlayer = PlayerEnum.Player2;
+                    SetState = ObjectState.Finished;
+                }
+                else WinningPlayer = PlayerEnum.None;
+            }
+            else WinningPlayer = PlayerEnum.None;
+
+            return WinningPlayer;
+        }
+
+        public void ChangeTurn()
+        {
+            //If nobody has won the leg yet change the turn.
+            if (Legs[Legs.Count - 1].LegState == ObjectState.InProgress)
+            {
+                Legs[Legs.Count - 1].ChangeTurn();
+            }
+
+            //If someone has won it start a new Leg and let the other player begin. Then start the leg.
+            else
+            {
+                // TODO: impement factory pattern.
+                Leg nextLeg = new Leg();
+                nextLeg.BeginningPlayer = Legs[Legs.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                nextLeg.Player1LegScore = PlayerPoints;
+                nextLeg.Player2LegScore = PlayerPoints;
+                nextLeg.LegState = ObjectState.InProgress;
+
+                Legs.Add(nextLeg);
+                nextLeg.Start();
+            }
         }
 
         public Set()
