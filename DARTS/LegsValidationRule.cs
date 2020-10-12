@@ -21,7 +21,7 @@ namespace DARTS
                 {
                     return new ValidationResult(false, "You must enter a number between 1 and 99.");
                 }
-                if (leg > 0 && leg % 2 != 0)
+                if (leg % 2 != 0)
                     return ValidationResult.ValidResult;
 
             }
