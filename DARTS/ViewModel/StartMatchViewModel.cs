@@ -57,6 +57,5 @@ namespace DARTS.ViewModel
         {
             return true;
         }
-        
     }
 }

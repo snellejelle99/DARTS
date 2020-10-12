@@ -24,20 +24,20 @@ namespace DARTS.Data
 
             Set dummySet = new Set();
             dummySet.BeginningPlayer = PlayerEnum.Player1;
-            dummySet.NumLegs = 66;
-            dummySet.Player1LegsWon = 66;
-            dummySet.Player2LegsWon = 666;
+            dummySet.NumLegs = 5;
+            dummySet.Player1LegsWon = 2;
+            dummySet.Player2LegsWon = 3;
             dummySet.WinningPlayer = PlayerEnum.Player1;
 
             Leg dummyLeg = new Leg();
             dummyLeg.BeginningPlayer = PlayerEnum.Player1;
-            dummyLeg.Player1LegScore = 66;
-            dummyLeg.Player2LegScore = 66;
+            dummyLeg.Player1LegScore = 501;
+            dummyLeg.Player2LegScore = 501;
             dummyLeg.WinningPlayer = PlayerEnum.Player1;
 
             Turn dummyTurn = new Turn();
             dummyTurn.PlayerTurn = PlayerEnum.Player1;
-            dummyTurn.ThrownPoints = 66;
+            dummyTurn.ThrownPoints = 20;
             Tuple<int, ScoreType> dummyTuple1 = new Tuple<int, ScoreType>(15, ScoreType.Double);
             Tuple<int, ScoreType> dummyTuple2 = new Tuple<int, ScoreType>(15, ScoreType.Double);
             Tuple<int, ScoreType> dummyTuple3 = new Tuple<int, ScoreType>(15, ScoreType.Double);
@@ -62,11 +62,11 @@ namespace DARTS.Data
                 Match match = new Match();
                 match.Player1 = dummyPlayers[i];
                 match.Player2 = dummyPlayers[i + 3];
-                match.NumSets = i;
-                match.NumLegs = i;
+                match.NumSets = 3;
+                match.NumLegs = 5;
                 match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
                 List<Set> dummySetList = new List<Set>();
-                for (int j = 0; j < random.Next(1,5); j++)
+                for (int j = 0; j < 3; j++)
                 {
                     dummySetList.Add(dummySet);
                 }
