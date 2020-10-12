@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows.Media;
 
@@ -112,7 +114,6 @@ namespace DARTS.Data.DataObjects
                 else _player2SetsWon = value;
             }
         }
-        #endregion
 
         public void Start()
         {
@@ -203,9 +204,25 @@ namespace DARTS.Data.DataObjects
             return (PlayerEnum)random.Next((int)PlayerEnum.Player1, (int)PlayerEnum.Player2 + 1);
         }
 
-        public Match()
+        public Player WinningPlayerObject
         {
+            get
+            {
+                switch (WinningPlayer)
+                {
+                    case PlayerEnum.Player1:
+                        return Player1;
+                    case PlayerEnum.Player2:
+                        return Player2;
+                    default:
+                        return null;
+                }
+            }
+        }
+        #endregion
 
+        public Match()
+        {  
         }
     }
 }
