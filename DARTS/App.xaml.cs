@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DARTS.Data;
 
 namespace DARTS
 {
@@ -17,11 +18,18 @@ namespace DARTS
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            MainMenuView window = new MainMenuView
+            //MainMenuView window = new MainMenuView
+            //{
+            //    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            //};
+            //MainMenuViewModel viewModel = new MainMenuViewModel();
+
+            ScoreInputView window = new ScoreInputView
             {
                 WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
             };
-            MainMenuViewModel viewModel = new MainMenuViewModel();
+            ScoreInputViewModel viewModel = new ScoreInputViewModel(DummyData.GetDummyMatch());
+
             window.DataContext = viewModel;
 
             window.Show();
