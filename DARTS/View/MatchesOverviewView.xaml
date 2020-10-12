@@ -18,7 +18,7 @@
             <Button Margin="5,0,0,0" x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="24" Width="35" Command="{Binding ClearFilterButtonClickCommand}"/>
             <Label VerticalContentAlignment="Center" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" HorizontalContentAlignment="Left" Height="30" Width="40" Content="{Binding AmountOfDisplayedMatches}"/>
             <Label VerticalContentAlignment="Center" DockPanel.Dock="Right" Content="Amount of resulted matches:" Width="162" Height="30"/>
-            <Button Content="Open Match" Width="131" Height="24" Command="{Binding OpenMatchClickCommand}"/>
+            <Button Content="Open Match" Width="131" Height="24" Command="{Binding OpenMatchClickCommand}" CommandParameter="{Binding ElementName=MatchesOverviewWindow}"/>
         </DockPanel>
         <ListView x:Name="ListViewMatchesOverview"  ItemsSource="{Binding DisplayedMatches}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
             <ListView.View>

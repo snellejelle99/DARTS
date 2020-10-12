@@ -74,7 +74,7 @@ namespace DARTS.ViewModel
         {
             BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute), canExecute => CanExecuteBackToMainMenuButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
-            OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
+            OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(execute), canExecute => CanExecuteOpenMatchButtonClick());
 
             _unfilteredMatches = matches;
             DisplayedMatches = _unfilteredMatches;
@@ -140,9 +140,17 @@ namespace DARTS.ViewModel
             return true;
         }
 
-        private void OpenMatchButton_Click()
+        private void OpenMatchButton_Click(object parameter)
         {
-            //TODO: Create a new window for match detail information
+            MatchDetailView mainMenuWindow = new MatchDetailView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            MatchDetailViewModel mainMenuWindowModel = new MatchDetailViewModel();
+            mainMenuWindow.DataContext = mainMenuWindowModel;
+            mainMenuWindow.Show();
+
+            (parameter as Window).Close();
         }
 
         private bool CanExecuteOpenMatchButtonClick()
