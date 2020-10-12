@@ -1,0 +1,14 @@
+﻿<Window x:Class="DARTS.View.MainMenuView"
+        x:Name="MainMenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Startscreen" Height="450" Width="800">
+    <Grid>
+        <Button Name="StartMatchButton" Content="Open Start Match screen" HorizontalAlignment="Center" Margin="0,127,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding StartMatchButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
+        <Button Name="PlayerOverviewButton" Content="Open Player Overview screen" HorizontalAlignment="Center" Margin="0,189,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding PlayerOverviewButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
+        <Button Name="MatchOverviewButton" Content="Open Match Overview screen" HorizontalAlignment="Center" Margin="0,252,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding MatchOverviewButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
+    </Grid>
+</Window>

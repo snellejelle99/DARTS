@@ -19,5 +19,4 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-
 </Project>
