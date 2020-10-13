@@ -125,7 +125,7 @@ namespace DARTS.ViewModel
 
         private bool CanExecutePreviousTurnButtonClick()
         {
-            if (Match.CurrentLeg.Turns.Count > 1)
+            if (Match.GetCurrentLeg().Turns.Count > 1)
                 return true;
             else return false;
         }
