@@ -113,23 +113,31 @@ namespace DARTS.ViewModel
             Match = match;
 
             SubmitScoreButtonClickCommand = new RelayCommand(execute => SubmitScoreButtonClick(), canExecute => CanExecuteSubmitScoreButtonClick());
-            PreviousTurnButtonClickCommand = new RelayCommand(execute => PreviousTurnButtontClick(), canExecute => true);
+            PreviousTurnButtonClickCommand = new RelayCommand(execute => PreviousTurnButtonClick(), canExecute => CanExecutePreviousTurnButtonClick());
             StopMatchButtonClickCommand = new RelayCommand(execute => StopMatchButtonClick(), canExecute => true);
+
+        }
+
+        private void StopMatchButtonClick()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool CanExecutePreviousTurnButtonClick()
+        {
+            if (Match.CurrentLeg.Turns.Count > 1)
+                return true;
+            else return false;
+        }
+
+        private void PreviousTurnButtonClick()
+        {
+            throw new NotImplementedException();
         }
 
         private void SubmitScoreButtonClick()
         {
             // Submit score.
-        }
-
-        private void PreviousTurnButtontClick()
-        {
-            // Previous turn.
-        }
-
-        private void StopMatchButtonClick()
-        {
-            // Stop match.
         }
 
         /// <summary>
