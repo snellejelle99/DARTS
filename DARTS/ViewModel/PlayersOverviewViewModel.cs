@@ -47,8 +47,8 @@ namespace DARTS.ViewModel
             set
             {
                 _selectedItem = value;
-                if (_selectedItem != null && _displayedPlayers.Count() > 0)
-                    OpenPlayerDetailsViewClick();
+                //if (_selectedItem != null && _displayedPlayers.Count() > 0)
+                //    OpenPlayerDetailsViewClick();
             }
         }
 
@@ -122,9 +122,17 @@ namespace DARTS.ViewModel
             return true;
         }
 
-        private void OpenPlayerDetailsViewClick()
+        private void OpenPlayerDetailsViewClick(object parameter)
         {
-            //TODO: Create a new window for player detail information, with _selectedItem as argument #28
+            PlayerMatchStatisticsView PlayerMatchStatisticsWindow = new PlayerMatchStatisticsView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            PlayerMatchStatisticsViewModel PlayerMatchStatisticsModel = new PlayerMatchStatisticsViewModel(new List<Match>());
+            PlayerMatchStatisticsWindow.DataContext = PlayerMatchStatisticsWindow;
+            PlayerMatchStatisticsWindow.Show();
+
+            (parameter as Window)?.Close();
         }
 
         private void FilterTextBoxTextChanged()

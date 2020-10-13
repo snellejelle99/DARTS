@@ -23,6 +23,8 @@ namespace DARTS.Data.DataObjects
         private int _numSets, _numLegs;
 
         private int _player1SetsWon, _player2SetsWon;
+
+        private string _matchResult;
         #endregion
 
 
@@ -112,6 +114,15 @@ namespace DARTS.Data.DataObjects
                     throw new ArgumentOutOfRangeException("Sets won by a player can not be bigger than the number of sets in the match.");
                 }
                 else _player2SetsWon = value;
+            }
+        }
+
+        public string MatchResult
+        {
+            get => _matchResult;
+            set
+            {
+                _matchResult = value;
             }
         }
 

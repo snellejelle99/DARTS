@@ -17,12 +17,12 @@ using System.Windows.Shapes;
 namespace DARTS.View
 {
     /// <summary>
-    /// Interaction logic for PlayerMatchStatisticsView.xaml
+    /// Interaction logic for PlayersOverviewView.xaml
     /// </summary>
     ///
-    public partial class PlayerMatchStatisticsView : Window
+    public partial class PlayersOverviewView : Window
     {
-        public PlayerMatchStatisticsView()
+        public PlayersOverviewView()
         {
             InitializeComponent();
         }

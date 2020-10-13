@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjects;
+﻿using DARTS.Data;
+using DARTS.Data.DataObjects;
 using DARTS.View;
 using DARTS.ViewModel.Command;
 using System;
@@ -84,35 +85,28 @@ namespace DARTS.ViewModel
             DisplayedMatches = matches;
 
             // view data:
-            if (matches.Count == 0) GetPlayersOverviewData();
+            if (matches.Count == 0) GetPlayersMatchStatisticsData();
             // TODO: Retrieve players to display #29:
             //_unfilteredPlayers = get list of players to display...;
             //DisplayedPlayers = _unfilteredPlayers;
         }
 
         // TEMP: until data retrieval implementation is finished.
-        private void GetPlayersOverviewData()
-        {    
-            for (int i = 0; i < 3; i++)
-            {
-                Player p = new Player();
-                p.Name = "player" + Convert.ToString(i);
-                p.ID = i;
-                _displayedMatches.Add(p);
-                _displayedMatches.Add(p);
-            }
-            _unfilteredMatches.AddRange(_displayedMatches);
+        private void GetPlayersMatchStatisticsData()
+        {
+            _unfilteredMatches = DummyData.TempAddListItems();
+            DisplayedMatches = _unfilteredMatches;
         }
 
         private void BackButtonClick(object parameter)
         {
-            MainMenuView MainMenuWindow = new MainMenuView
+            PlayersOverviewView playerOverviewWindow = new PlayersOverviewView
             {
                 WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
             };
-            MainMenuViewModel MainMenuViewModel = new MainMenuViewModel();
-            MainMenuWindow.DataContext = MainMenuViewModel;
-            MainMenuWindow.Show();
+            PlayersOverviewViewModel playerOverviewViewModel = new PlayersOverviewViewModel(new List<Player>());
+            playerOverviewWindow.DataContext = playerOverviewViewModel;
+            playerOverviewWindow.Show();
 
             (parameter as Window)?.Close();
         }
@@ -140,7 +134,7 @@ namespace DARTS.ViewModel
             }
             else
             {
-                DisplayedMatches = _unfilteredMatches.Where(match => match.Player1.Name.ToLower().Contains(filterText.ToLower()) && match.Player2.Name.ToLower().Contains(filterText.ToLower())).ToList();
+                DisplayedMatches = _unfilteredMatches.Where(match => match.Player1.Name.ToLower().Contains(filterText.ToLower()) || match.Player2.Name.ToLower().Contains(filterText.ToLower())).ToList();
             }
         }
 
