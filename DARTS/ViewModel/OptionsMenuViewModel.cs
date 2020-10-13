@@ -26,11 +26,23 @@ namespace DARTS.ViewModel
 
         private void ResetDatabaseButton_Click(object parameter)
         {
-
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to reset the database? \nThis action will delete all saved data.", "Reset database", MessageBoxButton.OKCancel);
+            switch(result)
+            {
+                case MessageBoxResult.OK:
+                    //TO DO:
+                    //Add database reset action. 
+                    MessageBox.Show("Database has been reset.");
+                    break;
+                case MessageBoxResult.Cancel:
+                    break;
+            }
         }
 
         public bool CanExecuteResetDatabaseButtonClick()
         {
+            //TO DO:
+            //Disable button when database is empty.
             return true;
         }
 
