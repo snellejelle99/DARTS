@@ -9,13 +9,12 @@ namespace DARTS.ViewModel
     public class ScoreInputViewModel
     {
         public ICommand SubmitScoreButtonClickCommand { get; }
+        public ICommand PreviousTurnButtonClickCommand { get; }
+        public ICommand StopMatchButtonClickCommand { get; }
 
         public int[] Throws { get; set; }
-
         public ScoreType[] ThrowTypes { get; set; }
-
         public ScoreType[] ScoreTypes { get; }
-
         private Match Match { get; }
 
         public string Player1Name
@@ -114,11 +113,23 @@ namespace DARTS.ViewModel
             Match = match;
 
             SubmitScoreButtonClickCommand = new RelayCommand(execute => SubmitScoreButtonClick(), canExecute => CanExecuteSubmitScoreButtonClick());
+            PreviousTurnButtonClickCommand = new RelayCommand(execute => PreviousTurnButtontClick(), canExecute => true);
+            StopMatchButtonClickCommand = new RelayCommand(execute => StopMatchButtonClick(), canExecute => true);
         }
 
         private void SubmitScoreButtonClick()
         {
-            //submit score
+            // Submit score.
+        }
+
+        private void PreviousTurnButtontClick()
+        {
+            // Previous turn.
+        }
+
+        private void StopMatchButtonClick()
+        {
+            // Stop match.
         }
 
         /// <summary>

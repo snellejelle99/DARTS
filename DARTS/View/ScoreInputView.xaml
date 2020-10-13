@@ -135,8 +135,8 @@
                 </Button.Style>
             </Button>
 
-            <Button Name="PreviousTurn" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15, 5, 30, 5" Grid.Row="3" Content="Previous turn"/>
-            <Button Name="StopMatch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="22.5, 5, 22.5, 5" Grid.Column="1" Grid.Row="3" Content="Stop Match"/>
+            <Button Name="PreviousTurn" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15, 5, 30, 5" Grid.Row="3" Content="Previous turn" Command="{Binding PreviousTurnButtonClickCommand}"/>
+            <Button Name="StopMatch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="22.5, 5, 22.5, 5" Grid.Column="1" Grid.Row="3" Content="Stop Match" Command="{Binding StopMatchButtonClickCommand}"/>
         </Grid>
     </Grid>
 
