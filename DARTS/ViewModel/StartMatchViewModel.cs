@@ -20,8 +20,8 @@ namespace DARTS.ViewModel
         public string Player2 { get; set; }
         public int NumSets { get; set; }
         public int NumLegs { get; set; }
-
         public PlayerEnum[] PlayerEnums { get; set; }
+        public PlayerEnum SelectedPlayerEnum { get; set; }
 
         public ICommand StartMatchButtonClickCommand { get; }
         public ICommand BackToMainMenuButtonClickCommand { get; }

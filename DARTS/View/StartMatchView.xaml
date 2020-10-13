@@ -40,7 +40,7 @@
         </TextBox>
 
         <Label Content="Choose starting player" Canvas.Left="631" Canvas.Top="150" FontSize="20" Width="226"/>
-        <ComboBox IsEditable="False" x:Name="PlayersCombo" ItemsSource="{Binding Path=PlayerEnums}" Canvas.Left="631" Canvas.Top="183" Width="221" Height="30" SelectedIndex="0" VerticalContentAlignment="Center" />
+        <ComboBox IsEditable="False" x:Name="PlayersCombo" ItemsSource="{Binding Path=PlayerEnums}" SelectedValue="{Binding SelectedPlayerEnum}" Canvas.Left="631" Canvas.Top="183" Width="221" Height="30" SelectedIndex="0" VerticalContentAlignment="Center" />
 
         <TextBlock Text="Enter amount of sets in the match" Canvas.Top="265" FontSize="20" Canvas.Left="65" Width="320"/>
         <TextBox Name="tbSetsInMatch" Width="320" Canvas.Left="65" Canvas.Top="297" Height="30"
@@ -69,8 +69,8 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        
-        <Button Name="startButton" Content="Start match" Canvas.Left="65" Canvas.Top="492" Width="120"  FontSize="20">
+
+        <Button Name="startButton" Content="Start match" Canvas.Left="65" Canvas.Top="492" Width="120" FontSize="20" Command="{Binding StartMatchButtonClickCommand}" CommandParameter="{Binding ElementName=StartMatchWindow}">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="False"/>
