@@ -17,6 +17,7 @@ namespace DARTS.ViewModel
         public ScoreType[] ScoreTypes { get; }
         private Match Match { get; }
 
+        #region Match object bindings
         public string Player1Name
         {
             get => Match.Player1.Name;
@@ -104,6 +105,7 @@ namespace DARTS.ViewModel
                 return string.Format("Leg {0} of {1} in Set {2} of {3}", Match.Sets.Last().Legs.Count(), Match.NumLegs, Match.Sets.Count(), Match.NumSets);
             }
         }
+        #endregion
 
         public ScoreInputViewModel(Match match)
         {
@@ -123,13 +125,6 @@ namespace DARTS.ViewModel
             throw new NotImplementedException();
         }
 
-        private bool CanExecutePreviousTurnButtonClick()
-        {
-            if (Match.GetCurrentLeg().Turns.Count > 1)
-                return true;
-            else return false;
-        }
-
         private void PreviousTurnButtonClick()
         {
             throw new NotImplementedException();
@@ -140,10 +135,20 @@ namespace DARTS.ViewModel
             // Submit score.
         }
 
+        #region CanExecute Functions
+        /// <summary>
+        /// Checks if there are more than one turn in the current leg.
+        /// </summary>
+        /// <returns>True when there are more than one turn in the current leg.</returns>
+        private bool CanExecutePreviousTurnButtonClick()
+        {
+            return (Match.GetCurrentLeg().Turns.Count > 1);
+        }
+
         /// <summary>
         /// Checks if the special throw cases (Miss, bull, bullseye) have the correct associated score.
         /// </summary>
-        /// <returns>Whether or not if all the throws have te correct ScoreType.</returns>
+        /// <returns>True when all the throws have the correct ScoreType.</returns>
         private bool CanExecuteSubmitScoreButtonClick()
         {
             for (int i = 0; i < Throws.Length; i++)
@@ -164,5 +169,6 @@ namespace DARTS.ViewModel
 
             return true;
         }
+        #endregion
     }
 }
