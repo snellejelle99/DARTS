@@ -40,11 +40,7 @@
         </TextBox>
 
         <Label Content="Choose starting player" Canvas.Left="631" Canvas.Top="150" FontSize="20" Width="226"/>
-        <ComboBox IsEditable="False" x:Name="PlayersCombo" Canvas.Left="631" Canvas.Top="183" Width="221" Height="30" SelectedIndex="0" VerticalContentAlignment="Center">
-            <ComboBoxItem Content="Random" FontSize="15"></ComboBoxItem>
-            <ComboBoxItem Content="Player one" FontSize="15"></ComboBoxItem>
-            <ComboBoxItem Content="Player two" FontSize="15"></ComboBoxItem>
-        </ComboBox>
+        <ComboBox IsEditable="False" x:Name="PlayersCombo" ItemsSource="{Binding Path=PlayerEnums}" Canvas.Left="631" Canvas.Top="183" Width="221" Height="30" SelectedIndex="0" VerticalContentAlignment="Center" />
 
         <TextBlock Text="Enter amount of sets in the match" Canvas.Top="265" FontSize="20" Canvas.Left="65" Width="320"/>
         <TextBox Name="tbSetsInMatch" Width="320" Canvas.Left="65" Canvas.Top="297" Height="30"

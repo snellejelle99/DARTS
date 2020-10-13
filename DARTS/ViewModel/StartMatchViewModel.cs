@@ -21,6 +21,8 @@ namespace DARTS.ViewModel
         public int NumSets { get; set; }
         public int NumLegs { get; set; }
 
+        public PlayerEnum[] PlayerEnums { get; set; }
+
         public ICommand StartMatchButtonClickCommand { get; }
         public ICommand BackToMainMenuButtonClickCommand { get; }
     
@@ -28,6 +30,8 @@ namespace DARTS.ViewModel
         {
             StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(), canExecute => CanExecuteStartMatchButtonClick());
             BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute), canExecute => CanExecuteBackToMainMenuButtonClick());
+
+            PlayerEnums = (PlayerEnum[])Enum.GetValues(typeof(PlayerEnum));
         }
 
         private void StartMatchButton_Click()
