@@ -1,41 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Text;
 
 namespace DARTS.Data.DataObjectFactories.DataObjectFieldTypes
 {
-    public class DataField : ICloneable
+    public class DataField : ICloneable, INotifyPropertyChanged
     {
+        private bool _primaryKey;
+        private object _value;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string Name {get;}
+
         public SQLiteType Type { get; }
 
-        public bool PrimaryKey { get; }
+        public bool PrimaryKey 
+        {
+            get
+            {
+                return _primaryKey;
+            }
+            private set
+            {
+                _primaryKey = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PrimaryKey)));
+            }
+        }
+
         public object Value
         {
             get
             {
-                return Value;
+                return _value;
             }
             set
             {
-                Value = value;
-                ValueChangedEvent?.Invoke(this, Value);
+                _value = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
             }
         }
 
-        public event EventHandler<object> ValueChangedEvent;
-
-
-        public DataField(string name, SQLiteType type, bool primaryKey)
+        public DataField(string name, SQLiteType type, bool primaryKey = false)
         {
             Name = name;
             Type = type;
             PrimaryKey = primaryKey;
-            Value = null;
         }
 
-        public DataField(string name, SQLiteType type, bool primarykey, object value)
+        public DataField(string name, SQLiteType type, object value, bool primarykey = false)
         {
             Name = name;
             Type = type;
@@ -67,7 +82,7 @@ namespace DARTS.Data.DataObjectFactories.DataObjectFieldTypes
 
         public virtual object Clone()
         {
-            return new DataField(Name, Type, PrimaryKey, Value);
+            return new DataField(Name, Type, Value, PrimaryKey);
         }
     }
 

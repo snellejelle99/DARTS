@@ -6,15 +6,14 @@ namespace DARTS.Data.DataObjectFactories.DataObjectFieldTypes
 {
     public class CodeField : DataField, ICloneable
     {
-        public CodeField(string name) : base(name, SQLiteType.INTEGER, false)
+        public CodeField(string name , bool primaryKey = false) : base(name, SQLiteType.INTEGER, primaryKey)
         {
 
         }
 
-
         public override object Clone()
         {
-            return new CodeField(Name);
+            return new CodeField(Name, PrimaryKey);
         }
     }
 }

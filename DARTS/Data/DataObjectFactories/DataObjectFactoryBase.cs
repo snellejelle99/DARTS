@@ -14,6 +14,7 @@ namespace DARTS.Data.DataFactory
     {
         protected Dictionary<string, DataField> _fieldCollection = new Dictionary<string, DataField>();
         protected Dictionary<string, ObjectField> _objectFieldCollection = new Dictionary<string, ObjectField>();
+        protected Dictionary<string, CollectionField> _collectionFieldCollection = new Dictionary<string, CollectionField>();
 
         public string TableName
         {
@@ -34,11 +35,17 @@ namespace DARTS.Data.DataFactory
             TableInitialize();
         }
 
+        /// <summary>
+        /// Sets the Tablename And targetObject for this factory
+        /// </summary>
         protected abstract void SetNameAndTarget();
 
+        /// <summary>
+        /// Initilializes the fields for all objects created by this factory
+        /// </summary>
         protected virtual void InitializeFields()
         {
-            _fieldCollection.Add("Id", new DataField("Id", SQLiteType.INTEGER , true));
+
         }
 
         protected void TableInitialize()
@@ -47,9 +54,9 @@ namespace DARTS.Data.DataFactory
             SQLiteCommand cmd = dbConnection.CreateCommand();
 
             StringBuilder querryBuilder = new StringBuilder();
-            querryBuilder.Append($"CREATE TABLE IF NOT EXISTS {TableName} (");
+            querryBuilder.Append($"CREATE TABLE IF NOT EXISTS \"{TableName}\" (");
 
-            foreach(KeyValuePair<string, DataField> entry in _fieldCollection)
+            foreach (KeyValuePair<string, DataField> entry in _fieldCollection)
             {
                 querryBuilder.Append($"{entry.Value.Name} {entry.Value.TypeToSQLString()} {entry.Value.PrimaryKeyToSQLString()},");
             }
@@ -60,6 +67,10 @@ namespace DARTS.Data.DataFactory
             cmd.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Spawn an empty DataObject of the type defined in this factory.
+        /// </summary>
+        /// <returns>An empty DataObject</returns>
         public virtual DataObjectBase Spawn()
         {
             DataObjectBase dataObject = (DataObjectBase)Activator.CreateInstance(TargetObject, true);
@@ -78,24 +89,44 @@ namespace DARTS.Data.DataFactory
             Dictionary<string, ObjectField> clonedObjectFieldCollection = new Dictionary<string, ObjectField>();
             foreach (KeyValuePair<string, ObjectField> entry in _objectFieldCollection)
             {
-                clonedObjectFieldCollection.Add(entry.Key, new ObjectField(entry.Value.Name, entry.Value.TargetFactory, (CodeField)clonedFieldCollection[entry.Value.SourceField.Name]));
+                clonedObjectFieldCollection.Add(entry.Key, (ObjectField)entry.Value.Clone());
+                clonedObjectFieldCollection[entry.Key].SetSourceField((CodeField)clonedFieldCollection[entry.Value.SourceField.Name]); //set the new reference of the sourcefield
+            }
+
+            Dictionary<string, CollectionField> clonedCollectionFieldCollection = new Dictionary<string, CollectionField>();
+            foreach (KeyValuePair<string, CollectionField> entry in _collectionFieldCollection)
+            {
+                clonedCollectionFieldCollection.Add(entry.Key, (CollectionField)entry.Value.Clone());
+                clonedCollectionFieldCollection[entry.Key].SetSourceField((CodeField)clonedFieldCollection[entry.Value.SourceField.Name]); //set the new reference of the sourcefield
             }
 
             dataObject.ObjectFieldCollection = clonedObjectFieldCollection;
+            dataObject.CollectionFieldCollection = clonedCollectionFieldCollection;
 
             return dataObject;
         }
 
+        /// <summary>
+        /// Spawns a specified ammount of empty DataObjects of the type defined in this factory.
+        /// </summary>
+        /// <param name="amount">The amount of objects to spawn</param>
+        /// <returns>A List of empty DataObjects</returns>
         public List<DataObjectBase> SpawnAmount(int amount)
         {
             List<DataObjectBase> resultList = new List<DataObjectBase>(amount);
-            for(int counter = 0; counter < amount; counter++)
+            for (int counter = 0; counter < amount; counter++)
             {
                 resultList.Add(this.Spawn());
             }
             return resultList;
         }
 
+        /// <summary>
+        /// Retrieves one or more DataObject(s) by the value of a specified field
+        /// </summary>
+        /// <param name="fieldName">The field to retrieve by</param>
+        /// <param name="value">The value of the field</param>
+        /// <returns>A list containing one or more DataObject(s) or containing nothing when no DataObject is found</returns>
         public List<DataObjectBase> Get(string fieldName, object value)
         {
             SQLiteConnection dbConnection = DataBaseProvider.Instance.GetDataBaseConnection();
@@ -109,7 +140,7 @@ namespace DARTS.Data.DataFactory
             }
             querryBuilder.Replace(',', ' ', querryBuilder.Length - 1, 1);
 
-            querryBuilder.Append($"FROM {TableName} ");
+            querryBuilder.Append($"FROM \"{TableName}\" ");
 
             querryBuilder.Append("WHERE ");
             querryBuilder.Append($"{_fieldCollection[fieldName].Name} = @{_fieldCollection[fieldName].Name}");
@@ -117,19 +148,19 @@ namespace DARTS.Data.DataFactory
             cmd.CommandText = querryBuilder.ToString();
             cmd.Parameters.Add(new SQLiteParameter($"@{_fieldCollection[fieldName].Name}", value));
 
-            SQLiteDataReader reader =  cmd.ExecuteReader();
-            if(reader.HasRows)
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            if (reader.HasRows)
             {
                 List<DataObjectBase> resultList = new List<DataObjectBase>(reader.StepCount);
                 while (reader.Read())
                 {
-                    DataObjectBase resultobject = this.Spawn();
-                    foreach (KeyValuePair<string, DataField> entry in resultobject.FieldCollection)
+                    DataObjectBase newObject = this.Spawn();
+                    foreach (KeyValuePair<string, DataField> entry in newObject.FieldCollection)
                     {
                         entry.Value.Value = reader[entry.Key];
                     }
-                    resultobject.ObjectState = ObjectState.Synced;
-                    resultList.Add(resultobject);
+                    newObject.ObjectState = ObjectState.Synced;
+                    resultList.Add(newObject);
                 }
                 return resultList;
             }
@@ -140,6 +171,11 @@ namespace DARTS.Data.DataFactory
             }
         }
 
+        /// <summary>
+        /// Retrieves an object by its primary key value
+        /// </summary>
+        /// <param name="primaryKey">The value of the primary key</param>
+        /// <returns>The DataObject retrieved from database or null if no DataObject is found</returns>
         public DataObjectBase Get(long primaryKey)
         {
             foreach (KeyValuePair<string, DataField> entry in _fieldCollection)
@@ -147,7 +183,7 @@ namespace DARTS.Data.DataFactory
                 if (entry.Value.PrimaryKey == true)
                 {
                     List<DataObjectBase> result = Get(entry.Value.Name, primaryKey);
-                    if(result.Count == 1)
+                    if (result.Count == 1)
                     {
                         return result[0];
                     }
@@ -157,13 +193,26 @@ namespace DARTS.Data.DataFactory
             return null;
         }
 
+        /// <summary>
+        /// Posts an object to the database
+        /// </summary>
+        /// <param name="objectBase">The DataObject to Post</param>
         public void Post(DataObjectBase objectBase)
         {
+            //First post all objects in the received object
+            foreach (KeyValuePair<string, ObjectField> entry in objectBase.ObjectFieldCollection)
+            {
+                if (!entry.Value.ValueSynced())
+                {
+                    entry.Value.PostValue();
+                }
+            }
+
             SQLiteConnection dbConnection = DataBaseProvider.Instance.GetDataBaseConnection();
             SQLiteCommand cmd = dbConnection.CreateCommand();
 
             StringBuilder querryBuilder = new StringBuilder();
-            querryBuilder.Append($"INSERT OR REPLACE INTO {TableName} (");
+            querryBuilder.Append($"INSERT OR REPLACE INTO \"{TableName}\" (");
 
             foreach (KeyValuePair<string, DataField> entry in objectBase.FieldCollection)
             {
@@ -192,11 +241,15 @@ namespace DARTS.Data.DataFactory
                 cmd = dbConnection.CreateCommand();
                 cmd.CommandText = "SELECT last_insert_rowid()";
                 long LastRowID64 = (long)cmd.ExecuteScalar();
-                foreach(KeyValuePair<string, DataField> entry in objectBase.FieldCollection)
+                foreach (KeyValuePair<string, DataField> entry in objectBase.FieldCollection)
                 {
-                    if(entry.Value.PrimaryKey == true)
+                    if (entry.Value.PrimaryKey == true)
                     {
                         entry.Value.Value = LastRowID64;
+                        foreach (KeyValuePair<string, CollectionField> collectionFieldEntry in objectBase.CollectionFieldCollection)
+                        {
+                            if (!collectionFieldEntry.Value.ValuesSynced()) collectionFieldEntry.Value.PostValues();
+                        }
                         break;
                     }
                 }

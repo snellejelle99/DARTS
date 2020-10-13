@@ -9,7 +9,6 @@ namespace DARTS.Data.DataObjectFactory
 {
     public class PlayerObjectFactory : DataObjectFactoryBase
     {
-
         public PlayerObjectFactory() : base()
         {
         }
@@ -23,9 +22,9 @@ namespace DARTS.Data.DataObjectFactory
 
         protected override void InitializeFields()
         {
-            base.InitializeFields();
-            _fieldCollection.Add(PlayerFieldNames.Name, new DataField(PlayerFieldNames.Name, SQLiteType.TEXT, false));
-            _fieldCollection.Add(PlayerFieldNames.Country, new DataField(PlayerFieldNames.Country, SQLiteType.TEXT, false));
+            _fieldCollection.Add("Id", new CodeField("Id", true));
+            _fieldCollection.Add(PlayerFieldNames.Name, new DataField(PlayerFieldNames.Name, SQLiteType.TEXT));
+            _fieldCollection.Add(PlayerFieldNames.Country, new DataField(PlayerFieldNames.Country, SQLiteType.TEXT));
         }
 
     }
