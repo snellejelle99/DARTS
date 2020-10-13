@@ -1,12 +1,19 @@
 ﻿<Window x:Class="DARTS.View.OptionsMenuView"
+        x:Name="OptionsMenuWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DARTS"
         mc:Ignorable="d"
-        Title="OptionsMenuView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Options" Height="450" Width="400">
+    <Canvas>
+        <Label Content="Options" Canvas.Top="10" FontSize="20" Width="400" HorizontalContentAlignment="Center"/>
+
+        <TextBlock Canvas.Left="88" Canvas.Top="109" Text="Database" TextWrapping="Wrap"/>
+        <Button Content="Reset" Width="100" Height="20" Canvas.Left="223" Canvas.Top="107" Command="{Binding ResetDatabaseButtonClickCommand}" CommandParameter="{Binding ElementName=OptionsMenuWindow}" />
+
+        <Button Content="Go back" Canvas.Left="318" Canvas.Top="376" Command="{Binding GoBackButtonClickCommand}" CommandParameter="{Binding ElementName=OptionsMenuWindow}"/>
+
+    </Canvas>
 </Window>
