@@ -84,7 +84,15 @@ namespace DARTS.ViewModel
 
         private void OptionsButton_Click(object parameter)
         {
-            // Open message box
+            OptionsMenuView optionsMenuWindow = new OptionsMenuView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            OptionsMenuViewModel optionsMenuViewModel = new OptionsMenuViewModel();
+            optionsMenuWindow.DataContext = optionsMenuViewModel;
+            optionsMenuWindow.Show();
+
+            (parameter as Window)?.Close();
         }
 
         private bool CanExecuteOptionsButtonClick()
