@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace DARTS
 {
-    class ThrowInputValidationRule : ValidationRule
+    public class ThrowInputValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {

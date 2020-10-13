@@ -15,7 +15,7 @@ namespace DARTS_UnitTests
     [TestClass]
     public class ScoreInput_UnitTest
     {
-        private ScoreInputValidationRule validator = new ScoreInputValidationRule();
+        private ThrowInputValidationRule validator = new ThrowInputValidationRule();
 
         [TestMethod]
         public void TestOnlyNumbers()
