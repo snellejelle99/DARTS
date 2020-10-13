@@ -222,34 +222,24 @@ namespace DARTS.Data.DataObjects
         #endregion
 
         #region Helper functions
-
-        public Set CurrentSet
+        public Set GetCurrentSet()
         {
-            get
-            {
-                return Sets[Sets.Count - 1];
-            }
+            return Sets[Sets.Count - 1];
         }
 
-        public Leg CurrentLeg
+        public Leg GetCurrentLeg()
         {
-            get
-            {
-                return CurrentSet.Legs[CurrentSet.Legs.Count - 1];
-            }
+            return GetCurrentSet().Legs[GetCurrentSet().Legs.Count - 1];
         }
 
-        public Turn CurrentTurn
+        public Turn GetCurrentTurn()
         {
-            get
-            {
-                return CurrentLeg.Turns[CurrentLeg.Turns.Count - 1];
-            }
+            return GetCurrentLeg().Turns[GetCurrentLeg().Turns.Count - 1];
         }
         #endregion
 
         public Match()
-        {  
+        {
         }
     }
 }
