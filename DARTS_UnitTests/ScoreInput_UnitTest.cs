@@ -39,7 +39,7 @@ namespace DARTS_UnitTests
             match.NumSets = numSets;
             match.NumLegs = numLegs;
             match.BeginningPlayer = beginningPlayer;
-            match.MatchState = ObjectState.InProgress;
+            match.MatchState = PlayState.InProgress;
 
             viewModel = new ScoreInputViewModel(match);
         }
