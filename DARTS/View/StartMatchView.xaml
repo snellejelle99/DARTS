@@ -73,7 +73,26 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button x:Name="startMatchButton" Content="Start match" Canvas.Left="65" Canvas.Top="490" Width="120"  FontSize="20" Command="{Binding StartMatchButtonClickCommand}"/>
+        
+        <Button Name="startButton" Content="Start match" Canvas.Left="65" Canvas.Top="492" Width="120"  FontSize="20">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=tbPlayer1, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbPlayer2, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbSetsInMatch, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbLegsInSet, Path=(Validation.HasError)}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        
         <Button Content="Go back" Canvas.Left="833" Canvas.Top="495" Width="107" Command="{Binding BackToMainMenuButtonClickCommand}" CommandParameter="{Binding ElementName=StartMatchWindow}"/>
     </Canvas>
 </Window>
