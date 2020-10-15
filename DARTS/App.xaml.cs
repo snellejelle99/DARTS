@@ -18,17 +18,11 @@ namespace DARTS
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            //MainMenuView window = new MainMenuView
-            //{
-            //    WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            //};
-            //MainMenuViewModel viewModel = new MainMenuViewModel();
-
-            ScoreInputView window = new ScoreInputView
+            MainMenuView window = new MainMenuView
             {
                 WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
             };
-            ScoreInputViewModel viewModel = new ScoreInputViewModel(DummyData.GetDummyMatch());
+            MainMenuViewModel viewModel = new MainMenuViewModel();
 
             window.DataContext = viewModel;
 

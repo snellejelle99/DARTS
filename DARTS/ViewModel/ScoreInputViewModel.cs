@@ -117,7 +117,6 @@ namespace DARTS.ViewModel
             SubmitScoreButtonClickCommand = new RelayCommand(execute => SubmitScoreButtonClick(), canExecute => CanExecuteSubmitScoreButtonClick());
             PreviousTurnButtonClickCommand = new RelayCommand(execute => PreviousTurnButtonClick(), canExecute => CanExecutePreviousTurnButtonClick());
             StopMatchButtonClickCommand = new RelayCommand(execute => StopMatchButtonClick(), canExecute => true);
-
         }
 
         private void StopMatchButtonClick()
@@ -132,7 +131,7 @@ namespace DARTS.ViewModel
 
         private void SubmitScoreButtonClick()
         {
-            // Submit score.
+            throw new NotImplementedException();
         }
 
         #region CanExecute Functions
