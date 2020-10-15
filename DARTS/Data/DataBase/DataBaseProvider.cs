@@ -51,7 +51,7 @@ namespace DARTS.Data.DataBase
             }
             else if (_dbConnection == null || _dbConnection.State != System.Data.ConnectionState.Open)
             {
-                string datasource = IsRunningFromUnittest ? "MyDatabase.sqlite" : ":memory:";
+                string datasource = IsRunningFromUnittest ? ":memory:" : "MyDatabase.sqlite";
                 string connectionstring = $"Data Source={datasource};Version=3;";
 
                 _dbConnection = new SQLiteConnection(connectionstring);
