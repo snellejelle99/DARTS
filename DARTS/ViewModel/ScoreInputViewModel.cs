@@ -65,7 +65,7 @@ namespace DARTS.ViewModel
                 switch (Match.Sets.Last().Legs.Last().Turns.Last().PlayerTurn)
                 {
                     case PlayerEnum.Player1:
-                        return "Visable";
+                        return "Visible";
                     case PlayerEnum.Player2:
                         return "Hidden";
                     default:
@@ -83,7 +83,7 @@ namespace DARTS.ViewModel
                     case PlayerEnum.Player1:
                         return "Hidden";
                     case PlayerEnum.Player2:
-                        return "Visable";
+                        return "Visible";
                     default:
                         return "Hidden";
                 }
