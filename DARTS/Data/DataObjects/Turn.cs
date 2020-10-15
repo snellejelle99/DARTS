@@ -39,14 +39,4 @@ namespace DARTS.Data.DataObjects
             
         }        
     }
-
-    #region Enums
-    public enum ScoreType
-    {
-        Single,
-        Double,
-        Triple,
-        Bull
-    }
-    #endregion
 }
