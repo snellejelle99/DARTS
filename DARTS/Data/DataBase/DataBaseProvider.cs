@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Data.Common;
 using System.Linq;
+using System.Diagnostics;
 
 namespace DARTS.Data.DataBase
 {
@@ -16,12 +17,13 @@ namespace DARTS.Data.DataBase
         private SQLiteConnection _dbConnection;
 
         private static readonly bool IsRunningFromUnittest =
-        AppDomain.CurrentDomain.GetAssemblies().Any(
-            a => a.FullName.ToLowerInvariant().StartsWith("mstest.framework"));
+            IsRunningFromUnittest = AppDomain.CurrentDomain.GetAssemblies().Any(
+            a => a.FullName.ToLowerInvariant().StartsWith("testhost"));
+
 
         private DataBaseProvider()
-        { 
-
+        {
+            
         }
 
         public static DataBaseProvider Instance
@@ -32,7 +34,9 @@ namespace DARTS.Data.DataBase
                 {
                     if(_instance == null)
                     {
+                        Trace.WriteLine("Creating new DataBaseProvider");
                         _instance = new DataBaseProvider();
+                        Trace.WriteLine($"Running from unit tests = {IsRunningFromUnittest}");
                     }
                     return _instance;
                 }
@@ -40,7 +44,7 @@ namespace DARTS.Data.DataBase
         }
 
         public SQLiteConnection GetDataBaseConnection()
-        {
+        {            
             if (!File.Exists("DARTS_DATABASE.sqlite") && IsRunningFromUnittest == false)
             {
                 SQLiteConnection.CreateFile("DARTS_DATABASE.sqlite");
