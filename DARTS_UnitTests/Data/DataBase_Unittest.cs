@@ -19,7 +19,7 @@ namespace DARTS_UnitTests.Data
         }
 
         [TestMethod]
-        public void TestConnection()
+        public void DataBase_Should_Return_Version()
         {
             SQLiteCommand cmd = _dbconnection.CreateCommand();
             cmd.CommandText = "SELECT SQLITE_VERSION()";
@@ -32,6 +32,7 @@ namespace DARTS_UnitTests.Data
         [ClassCleanup]
         public static void TestCleanup()
         {
+            _dbconnection.Close();
             DataBaseProvider.Instance.Dispose();
         }
     }

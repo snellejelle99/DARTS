@@ -129,22 +129,22 @@ namespace DARTS.Data.DataFactory
             SQLiteConnection dbConnection = DataBaseProvider.Instance.GetDataBaseConnection();
             SQLiteCommand cmd = dbConnection.CreateCommand();
 
-            StringBuilder querryBuilder = new StringBuilder();
-            querryBuilder.Append($"SELECT ");
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.Append($"SELECT ");
             foreach (KeyValuePair<string, DataField> entry in _fieldCollection)
             {
-                querryBuilder.Append($"{entry.Value.Name},");
+                queryBuilder.Append($"{entry.Value.Name},");
             }
-            querryBuilder.Replace(',', ' ', querryBuilder.Length - 1, 1);
+            queryBuilder.Replace(',', ' ', queryBuilder.Length - 1, 1);
 
-            querryBuilder.Append($"FROM \"{TableName}\" ");
+            queryBuilder.Append($"FROM \"{TableName}\" ");
 
             if (fieldName != null)
             {
-                querryBuilder.Append("WHERE ");
-                querryBuilder.Append($"{_fieldCollection[fieldName].Name} = @{_fieldCollection[fieldName].Name}");
+                queryBuilder.Append("WHERE ");
+                queryBuilder.Append($"{_fieldCollection[fieldName].Name} = @{_fieldCollection[fieldName].Name}");
             }
-            cmd.CommandText = querryBuilder.ToString();
+            cmd.CommandText = queryBuilder.ToString();
             if (fieldName != null) cmd.Parameters.Add(new SQLiteParameter($"@{_fieldCollection[fieldName].Name}", value));
 
             SQLiteDataReader reader = cmd.ExecuteReader();
@@ -210,24 +210,24 @@ namespace DARTS.Data.DataFactory
             SQLiteConnection dbConnection = DataBaseProvider.Instance.GetDataBaseConnection();
             SQLiteCommand cmd = dbConnection.CreateCommand();
 
-            StringBuilder querryBuilder = new StringBuilder();
-            querryBuilder.Append($"INSERT OR REPLACE INTO \"{TableName}\" (");
+            StringBuilder queryBuilder = new StringBuilder();
+            queryBuilder.Append($"INSERT OR REPLACE INTO \"{TableName}\" (");
 
             foreach (KeyValuePair<string, DataField> entry in objectBase.FieldCollection)
             {
-                querryBuilder.Append($"{entry.Value.Name},");
+                queryBuilder.Append($"{entry.Value.Name},");
             }
-            querryBuilder.Replace(',', ')', querryBuilder.Length - 1, 1);
+            queryBuilder.Replace(',', ')', queryBuilder.Length - 1, 1);
 
-            querryBuilder.Append("VALUES (");
+            queryBuilder.Append("VALUES (");
 
             foreach (KeyValuePair<string, DataField> entry in objectBase.FieldCollection)
             {
-                querryBuilder.Append($"@{entry.Value.Name},");
+                queryBuilder.Append($"@{entry.Value.Name},");
             }
-            querryBuilder.Replace(',', ')', querryBuilder.Length - 1, 1);
+            queryBuilder.Replace(',', ')', queryBuilder.Length - 1, 1);
 
-            cmd.CommandText = querryBuilder.ToString();
+            cmd.CommandText = queryBuilder.ToString();
             foreach (KeyValuePair<string, DataField> entry in objectBase.FieldCollection)
             {
                 cmd.Parameters.Add(new SQLiteParameter($"@{entry.Value.Name}", entry.Value.Value));

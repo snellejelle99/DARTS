@@ -270,6 +270,7 @@ namespace DARTS_UnitTests.Data.DataFactories
         [ClassCleanup]
         public static void TestCleanup()
         {
+            _dbconnection.Close();
             DataBaseProvider.Instance.Dispose();
         }
     }
