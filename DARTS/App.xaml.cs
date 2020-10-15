@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using DARTS.Data;
 
 namespace DARTS
 {
@@ -17,10 +18,16 @@ namespace DARTS
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            MainMenuView window = new MainMenuView();
+            MainMenuView window = new MainMenuView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
             MainMenuViewModel viewModel = new MainMenuViewModel();
+
             window.DataContext = viewModel;
+
             window.Show();
         }
     }
 }
+

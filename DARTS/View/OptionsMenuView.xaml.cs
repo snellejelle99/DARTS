@@ -1,5 +1,5 @@
 ﻿using DARTS.Data.DataObjects;
-﻿using DARTS.View;
+using DARTS.View;
 using DARTS.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -19,11 +19,11 @@ using System.Windows.Shapes;
 namespace DARTS.View
 {
     /// <summary>
-    /// Interaction logic for MainMenuView.xaml
+    /// Interaction logic for OptionsMenuView.xaml
     /// </summary>
-    public partial class MainMenuView : Window
+    public partial class OptionsMenuView : Window
     {
-        public MainMenuView()
+        public OptionsMenuView()
         {
             InitializeComponent();
         }
