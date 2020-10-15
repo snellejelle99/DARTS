@@ -101,7 +101,7 @@ namespace DARTS.Data
             leg.Player1LegScore = 441;
             leg.Player2LegScore = 501;
             leg.BeginningPlayer = beginningPlayer;
-            leg.LegState = ObjectState.InProgress;
+            leg.LegState = PlayState.InProgress;
             leg.Turns = turns;
             legs.Add(leg);
 
@@ -122,7 +122,7 @@ namespace DARTS.Data
             match.Player2SetsWon = 4;
             match.Sets = sets;
             match.BeginningPlayer = beginningPlayer;
-            match.MatchState = ObjectState.InProgress;
+            match.MatchState = PlayState.InProgress;
 
             return match;
         }

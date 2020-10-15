@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public enum ObjectState
+    public enum PlayState
     {
         NotStarted,
         InProgress,
