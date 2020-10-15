@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace DARTS.Data
 {
@@ -75,6 +76,55 @@ namespace DARTS.Data
             }
 
             return dummyMatches;
+        }
+
+        public static Match GetDummyMatch()
+        {
+            Player player1 = new Player();
+            player1.Name = "Klaas";
+
+            Player player2 = new Player();
+            player2.Name = "Pieter";
+
+            int numSets = 11;
+            int numLegs = 3;
+
+            PlayerEnum beginningPlayer = PlayerEnum.Player1;
+
+            List<Turn> turns = new List<Turn>();
+            Turn turn = new Turn();
+            turn.PlayerTurn = PlayerEnum.Player2;
+            turns.Add(turn);
+
+            List<Leg> legs = new List<Leg>();
+            Leg leg = new Leg();
+            leg.Player1LegScore = 441;
+            leg.Player2LegScore = 501;
+            leg.BeginningPlayer = beginningPlayer;
+            leg.LegState = ObjectState.InProgress;
+            leg.Turns = turns;
+            legs.Add(leg);
+
+            List<Set> sets = new List<Set>();
+            Set set = new Set();
+            set.NumLegs = numLegs;
+            set.Player1LegsWon = 1;
+            set.Player2LegsWon = 2;            
+            set.Legs = legs;
+            sets.Add(set);
+
+            Match match = new Match();
+            match.Player1 = player1;
+            match.Player2 = player2;
+            match.NumSets = numSets;
+            match.NumLegs = numLegs;
+            match.Player1SetsWon = 5;
+            match.Player2SetsWon = 4;
+            match.Sets = sets;
+            match.BeginningPlayer = beginningPlayer;
+            match.MatchState = ObjectState.InProgress;
+
+            return match;
         }
     }
 }

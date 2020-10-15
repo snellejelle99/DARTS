@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace DARTS
 {
-    class LegsValidationRule : ValidationRule
+    public class LegsValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
@@ -21,7 +21,7 @@ namespace DARTS
                 {
                     return new ValidationResult(false, "You must enter a number between 1 and 99.");
                 }
-                if (leg > 0)
+                if (leg % 2 != 0)
                     return ValidationResult.ValidResult;
 
             }

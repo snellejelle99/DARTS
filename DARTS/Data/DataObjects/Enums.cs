@@ -17,4 +17,14 @@ namespace DARTS.Data.DataObjects
         Player1,
         Player2
     }
+
+    public enum ScoreType
+    {
+        Miss,
+        Single,
+        Double,
+        Triple,
+        Bull,
+        Bullseye
+    }
 }
