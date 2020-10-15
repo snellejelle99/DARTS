@@ -25,6 +25,7 @@ namespace DARTS.ViewModel
 
         public ICommand BackButtonClickCommand { get; }
         public ICommand ClearFilterButtonClickCommand { get; }
+        public ICommand OpenPlayerMatchClickCommand { get; }
 
         public List<Player> DisplayedPlayers
         {
@@ -47,8 +48,6 @@ namespace DARTS.ViewModel
             set
             {
                 _selectedItem = value;
-                //if (_selectedItem != null && _displayedPlayers.Count() > 0)
-                //    OpenPlayerDetailsViewClick();
             }
         }
 
@@ -78,9 +77,10 @@ namespace DARTS.ViewModel
             // view commands:
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(execute), canExecute => CanExecuteBackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
+            OpenPlayerMatchClickCommand = new RelayCommand(execute => OpenPlayerMatchButtonClick(execute), canExecute => CanExecuteOpenPlayerMatchButtonClick());
 
-            // TEMP: SetListItems #29
-            _unfilteredPlayers.AddRange(players);
+        // TEMP: SetListItems #29
+        _unfilteredPlayers.AddRange(players);
             DisplayedPlayers = players;
 
             // view data:
@@ -161,6 +161,24 @@ namespace DARTS.ViewModel
         private bool CanExecuteClearFilterButtonClick()
         {
             return _filterTextBoxText != "";
+        }
+
+        private void OpenPlayerMatchButtonClick(object parameter)
+        {
+            PlayerMatchStatisticsView PlayerMatchStatisticsWindow = new PlayerMatchStatisticsView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            PlayerMatchStatisticsViewModel PlayerMatchStatisticsModel = new PlayerMatchStatisticsViewModel(new List<Match>());
+            PlayerMatchStatisticsWindow.DataContext = PlayerMatchStatisticsModel;
+            PlayerMatchStatisticsWindow.Show();
+
+            (parameter as Window)?.Close();
+        }
+
+        private bool CanExecuteOpenPlayerMatchButtonClick()
+        {
+            return _selectedItem != null;
         }
     }
 }
