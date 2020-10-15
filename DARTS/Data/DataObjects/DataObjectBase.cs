@@ -2,11 +2,13 @@
 using DARTS.Data.DataObjectFactories.DataObjectFieldTypes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 
 namespace DARTS.Data.DataObject
 {
-    public abstract class DataObjectBase
+    public abstract class DataObjectBase : IEquatable<DataObjectBase>
     {
         private Dictionary<string, DataField> _fieldCollection;
         private Dictionary<string, ObjectField> _objectFieldCollection;
@@ -127,6 +129,48 @@ namespace DARTS.Data.DataObject
                     };
                 };
             }
+        }
+
+        public bool Equals([AllowNull] DataObjectBase other)
+        {
+            if (other == null) return false;
+            else if (this.GetType() != other.GetType()) return false;
+            else
+            {
+                //check if fields are the same
+                if (FieldCollection.Count == other.FieldCollection.Count)
+                {
+                    for (int counter = 0; counter < FieldCollection.Count; counter++)
+                    {
+                        if (!FieldCollection.ElementAt(counter).Value.Name.Equals(other.FieldCollection.ElementAt(counter).Value.Name)
+                            || !FieldCollection.ElementAt(counter).Value.PrimaryKey.Equals(other.FieldCollection.ElementAt(counter).Value.PrimaryKey)
+                            || !FieldCollection.ElementAt(counter).Value.Type.Equals(other.FieldCollection.ElementAt(counter).Value.Type)
+                            || !FieldCollection.ElementAt(counter).Value.Value.Equals(other.FieldCollection.ElementAt(counter).Value.Value))
+                            return false;
+                    }
+                }
+                //check if objectfields are the same
+                if (ObjectFieldCollection.Count == other.ObjectFieldCollection.Count && ObjectFieldCollection.Count != 0)
+                {
+                    for (int counter = 0; counter < ObjectFieldCollection.Count; counter++)
+                    {
+                        if (!ObjectFieldCollection.ElementAt(counter).Value.Name.Equals(other.ObjectFieldCollection.ElementAt(counter).Value.Name)
+                            || !ObjectFieldCollection.ElementAt(counter).Value.Value.Equals(other.ObjectFieldCollection.ElementAt(counter).Value.Value))
+                            return false;
+                    }
+                }
+                //check if collectionfields are the same
+                if (CollectionFieldCollection.Count == other.CollectionFieldCollection.Count && CollectionFieldCollection.Count != 0)
+                {
+                    for (int counter = 0; counter < CollectionFieldCollection.Count; counter++)
+                    {
+                        if (!CollectionFieldCollection.ElementAt(counter).Value.Name.Equals(other.CollectionFieldCollection.ElementAt(counter).Value.Name)
+                            || !CollectionFieldCollection.ElementAt(counter).Value.Value.SequenceEqual(other.CollectionFieldCollection.ElementAt(counter).Value.Value))
+                            return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 

@@ -127,7 +127,7 @@ namespace DARTS.Data.DataFactory
         /// <param name="fieldName">The field to retrieve by</param>
         /// <param name="value">The value of the field</param>
         /// <returns>A list containing one or more DataObject(s) or containing nothing when no DataObject is found</returns>
-        public List<DataObjectBase> Get(string fieldName, object value)
+        public List<DataObjectBase> Get(string fieldName = null, object value = null)
         {
             SQLiteConnection dbConnection = DataBaseProvider.Instance.GetDataBaseConnection();
             SQLiteCommand cmd = dbConnection.CreateCommand();
@@ -142,11 +142,13 @@ namespace DARTS.Data.DataFactory
 
             querryBuilder.Append($"FROM \"{TableName}\" ");
 
-            querryBuilder.Append("WHERE ");
-            querryBuilder.Append($"{_fieldCollection[fieldName].Name} = @{_fieldCollection[fieldName].Name}");
-
+            if (fieldName != null)
+            {
+                querryBuilder.Append("WHERE ");
+                querryBuilder.Append($"{_fieldCollection[fieldName].Name} = @{_fieldCollection[fieldName].Name}");
+            }
             cmd.CommandText = querryBuilder.ToString();
-            cmd.Parameters.Add(new SQLiteParameter($"@{_fieldCollection[fieldName].Name}", value));
+            if (fieldName != null) cmd.Parameters.Add(new SQLiteParameter($"@{_fieldCollection[fieldName].Name}", value));
 
             SQLiteDataReader reader = cmd.ExecuteReader();
             if (reader.HasRows)

@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -51,7 +52,7 @@ namespace DARTS_UnitTests.Data.DataFactories
         }
 
         [TestMethod]
-        public void DataObject_Should_Spawn()
+        public void DataFactory_Should_Spawn()
         {
             //ACT
             DataObjectBase order = _orderFactory.Spawn();
@@ -63,7 +64,7 @@ namespace DARTS_UnitTests.Data.DataFactories
         }
 
         [TestMethod]
-        public void DataObject_Should_Post()
+        public void DataFactory_Should_Post()
         {
             //ARRANGE
             DataObjectBase order = _orderFactory.Spawn();
@@ -79,21 +80,42 @@ namespace DARTS_UnitTests.Data.DataFactories
         }
 
         [TestMethod]
-        public void DataObject_Should_Retrieve()
+        public void DataFactory_Should_Retrieve()
         {
             //ARRANGE
-            DataObjectBase order = _orderFactory.Spawn();
+            Mock_OrderObject order = (Mock_OrderObject)_orderFactory.Spawn();
 
-            ((Mock_OrderObject)order).RecipientName = "Johan Derksen";
+            order.RecipientName = "Johan Derksen";
 
             order.Post();
 
             //ACT
-            DataObjectBase retrievedObject = _orderFactory.Get(((Mock_OrderObject)order).Id);
+            Mock_OrderObject retrievedObject = (Mock_OrderObject)_orderFactory.Get(order.Id);
 
             //ASSERT
-            Assert.AreEqual(((Mock_OrderObject)order).Id, ((Mock_OrderObject)retrievedObject).Id);
-            Assert.AreEqual(((Mock_OrderObject)order).RecipientName, ((Mock_OrderObject)retrievedObject).RecipientName);
+            Assert.AreEqual(order.Id, retrievedObject.Id);
+            Assert.AreEqual(order.RecipientName, retrievedObject.RecipientName);
+        }
+
+        [TestMethod]
+        public void DataFactory_Should_Retrieve_All()
+        {
+            //ARRANGE
+            Mock_OrderObject order = (Mock_OrderObject)_orderFactory.Spawn();
+            Mock_OrderObject order2 = (Mock_OrderObject)_orderFactory.Spawn();
+
+            order.RecipientName = "Jantje";
+            order2.RecipientName = "Klaas";
+
+            order.Post();
+            order2.Post();
+
+            //ACT
+            List<DataObjectBase> retrievedObjectList = _orderFactory.Get();
+
+            //ASSERT
+            Assert.IsTrue(retrievedObjectList.Contains(order), "Object not found in database");
+            Assert.IsTrue(retrievedObjectList.Contains(order2), "Object not found in database");
         }
 
         [TestMethod]
@@ -174,7 +196,7 @@ namespace DARTS_UnitTests.Data.DataFactories
         }
 
         [TestMethod]
-        public void DataObject_Should_Post_With_Nested_Object()
+        public void DataFactory_Should_Post_DataObject_With_Nested_Object()
         {
             //ARRANGE
             Mock_OrderLineObject orderLine = (Mock_OrderLineObject)_orderLineFactory.Spawn();
@@ -189,7 +211,7 @@ namespace DARTS_UnitTests.Data.DataFactories
         }
 
         [TestMethod]
-        public void DataObject_Should_Post_With_Nested_Collection()
+        public void DataFactory_Should_Post_DataObject_With_Nested_Collection()
         {
             //ARRANGE
             Mock_OrderObject order = (Mock_OrderObject)_orderFactory.Spawn();
@@ -208,7 +230,7 @@ namespace DARTS_UnitTests.Data.DataFactories
         }
 
         [TestMethod]
-        public void DataObject_Should_Get_With_Nested_Object()
+        public void DataFactory_Should_Get_DataObject_With_Nested_Object()
         {
             //ARRANGE
             Mock_OrderLineObject orderLine = (Mock_OrderLineObject)_orderLineFactory.Spawn();
@@ -226,7 +248,7 @@ namespace DARTS_UnitTests.Data.DataFactories
         }
 
         [TestMethod]
-        public void DataObject_Should_Get_With_Nested_Collection()
+        public void DataFactory_Should_Get_DataObject_With_Nested_Collection()
         {
             //ARRANGE
             Mock_OrderObject order = (Mock_OrderObject)_orderFactory.Spawn();
