@@ -43,10 +43,7 @@ namespace DARTS.Data.DataFactory
         /// <summary>
         /// Initilializes the fields for all objects created by this factory
         /// </summary>
-        protected virtual void InitializeFields()
-        {
-
-        }
+        protected abstract void InitializeFields();
 
         protected void TableInitialize()
         {
