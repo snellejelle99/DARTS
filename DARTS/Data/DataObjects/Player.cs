@@ -1,33 +1,34 @@
-﻿using DARTS.Data.DataObject;
-using DARTS.Data.DataObjectFactory;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Player : DataObjectBase
+    public class Player
     {
         #region BackingStores
-        PlayerEnum _playerEnum;
+        private string _name;
+
+        private int _id;
+
         #endregion
 
         #region Properties
         public string Name
         {
-            get => (string)FieldCollection[PlayerFieldNames.Name].Value;
-            set => FieldCollection[PlayerFieldNames.Name].Value = value;
+            get => _name;
+            set => _name = value;
         }
 
-        public long Id
+        public int ID
         {
-            get => (long)FieldCollection[PlayerFieldNames.Id].Value;
-            set => FieldCollection[PlayerFieldNames.Id].Value = value;
+            get => _id;
+            set => _id = value;
         }
 
         #endregion
 
-        private Player() : base()
+        public Player()
         {
 
         }

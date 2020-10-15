@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
-namespace DARTS.Data.DataObject
+namespace DARTS.Data.DataObjects
 {
     public abstract class DataObjectBase : IEquatable<DataObjectBase>
     {

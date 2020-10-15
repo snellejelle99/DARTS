@@ -1,17 +1,11 @@
 ﻿using DARTS.Data.DataBase;
-using DARTS.Data.DataObject;
-using DARTS.Data.DataObjectFactory;
 using DARTS.Data.DataObjects;
 using DARTS_UnitTests.Data.DataFactories.Mock;
 using DARTS_UnitTests.Data.DataObjects.Mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.SQLite;
 using System.Linq;
-using System.Text;
 
 namespace DARTS_UnitTests.Data.DataFactories
 {

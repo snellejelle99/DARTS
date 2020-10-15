@@ -10,7 +10,7 @@ namespace DARTS.Data.DataObjects
 
         private PlayerEnum _winnningPlayer, _beginnningPlayer;
 
-        private ObjectState _setState = ObjectState.NotStarted;
+        private PlayState _setState = PlayState.NotStarted;
 
         private int _player1LegsWon, _player2LegsWon, _numLegs;
 
@@ -34,7 +34,7 @@ namespace DARTS.Data.DataObjects
             set => _beginnningPlayer = value;
         }
 
-        public ObjectState SetState
+        public PlayState SetState
         {
             get => _setState;
             set => _setState = value;
@@ -89,7 +89,7 @@ namespace DARTS.Data.DataObjects
             firstLeg.BeginningPlayer = BeginningPlayer;
             firstLeg.Player1LegScore = PlayerPoints;
             firstLeg.Player2LegScore = PlayerPoints;
-            firstLeg.LegState = ObjectState.InProgress;
+            firstLeg.LegState = PlayState.InProgress;
 
             Legs.Add(firstLeg);
             firstLeg.Start();
@@ -110,12 +110,12 @@ namespace DARTS.Data.DataObjects
                 if (Player1LegsWon > (NumLegs / 2))
                 {
                     WinningPlayer = PlayerEnum.Player1;
-                    SetState = ObjectState.Finished;
+                    SetState = PlayState.Finished;
                 }
                 else if (Player2LegsWon > (NumLegs / 2))
                 {
                     WinningPlayer = PlayerEnum.Player2;
-                    SetState = ObjectState.Finished;
+                    SetState = PlayState.Finished;
                 }
                 else WinningPlayer = PlayerEnum.None;
             }
@@ -127,7 +127,7 @@ namespace DARTS.Data.DataObjects
         public void ChangeTurn()
         {
             //If nobody has won the leg yet change the turn.
-            if (Legs[Legs.Count - 1].LegState == ObjectState.InProgress)
+            if (Legs[Legs.Count - 1].LegState == PlayState.InProgress)
             {
                 Legs[Legs.Count - 1].ChangeTurn();
             }
@@ -140,7 +140,7 @@ namespace DARTS.Data.DataObjects
                 nextLeg.BeginningPlayer = Legs[Legs.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
                 nextLeg.Player1LegScore = PlayerPoints;
                 nextLeg.Player2LegScore = PlayerPoints;
-                nextLeg.LegState = ObjectState.InProgress;
+                nextLeg.LegState = PlayState.InProgress;
 
                 Legs.Add(nextLeg);
                 nextLeg.Start();
