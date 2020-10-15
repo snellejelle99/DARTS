@@ -16,14 +16,15 @@ namespace DARTS.Functionality
 
         public int ValidateScore(int ThrowScore, ScoreType type, int LegScore)
         {
-            if(ThrowScore >= 0 && (ThrowScore <= 20 || ThrowScore == 25))
+            if(ThrowScore >= 0 && (ThrowScore <= 20 || ThrowScore == 25 || ThrowScore== 50))
             {
                 switch (type)
                 {
+                    case ScoreType.Bull:
+                    case ScoreType.Bullseye:
                     case ScoreType.Single:
                         LegScore -= ThrowScore;
                         break;
-                    case ScoreType.Bull:
                     case ScoreType.Double:
                         LegScore -= ThrowScore * 2;
                         break;
@@ -34,13 +35,13 @@ namespace DARTS.Functionality
 
                 if (LegScore == 0)
                 {
-                    if (type == ScoreType.Double || type == ScoreType.Bull)
+                    if (type == ScoreType.Double || type == ScoreType.Bullseye)
                     {
                         return LegScore;
                     }
                     else
                     {
-                        if (type == ScoreType.Single)
+                        if (type == ScoreType.Single || type == ScoreType.Bull)
                         {
                             LegScore += ThrowScore;
                         }

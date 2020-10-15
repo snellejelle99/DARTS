@@ -131,7 +131,7 @@ namespace DARTS.ViewModel
 
         private void SubmitScoreButtonClick()
         {
-            throw new NotImplementedException();
+             
         }
 
         #region CanExecute Functions
