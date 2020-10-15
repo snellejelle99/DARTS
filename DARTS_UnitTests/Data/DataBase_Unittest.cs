@@ -32,7 +32,6 @@ namespace DARTS_UnitTests.Data
         [ClassCleanup]
         public static void TestCleanup()
         {
-            _dbconnection.Close();
             DataBaseProvider.Instance.Dispose();
         }
     }
