@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace DARTS.ViewModel.Command
 {
-    class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private Action<object> execute;
         private Func<object, bool> canExecute;
