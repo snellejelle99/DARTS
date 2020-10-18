@@ -24,7 +24,7 @@ namespace DARTS.ViewModel.Command
 
         public bool CanExecute(object parameter)
         {
-            return this?.canExecute(parameter) ?? true;
+            return canExecute != null ? this.canExecute(parameter) : true;
         }
 
         public void Execute(object parameter)
