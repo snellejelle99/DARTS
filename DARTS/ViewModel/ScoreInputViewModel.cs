@@ -1,4 +1,5 @@
 ﻿using DARTS.Data.DataObjects;
+using DARTS.Functionality;
 using DARTS.ViewModel.Command;
 using System;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace DARTS.ViewModel
         public int[] Throws { get; set; }
         public ScoreType[] ThrowTypes { get; set; }
         public ScoreType[] ScoreTypes { get; }
+
+        public ProcessThrow ProcessThrow = new ProcessThrow();
         private Match Match { get; }
 
         #region Match object bindings
@@ -131,7 +134,23 @@ namespace DARTS.ViewModel
 
         private void SubmitScoreButtonClick()
         {
-             
+            int legscore = default;
+            if (IsPlayer1Turn == "Visible") legscore = (int)Player1Score;
+            else if (IsPlayer2Turn == "Visible") legscore = (int)Player2Score;
+            for (int i = 0; i < 4; i++)
+            {
+               if (Throws[i] != 0) 
+               {
+                    legscore = ProcessThrow.ValidateScore(Throws[i], ThrowTypes[i], legscore);
+                    if (legscore < 0) legscore += Throws[i];
+                    if (IsPlayer1Turn == "Visible") Match.Sets.Last().Legs.Last().Player1LegScore = (uint)legscore;
+                    else if (IsPlayer2Turn == "Visible") Match.Sets.Last().Legs.Last().Player2LegScore = (uint)legscore;
+
+                    Match.Sets.Last().Legs.Last().CheckWin();
+
+
+               }                
+            }
         }
 
         #region CanExecute Functions
