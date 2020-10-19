@@ -8,6 +8,32 @@
         mc:Ignorable="d"
         Title="MatchDetailView" Height="450" Width="800">
     <Grid>
-        
+        <Label Content="{Binding Player1Name}" FontSize="24" HorizontalAlignment="Left" Margin="122,48,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.496,1.353"/>
+        <Label Content="{Binding Player2Name}" FontSize="24" HorizontalAlignment="Left" Margin="593,48,0,0" VerticalAlignment="Top"/>
+        <Label Content="Sets won:" FontSize="14" HorizontalAlignment="Left" Margin="373,9,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding SetsWon}" FontSize="24" HorizontalAlignment="Left" Margin="373,48,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Player1AverageScore}" FontSize="14" HorizontalAlignment="Left" Margin="134,95,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Player2AverageScore}" FontSize="14" HorizontalAlignment="Left" Margin="605,95,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding TotalAmount180s}" ContentStringFormat="Total amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="337,109,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Player1Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="113,129,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Player2Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="584,129,0,0" VerticalAlignment="Top"/>
+        <ListView ItemsSource="{Binding SpecifiedMatch}" Margin="66,163,66,24">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Set" Width="150" DisplayMemberBinding="{Binding Player1SetsWon}" />
+                    <GridViewColumn Header="Score" Width="150" DisplayMemberBinding="{Binding Score}" />
+                    <GridViewColumn Header="Average score" Width="150" DisplayMemberBinding="{Binding AverageScore}" />
+                </GridView>
+            </ListView.View>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Player1SetsWon}"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+        </ListView>
     </Grid>
 </Window>

@@ -93,7 +93,8 @@ namespace DARTS.Data
 
             List<Turn> turns = new List<Turn>();
             Turn turn = new Turn();
-            turn.PlayerTurn = PlayerEnum.Player2;
+            turn.PlayerTurn = PlayerEnum.Player1;
+            turn.ThrownPoints = 180;
             turns.Add(turn);
 
             List<Leg> legs = new List<Leg>();
