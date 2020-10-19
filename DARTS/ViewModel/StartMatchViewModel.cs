@@ -29,7 +29,7 @@ namespace DARTS.ViewModel
         public StartMatchViewModel()
         {
             StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(), canExecute => CanExecuteStartMatchButtonClick());
-            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute), canExecute => CanExecuteBackToMainMenuButtonClick());
+            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute));
 
             PlayerEnums = (PlayerEnum[])Enum.GetValues(typeof(PlayerEnum));
         }

@@ -76,7 +76,7 @@ namespace DARTS.ViewModel
         public PlayersOverviewViewModel(List<Player> players)
         {
             // view commands:
-            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(execute), canExecute => CanExecuteBackButtonClick());
+            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(execute));
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
 
             // TEMP: SetListItems #29

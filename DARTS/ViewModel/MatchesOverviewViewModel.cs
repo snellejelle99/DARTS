@@ -72,7 +72,7 @@ namespace DARTS.ViewModel
         }
         public MatchesOverviewViewModel(List<Match> matches)
         {
-            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute), canExecute => CanExecuteBackToMainMenuButtonClick());
+            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute));
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
             OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
