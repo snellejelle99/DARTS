@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
+using DARTS.Data.Singletons;
 using DARTS.View;
 using DARTS.ViewModel.Command;
 
@@ -22,62 +23,30 @@ namespace DARTS.ViewModel
 
         public MainMenuViewModel()
         {
-            StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(execute));
-            PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(execute));
-            MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(execute));
-            OptionsButtonClickCommand = new RelayCommand(execute => OptionsButton_Click(execute));
+            StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click());
+            PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click());
+            MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click());
+            OptionsButtonClickCommand = new RelayCommand(execute => OptionsButton_Click());
         }
 
-        private void StartMatchButton_Click(object parameter)
+        private void StartMatchButton_Click()
         {
-            StartMatchView startMatchWindow = new StartMatchView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            StartMatchViewModel startMatchViewModel = new StartMatchViewModel();
-            startMatchWindow.DataContext = startMatchViewModel;
-            startMatchWindow.Show();
-
-            (parameter as Window)?.Close();
+            GameInstance.Instance.MainWindow.ChangeToStartMatch();
         }
 
-        private void PlayerOverviewButton_Click(object parameter)
+        private void PlayerOverviewButton_Click()
         {
-            PlayersOverviewView playerOverviewWindow = new PlayersOverviewView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            PlayersOverviewViewModel playerOverviewViewModel = new PlayersOverviewViewModel(new List<Player>());
-            playerOverviewWindow.DataContext = playerOverviewViewModel;
-            playerOverviewWindow.Show();
-
-            (parameter as Window)?.Close();
+            GameInstance.Instance.MainWindow.ChangeToPlayerOverviewView();
         }
 
-        private void MatchOverviewButton_Click(object parameter)
+        private void MatchOverviewButton_Click()
         {
-            MatchesOverviewView matchesOverviewWindow = new MatchesOverviewView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            MatchesOverviewViewModel matchesOverviewViewModel = new MatchesOverviewViewModel(new List<Match>());
-            matchesOverviewWindow.DataContext = matchesOverviewViewModel;
-            matchesOverviewWindow.Show();
-
-            (parameter as Window)?.Close();
+            GameInstance.Instance.MainWindow.ChangeToMatchesOverview();
         }
 
-        private void OptionsButton_Click(object parameter)
+        private void OptionsButton_Click()
         {
-            OptionsMenuView optionsMenuWindow = new OptionsMenuView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            OptionsMenuViewModel optionsMenuViewModel = new OptionsMenuViewModel();
-            optionsMenuWindow.DataContext = optionsMenuViewModel;
-            optionsMenuWindow.Show();
-
-            (parameter as Window)?.Close();
+            GameInstance.Instance.MainWindow.ChangeToOptionsMenuView();
         }
     }
 }
