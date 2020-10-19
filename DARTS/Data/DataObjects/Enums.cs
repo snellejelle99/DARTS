@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public enum ObjectState
+    public enum PlayState
     {
         NotStarted,
         InProgress,
@@ -16,5 +16,15 @@ namespace DARTS.Data.DataObjects
         None,
         Player1,
         Player2
+    }
+
+    public enum ScoreType
+    {
+        Miss,
+        Single,
+        Double,
+        Triple,
+        Bull,
+        Bullseye
     }
 }

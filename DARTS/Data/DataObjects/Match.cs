@@ -12,7 +12,7 @@ namespace DARTS.Data.DataObjects
         #region BackingStores
         private PlayerEnum _winnningPlayer, _beginningPlayer;
 
-        private ObjectState _matchState = ObjectState.NotStarted;
+        private PlayState _matchState = PlayState.NotStarted;
 
         private Player _player1;
 
@@ -51,7 +51,7 @@ namespace DARTS.Data.DataObjects
             set => _beginningPlayer = value;
         }
 
-        public ObjectState MatchState
+        public PlayState MatchState
         {
             get => _matchState;
             set => _matchState = value;
@@ -128,7 +128,7 @@ namespace DARTS.Data.DataObjects
             Set firstSet = new Set();
             firstSet.BeginningPlayer = BeginningPlayer;
             firstSet.NumLegs = NumLegs;
-            firstSet.SetState = ObjectState.InProgress;
+            firstSet.SetState = PlayState.InProgress;
 
             Sets.Add(firstSet);
             firstSet.Start();
@@ -155,13 +155,13 @@ namespace DARTS.Data.DataObjects
                 if (Player1SetsWon > (NumSets / 2))
                 {
                     WinningPlayer = PlayerEnum.Player1;
-                    MatchState = ObjectState.Finished;
+                    MatchState = PlayState.Finished;
                 }
 
                 else if (Player2SetsWon > (NumSets / 2))
                 {
                     WinningPlayer = PlayerEnum.Player2;
-                    MatchState = ObjectState.Finished;
+                    MatchState = PlayState.Finished;
                 }
 
                 else WinningPlayer = PlayerEnum.None;
@@ -179,7 +179,7 @@ namespace DARTS.Data.DataObjects
         {
             if (CheckWin() == PlayerEnum.None)
             {
-                if (Sets[Sets.Count - 1].SetState == ObjectState.InProgress) //If newest set still in progress, change the turn.
+                if (Sets[Sets.Count - 1].SetState == PlayState.InProgress) //If newest set still in progress, change the turn.
                 {
                     Sets[Sets.Count - 1].ChangeTurn();
                 }
@@ -189,7 +189,7 @@ namespace DARTS.Data.DataObjects
                     Set nextSet = new Set();
                     nextSet.BeginningPlayer = Sets[Sets.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
                     nextSet.NumLegs = NumLegs;
-                    nextSet.SetState = ObjectState.InProgress;
+                    nextSet.SetState = PlayState.InProgress;
 
                     Sets.Add(nextSet);
                     nextSet.Start();
@@ -221,8 +221,25 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
+        #region Helper functions
+        public Set GetCurrentSet()
+        {
+            return Sets[Sets.Count - 1];
+        }
+
+        public Leg GetCurrentLeg()
+        {
+            return GetCurrentSet().Legs[GetCurrentSet().Legs.Count - 1];
+        }
+
+        public Turn GetCurrentTurn()
+        {
+            return GetCurrentLeg().Turns[GetCurrentLeg().Turns.Count - 1];
+        }
+        #endregion
+
         public Match()
-        {  
+        {
         }
     }
 }

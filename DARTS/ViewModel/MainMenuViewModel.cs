@@ -18,12 +18,14 @@ namespace DARTS.ViewModel
         public ICommand StartMatchButtonClickCommand { get; }
         public ICommand PlayerOverviewButtonClickCommand { get; }
         public ICommand MatchOverviewButtonClickCommand { get; }
+        public ICommand OptionsButtonClickCommand { get; }
 
         public MainMenuViewModel()
         {
             StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(execute), canExecute => CanExecuteStartMatchButtonClick());
             PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(execute), canExecute => CanExecutePlayerOverviewButtonClick());
             MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(execute), canExecute => CanExecuteMatchOverviewButtonClick());
+            OptionsButtonClickCommand = new RelayCommand(execute => OptionsButton_Click(execute), canExecute => CanExecuteOptionsButtonClick());
         }
 
         private void StartMatchButton_Click(object parameter)
@@ -78,6 +80,24 @@ namespace DARTS.ViewModel
         private bool CanExecuteMatchOverviewButtonClick()
         {
             return true; 
+        }
+
+        private void OptionsButton_Click(object parameter)
+        {
+            OptionsMenuView optionsMenuWindow = new OptionsMenuView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            OptionsMenuViewModel optionsMenuViewModel = new OptionsMenuViewModel();
+            optionsMenuWindow.DataContext = optionsMenuViewModel;
+            optionsMenuWindow.Show();
+
+            (parameter as Window)?.Close();
+        }
+
+        private bool CanExecuteOptionsButtonClick()
+        {
+            return true;
         }
     }
 }

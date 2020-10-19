@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="Startscreen" Height="450" Width="800">
     <Grid>
-        <Button Name="StartMatchButton" Content="Open Start Match screen" HorizontalAlignment="Center" Margin="0,127,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding StartMatchButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
-        <Button Name="PlayerOverviewButton" Content="Open Player Overview screen" HorizontalAlignment="Center" Margin="0,189,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding PlayerOverviewButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
-        <Button Name="MatchOverviewButton" Content="Open Match Overview screen" HorizontalAlignment="Center" Margin="0,252,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding MatchOverviewButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
+        <Button Name="StartMatchButton" Content="Open Start Match screen" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding StartMatchButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
+        <Button Name="PlayerOverviewButton" Content="Open Player Overview screen" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding PlayerOverviewButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
+        <Button Name="MatchOverviewButton" Content="Open Match Overview screen" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top" Height="28" Width="206" Command="{Binding MatchOverviewButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
+        <Button Name="OptionsButtonClick" Content="Options" HorizontalAlignment="Center" Margin="0,290,0,0" VerticalAlignment="Top" Height="28" Width="132" Command="{Binding OptionsButtonClickCommand}" CommandParameter="{Binding ElementName=MainMenuWindow}"/>
     </Grid>
 </Window>
