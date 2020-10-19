@@ -184,6 +184,9 @@ namespace DARTS.ViewModel
                     case ScoreType.Bullseye:
                         if (Throws[i] != 50) return false;
                         break;
+                    default:
+                        if (!(Throws[i] > 0 && Throws[i] <= 20)) return false;
+                        break;
                 }
             }
 
