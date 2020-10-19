@@ -21,7 +21,7 @@ namespace DARTS.ViewModel
         public OptionsMenuViewModel()
         {
             ResetDatabaseButtonClickCommand = new RelayCommand(execute => ResetDatabaseButton_Click(execute), canExecute => CanExecuteResetDatabaseButtonClick());
-            GoBackButtonClickCommand = new RelayCommand(execute => GoBackButton_Click(execute), canExecute => CanExecuteGoBackButtonClick());
+            GoBackButtonClickCommand = new RelayCommand(execute => GoBackButton_Click(execute));
         }
 
         private void ResetDatabaseButton_Click(object parameter)
@@ -43,7 +43,7 @@ namespace DARTS.ViewModel
         {
             //TO DO:
             //Disable button when database is empty.
-            return true;
+            return false;
         }
 
         private void GoBackButton_Click(object parameter)
@@ -57,11 +57,6 @@ namespace DARTS.ViewModel
             mainMenuWindow.Show();
 
             (parameter as Window).Close();
-        }
-
-        public bool CanExecuteGoBackButtonClick()
-        {
-            return true;
         }
     }
 }
