@@ -56,10 +56,5 @@ namespace DARTS.ViewModel
 
             (parameter as Window).Close();
         }
-
-        private bool CanExecuteBackToMainMenuButtonClick()
-        {
-            return true;
-        }
     }
 }

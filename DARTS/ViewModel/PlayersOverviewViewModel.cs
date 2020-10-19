@@ -117,11 +117,6 @@ namespace DARTS.ViewModel
             (parameter as Window)?.Close();
         }
 
-        private bool CanExecuteBackButtonClick()
-        {
-            return true;
-        }
-
         private void OpenPlayerDetailsViewClick()
         {
             //TODO: Create a new window for player detail information, with _selectedItem as argument #28

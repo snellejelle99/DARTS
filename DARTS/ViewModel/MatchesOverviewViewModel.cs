@@ -135,11 +135,6 @@ namespace DARTS.ViewModel
             (parameter as Window).Close();
         }
 
-        private bool CanExecuteBackToMainMenuButtonClick()
-        {
-            return true;
-        }
-
         private void OpenMatchButton_Click()
         {
             //TODO: Create a new window for match detail information
