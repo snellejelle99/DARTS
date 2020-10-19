@@ -22,10 +22,10 @@ namespace DARTS.ViewModel
 
         public MainMenuViewModel()
         {
-            StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(execute), canExecute => CanExecuteStartMatchButtonClick());
-            PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(execute), canExecute => CanExecutePlayerOverviewButtonClick());
-            MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(execute), canExecute => CanExecuteMatchOverviewButtonClick());
-            OptionsButtonClickCommand = new RelayCommand(execute => OptionsButton_Click(execute), canExecute => CanExecuteOptionsButtonClick());
+            StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(execute));
+            PlayerOverviewButtonClickCommand = new RelayCommand(execute => PlayerOverviewButton_Click(execute));
+            MatchOverviewButtonClickCommand = new RelayCommand(execute => MatchOverviewButton_Click(execute));
+            OptionsButtonClickCommand = new RelayCommand(execute => OptionsButton_Click(execute));
         }
 
         private void StartMatchButton_Click(object parameter)
@@ -41,11 +41,6 @@ namespace DARTS.ViewModel
             (parameter as Window)?.Close();
         }
 
-        private bool CanExecuteStartMatchButtonClick()
-        {
-            return true;
-        }
-
         private void PlayerOverviewButton_Click(object parameter)
         {
             PlayersOverviewView playerOverviewWindow = new PlayersOverviewView
@@ -57,11 +52,6 @@ namespace DARTS.ViewModel
             playerOverviewWindow.Show();
 
             (parameter as Window)?.Close();
-        }
-
-        private bool CanExecutePlayerOverviewButtonClick()
-        {
-            return true;
         }
 
         private void MatchOverviewButton_Click(object parameter)
@@ -77,11 +67,6 @@ namespace DARTS.ViewModel
             (parameter as Window)?.Close();
         }
 
-        private bool CanExecuteMatchOverviewButtonClick()
-        {
-            return true; 
-        }
-
         private void OptionsButton_Click(object parameter)
         {
             OptionsMenuView optionsMenuWindow = new OptionsMenuView
@@ -93,11 +78,6 @@ namespace DARTS.ViewModel
             optionsMenuWindow.Show();
 
             (parameter as Window)?.Close();
-        }
-
-        private bool CanExecuteOptionsButtonClick()
-        {
-            return true;
         }
     }
 }
