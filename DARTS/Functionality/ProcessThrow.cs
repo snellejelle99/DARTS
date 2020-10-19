@@ -9,56 +9,32 @@ namespace DARTS.Functionality
 {
     public class ProcessThrow
     {
-        public ProcessThrow()
-        { 
-        
-        }
-
-        public int ValidateScore(int ThrowScore, ScoreType type, int LegScore)
+     
+        /// <summary>
+        /// Calculates the Score from a single dart throw 
+        /// </summary>
+        /// <param name="ThrowScore">the regular score without multiplication</param>
+        /// <param name="type">the Scoretype</param>
+        /// <returns></returns>
+        public static Tuple<int, ScoreType> CalculateThrowScore(int ThrowScore, ScoreType type)
         {
-            if(ThrowScore >= 0 && (ThrowScore <= 20 || ThrowScore == 25 || ThrowScore== 50))
+            if (ThrowScore >= 0 && (ThrowScore <= 20 || ThrowScore == 25 || ThrowScore == 50))
             {
                 switch (type)
                 {
-                    case ScoreType.Bull:
-                    case ScoreType.Bullseye:
-                    case ScoreType.Single:
-                        LegScore -= ThrowScore;
-                        break;
                     case ScoreType.Double:
-                        LegScore -= ThrowScore * 2;
+                        ThrowScore *= 2;
                         break;
                     case ScoreType.Triple:
-                        LegScore -= ThrowScore * 3;
+                        ThrowScore *= 3;
+                        break;
+                    default:
                         break;
                 };
-
-                if (LegScore == 0)
-                {
-                    if (type == ScoreType.Double || type == ScoreType.Bullseye)
-                    {
-                        return LegScore;
-                    }
-                    else
-                    {
-                        if (type == ScoreType.Single || type == ScoreType.Bull)
-                        {
-                            LegScore += ThrowScore;
-                        }
-                        else if (type == ScoreType.Triple)
-                        {
-                            LegScore += ThrowScore * 3;
-                        }    
-                        
-
-                    }
-                }
-
-                
             }
-            return LegScore;
+            return new Tuple<int, ScoreType>(ThrowScore, type);         
         }
-        
+
 
     }
 }

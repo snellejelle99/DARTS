@@ -61,6 +61,7 @@ namespace DARTS.Data.DataObjects
             // TODO: impement factory pattern.
             Turn firstTurn = new Turn();
             firstTurn.PlayerTurn = BeginningPlayer;
+            firstTurn.Throws = new List<Tuple<int, ScoreType>>();
 
             Turns.Add(firstTurn);
         }
@@ -91,8 +92,36 @@ namespace DARTS.Data.DataObjects
             // Create the next turn and assign the other player.
             Turn nextTurn = new Turn();
             nextTurn.PlayerTurn = Turns[Turns.Count - 1].PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-
+            nextTurn.Throws = new List<Tuple<int, ScoreType>>();
             Turns.Add(nextTurn);
+        }
+
+        public void SubtractScore(Turn turn)
+        {
+            if (turn.PlayerTurn == PlayerEnum.Player1)
+            {                
+                foreach(Tuple<int, ScoreType> dart in turn.Throws)
+                {
+                    if (Player1LegScore > dart.Item1) Player1LegScore -= (uint)dart.Item1;
+                    else if(Player1LegScore == dart.Item1)
+                    {
+                        if (dart.Item2 == ScoreType.Double || dart.Item2 == ScoreType.Bullseye) Player1LegScore = 0;
+                    }
+                    else break;
+                }
+            }
+            else
+            {
+                foreach (Tuple<int, ScoreType> dart in turn.Throws)
+                {
+                    if (Player2LegScore > dart.Item1) Player2LegScore -= (uint)dart.Item1;
+                    else if (Player2LegScore == dart.Item1)
+                    {
+                        if (dart.Item2 == ScoreType.Double || dart.Item2 == ScoreType.Bullseye) Player2LegScore = 0;
+                    }
+                    else break;
+                }
+            }
         }
 
         public Leg()

@@ -1,8 +1,10 @@
 ﻿using DARTS.Data.DataObjects;
 using DARTS.Functionality;
+using DARTS.View;
 using DARTS.ViewModel.Command;
 using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DARTS.ViewModel
@@ -17,7 +19,7 @@ namespace DARTS.ViewModel
         public ScoreType[] ThrowTypes { get; set; }
         public ScoreType[] ScoreTypes { get; }
 
-        public ProcessThrow ProcessThrow = new ProcessThrow();
+        
         private Match Match { get; }
 
         #region Match object bindings
@@ -117,7 +119,7 @@ namespace DARTS.ViewModel
             ScoreTypes = (ScoreType[])Enum.GetValues(typeof(ScoreType));
             Match = match;
 
-            SubmitScoreButtonClickCommand = new RelayCommand(execute => SubmitScoreButtonClick(), canExecute => CanExecuteSubmitScoreButtonClick());
+            SubmitScoreButtonClickCommand = new RelayCommand(execute => SubmitScoreButtonClick(execute), canExecute => CanExecuteSubmitScoreButtonClick());
             PreviousTurnButtonClickCommand = new RelayCommand(execute => PreviousTurnButtonClick(), canExecute => CanExecutePreviousTurnButtonClick());
             StopMatchButtonClickCommand = new RelayCommand(execute => StopMatchButtonClick(), canExecute => true);
         }
@@ -132,25 +134,19 @@ namespace DARTS.ViewModel
             throw new NotImplementedException();
         }
 
-        private void SubmitScoreButtonClick()
+        private void SubmitScoreButtonClick(object parameter)
         {
-            int legscore = default;
-            if (IsPlayer1Turn == "Visible") legscore = (int)Player1Score;
-            else if (IsPlayer2Turn == "Visible") legscore = (int)Player2Score;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Throws.Count(); i++)
             {
-               if (Throws[i] != 0) 
-               {
-                    legscore = ProcessThrow.ValidateScore(Throws[i], ThrowTypes[i], legscore);
-                    if (legscore < 0) legscore += Throws[i];
-                    if (IsPlayer1Turn == "Visible") Match.Sets.Last().Legs.Last().Player1LegScore = (uint)legscore;
-                    else if (IsPlayer2Turn == "Visible") Match.Sets.Last().Legs.Last().Player2LegScore = (uint)legscore;
-
-                    Match.Sets.Last().Legs.Last().CheckWin();
-
-
-               }                
+                Match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(Throws[i], ThrowTypes[i]));                
             }
+            Match.GetCurrentTurn().CalculateThrownPoints();
+            Match.GetCurrentLeg().SubtractScore(Match.GetCurrentTurn());
+            Match.ChangeTurn();
+
+            ScoreInputViewModel scoreInputViewModel= new ScoreInputViewModel(Match);
+            (parameter as Window).DataContext = scoreInputViewModel;
+
         }
 
         #region CanExecute Functions

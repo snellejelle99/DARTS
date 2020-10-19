@@ -1,6 +1,7 @@
 ﻿using DARTS.Data.DataObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using DARTS.Functionality;
 using System.Collections.Generic;
 using System.Text;
 
@@ -123,6 +124,55 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.AreEqual(match.Sets.Count, 2, "New Set was not created.");
             Assert.AreEqual(match.Sets[0].WinningPlayer, PlayerEnum.Player1, "Expected Player1 to win the Set but this was not the case.");
             Assert.AreEqual(match.Sets[1].BeginningPlayer, PlayerEnum.Player2, "Expected Player2 to be the BeginningPlayer for this set, but this was not the case.");
+        }
+
+        [TestMethod]
+        public void Should_Subtract_Proper_Value_From_Leg_Score()
+        {
+            // Arrange
+            match.Start();
+            uint StartingLegScore = match.GetCurrentLeg().Player1LegScore;
+            int ThrowScore = 18;
+            match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(ThrowScore, ScoreType.Double));
+
+            //Act
+            match.GetCurrentLeg().SubtractScore(match.GetCurrentTurn());
+
+            //Assert
+            Assert.AreEqual(match.GetCurrentLeg().Player1LegScore, StartingLegScore - ThrowScore * 2);
+        }
+
+        [TestMethod]
+        public void Should_Set_Score_To_0_When_Score_Is_Double()
+        {
+            // Arrange
+            match.Start();
+            uint StartingLegScore = match.GetCurrentLeg().Player1LegScore = 36;
+            int ThrowScore = 18;
+            match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(ThrowScore, ScoreType.Double));
+
+            //Act
+            match.GetCurrentLeg().SubtractScore(match.GetCurrentTurn());
+
+            //Assert
+            Assert.AreEqual(match.GetCurrentLeg().Player1LegScore, StartingLegScore - (ThrowScore * 2));
+
+        }
+
+        [TestMethod]
+        public void Should_Set_Score_To_Score_Before_Throw_When_Throw_Exceeds_LegScore()
+        {
+            // Arrange
+            match.Start();
+            uint StartingLegScore = match.GetCurrentLeg().Player1LegScore = 35;
+            int ThrowScore = 18;
+            match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(ThrowScore, ScoreType.Double));
+
+            //Act            
+            match.GetCurrentLeg().SubtractScore(match.GetCurrentTurn());
+
+            //Assert
+            Assert.AreEqual(match.GetCurrentLeg().Player1LegScore, StartingLegScore);
         }
     }
 }
