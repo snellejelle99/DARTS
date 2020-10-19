@@ -116,7 +116,7 @@
             <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="15, 0, 15, 0" Grid.Column="3" Grid.Row="2" ItemsSource="{Binding ScoreTypes}" SelectedValue="{Binding ThrowTypes[2]}" SelectedIndex="0"/>
             <Label Content="Worp 3:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 0, 0" Grid.Row="2" FontWeight="Bold"/>
 
-            <Button Name="SubmitScore" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="30, 5, 15, 5" Grid.Column="3" Grid.Row="9" Content="Next turn" Command="{Binding SubmitScoreButtonClickCommand}" CommandParameter="{Binding ElementName=ScoreInputWindow}" >
+            <Button Name="SubmitScore" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="30, 5, 15, 5" Grid.Column="3" Grid.Row="9" Content="Next turn" Command="{Binding SubmitScoreButtonClickCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="IsEnabled" Value="False"/>

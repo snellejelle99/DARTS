@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
@@ -52,6 +53,32 @@ namespace DARTS.Data.DataObjects
             get => _player2LegScore;
             set => _player2LegScore = value;
         }
+
+        public uint CurrentPlayerLegScore
+        {
+            get
+            {
+                switch(Turns.Last().PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        return _player1LegScore;
+                    default:
+                        return _player2LegScore;
+                }
+            }
+            set
+            {
+                switch (Turns.Last().PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        _player1LegScore = value;
+                        break;
+                    default:
+                        _player2LegScore = value;
+                        break;
+                }
+            }            
+        }
         #endregion
 
         public void Start()
@@ -96,31 +123,16 @@ namespace DARTS.Data.DataObjects
             Turns.Add(nextTurn);
         }
 
-        public void SubtractScore(Turn turn)
+        public void SubtractScore()
         {
-            if (turn.PlayerTurn == PlayerEnum.Player1)
-            {                
-                foreach(Tuple<int, ScoreType> dart in turn.Throws)
-                {
-                    if (Player1LegScore > dart.Item1) Player1LegScore -= (uint)dart.Item1;
-                    else if(Player1LegScore == dart.Item1)
-                    {
-                        if (dart.Item2 == ScoreType.Double || dart.Item2 == ScoreType.Bullseye) Player1LegScore = 0;
-                    }
-                    else break;
-                }
-            }
-            else
+            foreach (Tuple<int, ScoreType> dart in Turns.Last().Throws)
             {
-                foreach (Tuple<int, ScoreType> dart in turn.Throws)
+                if (CurrentPlayerLegScore > dart.Item1) CurrentPlayerLegScore -= (uint)dart.Item1;
+                else if (CurrentPlayerLegScore == dart.Item1)
                 {
-                    if (Player2LegScore > dart.Item1) Player2LegScore -= (uint)dart.Item1;
-                    else if (Player2LegScore == dart.Item1)
-                    {
-                        if (dart.Item2 == ScoreType.Double || dart.Item2 == ScoreType.Bullseye) Player2LegScore = 0;
-                    }
-                    else break;
+                    if (dart.Item2 == ScoreType.Double || dart.Item2 == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
                 }
+                else break;
             }
         }
 

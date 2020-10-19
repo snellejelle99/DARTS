@@ -86,7 +86,7 @@ namespace DARTS.Data
             Player player2 = new Player();
             player2.Name = "Pieter";
 
-            int numSets = 11;
+            int numSets = 3;
             int numLegs = 3;
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
