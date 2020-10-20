@@ -8,6 +8,7 @@
         xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         xmlns:local="clr-namespace:DARTS"
+        xmlns:validationrules="clr-namespace:DARTS.ValidationRules"
         mc:Ignorable="d"
         Title="Startscreen" Height="600" Width="1000" ResizeMode="NoResize">
     <Window.Resources>
@@ -21,7 +22,7 @@
             <TextBox.Text>
                 <Binding Path="Player1" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                     <Binding.ValidationRules>
-                        <local:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -33,7 +34,7 @@
             <TextBox.Text>
                 <Binding Path="Player2" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -48,7 +49,7 @@
             <TextBox.Text>
                 <Binding Path="NumSets" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:SetsValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:SetsValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -64,7 +65,7 @@
             <TextBox.Text>
                 <Binding Path="NumLegs" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:LegsValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:LegsValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>

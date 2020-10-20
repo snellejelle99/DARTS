@@ -1,4 +1,4 @@
-﻿using DARTS;
+﻿using DARTS.ValidationRules;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DARTS_UnitTests
