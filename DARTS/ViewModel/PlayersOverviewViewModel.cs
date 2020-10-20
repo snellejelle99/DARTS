@@ -97,7 +97,7 @@ namespace DARTS.ViewModel
             {
                 Player p = new Player();
                 p.Name = "player" + Convert.ToString(i);
-                p.ID = i;
+                p.Id = i;
                 _displayedPlayers.Add(p);
                 _displayedPlayers.Add(p);
             }

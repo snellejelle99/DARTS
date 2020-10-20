@@ -22,7 +22,7 @@ namespace DARTS.Data.DataObjectFactories
 
             _fieldCollection.Add(LegFieldNames.WinningPlayer, new DataField(LegFieldNames.WinningPlayer, SQLiteType.INTEGER));
             _fieldCollection.Add(LegFieldNames.BeginningPlayer, new DataField(LegFieldNames.BeginningPlayer, SQLiteType.INTEGER));
-            _fieldCollection.Add(LegFieldNames.BeginningPlayer, new DataField(LegFieldNames.LegState, SQLiteType.INTEGER));
+            _fieldCollection.Add(LegFieldNames.LegState, new DataField(LegFieldNames.LegState, SQLiteType.INTEGER));
             _fieldCollection.Add(LegFieldNames.Player1LegScore, new DataField(LegFieldNames.Player1LegScore, SQLiteType.INTEGER));
             _fieldCollection.Add(LegFieldNames.Player2LegScore, new DataField(LegFieldNames.Player2LegScore, SQLiteType.INTEGER));
 
@@ -39,6 +39,8 @@ namespace DARTS.Data.DataObjectFactories
 
     public static class LegFieldNames
     {
+        public const string Id = "Id";
+        public const string SetId = "Id";
         public const string WinningPlayer = "WinningPlayer";
         public const string Turns = "Turns";
         public const string BeginningPlayer = "BeginningPlayer";

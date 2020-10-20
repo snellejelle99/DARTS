@@ -20,12 +20,21 @@ namespace DARTS.ViewModel
         #region Match object bindings
         public string Player1Name
         {
-            get => Match.Player1.Name;
+            get
+            {
+                Player player1 = Match.Player1 as Player;
+                return player1.Name;
+            }
+            
         }
 
         public string Player2Name
         {
-            get => Match.Player2.Name;
+            get
+            {
+                Player player2 = Match.Player2 as Player;
+                return player2.Name;
+            }
         }
 
         public int Player1SetsWon
@@ -40,22 +49,22 @@ namespace DARTS.ViewModel
 
         public int Player1LegsWon
         {
-            get => Match.Sets.Last().Player1LegsWon;
+            get => Match.GetCurrentSet().Player1LegsWon;
         }
 
         public int Player2LegsWon
         {
-            get => Match.Sets.Last().Player2LegsWon;
+            get => Match.GetCurrentSet().Player2LegsWon;
         }
 
         public uint Player1Score
         {
-            get => Match.Sets.Last().Legs.Last().Player1LegScore;
+            get => Match.GetCurrentLeg().Player1LegScore;
         }
 
         public uint Player2Score
         {
-            get => Match.Sets.Last().Legs.Last().Player2LegScore;
+            get => Match.GetCurrentLeg().Player2LegScore;
         }
 
         public string IsPlayer1Turn
@@ -102,7 +111,7 @@ namespace DARTS.ViewModel
         {
             get
             {
-                return string.Format("Leg {0} of {1} in Set {2} of {3}", Match.Sets.Last().Legs.Count(), Match.NumLegs, Match.Sets.Count(), Match.NumSets);
+                return string.Format("Leg {0} of {1} in Set {2} of {3}", Match.GetCurrentSet().Legs.Count(), Match.NumLegs, Match.Sets.Count(), Match.NumSets);
             }
         }
         #endregion

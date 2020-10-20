@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Player
+    public class Player : DataObjectBase
     {
         #region BackingStores
         private string _name;
@@ -16,14 +16,14 @@ namespace DARTS.Data.DataObjects
         #region Properties
         public string Name
         {
-            get => _name;
-            set => _name = value;
+            get => (string)FieldCollection["Name"].Value;
+            set => FieldCollection["Name"].Value = value;
         }
 
-        public int ID
+        public long Id
         {
-            get => _id;
-            set => _id = value;
+            get => (long)FieldCollection["Id"].Value;
+            set => FieldCollection["Id"].Value = value;
         }
 
         #endregion

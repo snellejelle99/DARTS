@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,11 +15,27 @@ namespace DARTS.Data.DataObjects
         private int _thrownPoints;
         #endregion
 
+        public long Id
+        {
+            get => (int)FieldCollection[TurnFieldNames.Id].Value;
+            set => FieldCollection[TurnFieldNames.Id].Value = value;
+        }
+
+        public long LegId
+        {
+            get => (int)FieldCollection[TurnFieldNames.LegId].Value;
+            set => FieldCollection[TurnFieldNames.LegId].Value = value;
+        }
+
         #region Properties
         public PlayerEnum PlayerTurn
         {
-            get => _playerTurn;
-            set => _playerTurn = value;
+            get
+            {
+                int intVal = (int)FieldCollection[TurnFieldNames.PlayerTurn].Value;
+                return (PlayerEnum)intVal;
+            }
+            set => FieldCollection[TurnFieldNames.PlayerTurn].Value = (int)value; 
         }
 
         public List<Tuple<int, ScoreType>> Throws
@@ -29,8 +46,8 @@ namespace DARTS.Data.DataObjects
 
         public int ThrownPoints
         {
-            get => _thrownPoints;
-            set => _thrownPoints = value;
+            get => (int)FieldCollection[TurnFieldNames.ThrownPoints].Value;
+            set => FieldCollection[TurnFieldNames.ThrownPoints].Value = value;
         }
         #endregion
 

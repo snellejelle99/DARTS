@@ -18,6 +18,16 @@ namespace DARTS.Data.DataObjects
 
         private const int PlayerPoints = 501;
 
+        public long Id
+        {
+            get => (int)FieldCollection[SetFieldNames.Id].Value;
+            set => FieldCollection[SetFieldNames.Id].Value = value;
+        }
+        public long MatchId
+        {
+            get => (int)FieldCollection[SetFieldNames.MatchId].Value;
+            set => FieldCollection[SetFieldNames.MatchId].Value = value;
+        }
         public BindingList<DataObjectBase> Legs
         {
             get => CollectionFieldCollection[SetFieldNames.Legs].Value;
@@ -93,13 +103,18 @@ namespace DARTS.Data.DataObjects
             }
         }
 
+        private LegFactory LegFactory
+        {
+            get;
+            set;
+        }
 
         public void Start()
         {
             Legs = new BindingList<DataObjectBase>();
-
+            LegFactory = new LegFactory();
             // TODO: impement factory pattern.
-            Leg firstLeg = new Leg();
+            Leg firstLeg = (Leg)LegFactory.Spawn();
             firstLeg.BeginningPlayer = BeginningPlayer;
             firstLeg.Player1LegScore = PlayerPoints;
             firstLeg.Player2LegScore = PlayerPoints;
@@ -141,17 +156,17 @@ namespace DARTS.Data.DataObjects
         public void ChangeTurn()
         {
             //If nobody has won the leg yet change the turn.
-            if (Legs[Legs.Count - 1].LegState == PlayState.InProgress)
+            if (GetCurrentLeg().LegState == PlayState.InProgress)
             {
-                Legs[Legs.Count - 1].ChangeTurn();
+                GetCurrentLeg().ChangeTurn();
             }
 
             //If someone has won it start a new Leg and let the other player begin. Then start the leg.
             else
             {
                 // TODO: impement factory pattern.
-                Leg nextLeg = new Leg();
-                nextLeg.BeginningPlayer = Legs[Legs.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                Leg nextLeg = (Leg)LegFactory.Spawn();
+                nextLeg.BeginningPlayer = GetCurrentLeg().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
                 nextLeg.Player1LegScore = PlayerPoints;
                 nextLeg.Player2LegScore = PlayerPoints;
                 nextLeg.LegState = PlayState.InProgress;
@@ -159,6 +174,11 @@ namespace DARTS.Data.DataObjects
                 Legs.Add(nextLeg);
                 nextLeg.Start();
             }
+        }
+
+        public Leg GetCurrentLeg()
+        {
+            return (Leg)Legs[Legs.Count - 1];
         }
 
         public Set()

@@ -18,6 +18,12 @@ namespace DARTS.Data.DataObjects
         #endregion
 
         #region Properties
+        public long Id
+        {
+            get => (int)FieldCollection[LegFieldNames.Id].Value;
+            set => FieldCollection[LegFieldNames.Id].Value = value;
+        }
+
         public BindingList<DataObjectBase> Turns
         {
             get => CollectionFieldCollection[LegFieldNames.Turns].Value;
@@ -66,13 +72,17 @@ namespace DARTS.Data.DataObjects
             set => FieldCollection[LegFieldNames.Player1LegScore].Value = value;
         }
         #endregion
-
+        private TurnFactory TurnFactory
+        {
+            get;
+            set;
+        }
         public void Start()
         {
             Turns = new BindingList<DataObjectBase>();
-
+            TurnFactory = new TurnFactory();
             // TODO: impement factory pattern.
-            Turn firstTurn = new Turn();
+            Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
 
             Turns.Add(firstTurn);
@@ -102,7 +112,7 @@ namespace DARTS.Data.DataObjects
         {
             // TODO: impement factory pattern.(?)
             // Create the next turn and assign the other player.
-            Turn nextTurn = new Turn();
+            Turn nextTurn = (Turn)TurnFactory.Spawn();
             Turn currentTurn = Turns[Turns.Count - 1] as Turn;
             nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
 

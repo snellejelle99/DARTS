@@ -1,4 +1,5 @@
 ﻿using DARTS.Data.DataFactory;
+using DARTS.Data.DataObjectFactories.DataObjectFieldTypes;
 using DARTS.Data.DataObjects;
 
 namespace DARTS.Data.DataObjectFactories
@@ -7,7 +8,14 @@ namespace DARTS.Data.DataObjectFactories
     {
         protected override void InitializeFields()
         {
-         
+            CodeField idField = new CodeField(TurnFieldNames.Id, true);
+            _fieldCollection.Add(TurnFieldNames.Id,idField);
+
+            _fieldCollection.Add(TurnFieldNames.LegId, new DataField(TurnFieldNames.LegId, SQLiteType.INTEGER));
+            _fieldCollection.Add(TurnFieldNames.PlayerTurn, new DataField(TurnFieldNames.PlayerTurn, SQLiteType.INTEGER));
+            _fieldCollection.Add(TurnFieldNames.ThrownPoints, new DataField(TurnFieldNames.ThrownPoints, SQLiteType.INTEGER));
+
+
         }
 
         protected override void SetNameAndTarget()
@@ -15,5 +23,14 @@ namespace DARTS.Data.DataObjectFactories
             TableName = "TURN";
             TargetObject = typeof(Turn);
         }
+    }
+
+    public static class TurnFieldNames
+    {
+        public const string Id = "Id";
+        public const string LegId = "LegId";
+        public const string PlayerTurn = "PlayerTurn";
+        public const string Throws = "Throws";
+        public const string ThrownPoints = "ThrownPoints";
     }
 }

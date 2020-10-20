@@ -14,8 +14,10 @@ namespace DARTS.Data.DataObjectFactories
             CodeField idField = new CodeField(SetFieldNames.Id, true);
             _fieldCollection.Add(SetFieldNames.Id, idField);
 
+            
             _collectionFieldCollection.Add(SetFieldNames.Legs, new CollectionField(SetFieldNames.Legs, typeof(LegFactory), LegFieldNames.SetId, idField));
 
+            _fieldCollection.Add(SetFieldNames.MatchId, new CodeField(SetFieldNames.MatchId));
             _fieldCollection.Add(SetFieldNames.NumLegs, new DataField(SetFieldNames.NumLegs, SQLiteType.INTEGER));
             _fieldCollection.Add(SetFieldNames.Player1LegsWon, new DataField(SetFieldNames.Player1LegsWon, SQLiteType.INTEGER));
             _fieldCollection.Add(SetFieldNames.Player2LegsWon, new DataField(SetFieldNames.Player2LegsWon, SQLiteType.INTEGER));

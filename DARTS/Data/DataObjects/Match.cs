@@ -133,17 +133,23 @@ namespace DARTS.Data.DataObjects
             }
         }
 
+        private SetFactory SetFactory
+        {
+            get;
+            set;
+        }
+
         public void Start()
         {
             Sets = new BindingList<DataObjectBase>();
-
+            SetFactory = new SetFactory();
             if (BeginningPlayer.Equals(PlayerEnum.None))
             {
                 BeginningPlayer = ChooseRandomPlayer();
             }
 
             // TODO: impement factory pattern.
-            Set firstSet = new Set();
+            Set firstSet = (Set)SetFactory.Spawn();
             firstSet.BeginningPlayer = BeginningPlayer;
             firstSet.NumLegs = NumLegs;
             firstSet.SetState = PlayState.InProgress;
@@ -197,15 +203,15 @@ namespace DARTS.Data.DataObjects
         {
             if (CheckWin() == PlayerEnum.None)
             {
-                if (Sets[Sets.Count - 1].SetState == PlayState.InProgress) //If newest set still in progress, change the turn.
+                if (GetCurrentSet().SetState == PlayState.InProgress) //If newest set still in progress, change the turn.
                 {
-                    Sets[Sets.Count - 1].ChangeTurn();
+                    GetCurrentSet().ChangeTurn();
                 }
 
                 else //If newest set already finished, start another one 
                 {
-                    Set nextSet = new Set();
-                    nextSet.BeginningPlayer = Sets[Sets.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                    Set nextSet = (Set)SetFactory.Spawn();
+                    nextSet.BeginningPlayer = GetCurrentSet().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
                     nextSet.NumLegs = NumLegs;
                     nextSet.SetState = PlayState.InProgress;
 
@@ -222,7 +228,7 @@ namespace DARTS.Data.DataObjects
             return (PlayerEnum)random.Next((int)PlayerEnum.Player1, (int)PlayerEnum.Player2 + 1);
         }
 
-        public Player WinningPlayerObject
+        public DataObjectBase WinningPlayerObject
         {
             get
             {
@@ -242,12 +248,12 @@ namespace DARTS.Data.DataObjects
         #region Helper functions
         public Set GetCurrentSet()
         {
-            return Sets[Sets.Count - 1];
+            return (Set)Sets[Sets.Count - 1];
         }
 
         public Leg GetCurrentLeg()
         {
-            return GetCurrentSet().Legs[GetCurrentSet().Legs.Count - 1];
+            return (Leg)GetCurrentSet().Legs[GetCurrentSet().Legs.Count - 1];
         }
 
         public Turn GetCurrentTurn()

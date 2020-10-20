@@ -25,7 +25,7 @@ namespace DARTS.Data.DataObjectFactories
             _objectFieldCollection.Add(MatchFieldNames.Player1, new ObjectField(MatchFieldNames.Player1, typeof(PlayerFactory), idField));
             _objectFieldCollection.Add(MatchFieldNames.Player2, new ObjectField(MatchFieldNames.Player2, typeof(PlayerFactory), idField));
 
-            _collectionFieldCollection.Add(MatchFieldNames.Sets, new CollectionField(MatchFieldNames.Sets, typeof(SetFactory),SetFieldNames.MatchId, idField))
+            _collectionFieldCollection.Add(MatchFieldNames.Sets, new CollectionField(MatchFieldNames.Sets, typeof(SetFactory), SetFieldNames.MatchId, idField));
         }
 
         protected override void SetNameAndTarget()

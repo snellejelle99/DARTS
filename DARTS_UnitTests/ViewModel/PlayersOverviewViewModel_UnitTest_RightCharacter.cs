@@ -26,11 +26,11 @@ namespace DARTS_UnitTests.ViewModel
             {
                 Player p = new Player();
                 p.Name = "player" + Convert.ToString(i);
-                p.ID = i;
+                p.Id = i;
                 players.Add(p);
             }
 
-            players.Add(new Player() { Name = "草", ID = 4 });
+            players.Add(new Player() { Name = "草", Id = 4 });
             overview = new PlayersOverviewViewModel(players);
         }
 

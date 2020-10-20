@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjects;
+﻿using DARTS.Data.DataObjectFactories;
+using DARTS.Data.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace DARTS.Data
             {
                 Player player = new Player();
                 player.Name = "player" + Convert.ToString(i);
-                player.ID = i;
+                player.Id = i;
                 dummyPlayers.Add(player);
             }
 
@@ -53,7 +54,7 @@ namespace DARTS.Data
             dummyTurnList.Add(dummyTurn);
             dummyLeg.Turns = dummyTurnList;
 
-            List<Leg> dummyLegList = new List<Leg>();
+            BindingList<DataObjectBase> dummyLegList = new BindingList<DataObjectBase>();
             dummyLegList.Add(dummyLeg);
             dummySet.Legs = dummyLegList;
 
@@ -67,7 +68,7 @@ namespace DARTS.Data
                 match.NumSets = 3;
                 match.NumLegs = 5;
                 match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
-                List<Set> dummySetList = new List<Set>();
+                BindingList<DataObjectBase> dummySetList = new BindingList<DataObjectBase>();
                 for (int j = 0; j < 3; j++)
                 {
                     dummySetList.Add(dummySet);
@@ -81,10 +82,17 @@ namespace DARTS.Data
 
         public static Match GetDummyMatch()
         {
-            Player player1 = new Player();
+
+            PlayerFactory playerFactory = new PlayerFactory();
+            LegFactory legFactory = new LegFactory();
+            TurnFactory turnFactory = new TurnFactory();
+            MatchFactory matchFactory = new MatchFactory();
+            SetFactory setFactory = new SetFactory(
+                );
+            Player player1 = (Player)playerFactory.Spawn();
             player1.Name = "Klaas";
 
-            Player player2 = new Player();
+            Player player2 = (Player)playerFactory.Spawn();
             player2.Name = "Pieter";
 
             int numSets = 11;
@@ -93,12 +101,12 @@ namespace DARTS.Data
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
             BindingList<DataObjectBase> turns = new BindingList<DataObjectBase>();
-            Turn turn = new Turn();
+            Turn turn = (Turn)turnFactory.Spawn();
             turn.PlayerTurn = PlayerEnum.Player2;
             turns.Add(turn);
 
-            List<Leg> legs = new List<Leg>();
-            Leg leg = new Leg();
+            BindingList<DataObjectBase> legs = new BindingList<DataObjectBase>();
+            Leg leg = (Leg)legFactory.Spawn();
             leg.Player1LegScore = 441;
             leg.Player2LegScore = 501;
             leg.BeginningPlayer = beginningPlayer;
@@ -106,15 +114,15 @@ namespace DARTS.Data
             leg.Turns = turns;
             legs.Add(leg);
 
-            List<Set> sets = new List<Set>();
-            Set set = new Set();
+            BindingList<DataObjectBase> sets = new BindingList<DataObjectBase>();
+            Set set = (Set)setFactory.Spawn();
             set.NumLegs = numLegs;
             set.Player1LegsWon = 1;
             set.Player2LegsWon = 2;            
             set.Legs = legs;
             sets.Add(set);
 
-            Match match = new Match();
+            Match match = (Match)matchFactory.Spawn();
             match.Player1 = player1;
             match.Player2 = player2;
             match.NumSets = numSets;
