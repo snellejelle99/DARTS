@@ -8,6 +8,7 @@
         xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf" 
         xmlns:local="clr-namespace:DARTS"
+        xmlns:validationrules="clr-namespace:DARTS.ValidationRules"
         mc:Ignorable="d"
         Title="Startscreen" Height="600" Width="1000" ResizeMode="NoResize">
     <Window.Resources>
@@ -21,7 +22,7 @@
             <TextBox.Text>
                 <Binding Path="Player1" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" NotifyOnValidationError="True">
                     <Binding.ValidationRules>
-                        <local:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -33,18 +34,14 @@
             <TextBox.Text>
                 <Binding Path="Player2" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:TextBoxNotEmptyValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
 
         <Label Content="Choose starting player" Canvas.Left="631" Canvas.Top="150" FontSize="20" Width="226"/>
-        <ComboBox IsEditable="False" x:Name="PlayersCombo" Canvas.Left="631" Canvas.Top="183" Width="221" Height="30" SelectedIndex="0" VerticalContentAlignment="Center">
-            <ComboBoxItem Content="Random" FontSize="15"></ComboBoxItem>
-            <ComboBoxItem Content="Player one" FontSize="15"></ComboBoxItem>
-            <ComboBoxItem Content="Player two" FontSize="15"></ComboBoxItem>
-        </ComboBox>
+        <ComboBox IsEditable="False" x:Name="PlayersCombo" ItemsSource="{Binding Path=PlayerEnums}" SelectedValue="{Binding SelectedPlayerEnum}" Canvas.Left="631" Canvas.Top="183" Width="221" Height="30" SelectedIndex="0" VerticalContentAlignment="Center" />
 
         <TextBlock Text="Enter amount of sets in the match" Canvas.Top="265" FontSize="20" Canvas.Left="65" Width="320"/>
         <TextBox Name="tbSetsInMatch" Width="320" Canvas.Left="65" Canvas.Top="297" Height="30"
@@ -52,7 +49,7 @@
             <TextBox.Text>
                 <Binding Path="NumSets" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:SetsValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:SetsValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -68,12 +65,31 @@
             <TextBox.Text>
                 <Binding Path="NumLegs" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:LegsValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:LegsValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button x:Name="startMatchButton" Content="Start match" Canvas.Left="65" Canvas.Top="490" Width="120"  FontSize="20" Command="{Binding StartMatchButtonClickCommand}"/>
+
+        <Button Name="startButton" Content="Start match" Canvas.Left="65" Canvas.Top="492" Width="120" FontSize="20" Command="{Binding StartMatchButtonClickCommand}" CommandParameter="{Binding ElementName=StartMatchWindow}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding ElementName=tbPlayer1, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbPlayer2, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbSetsInMatch, Path=(Validation.HasError)}" Value="false"/>
+                                <Condition Binding="{Binding ElementName=tbLegsInSet, Path=(Validation.HasError)}" Value="false"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        
         <Button Content="Go back" Canvas.Left="833" Canvas.Top="495" Width="107" Command="{Binding BackToMainMenuButtonClickCommand}" CommandParameter="{Binding ElementName=StartMatchWindow}"/>
     </Canvas>
 </Window>

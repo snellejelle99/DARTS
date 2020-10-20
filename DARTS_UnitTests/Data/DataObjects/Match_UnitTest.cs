@@ -32,7 +32,7 @@ namespace DARTS_UnitTests.Datastructuur
             match.NumSets = numSets;
             match.NumLegs = numLegs;
             match.BeginningPlayer = beginningPlayer;
-            match.MatchState = ObjectState.InProgress;
+            match.MatchState = PlayState.InProgress;
 
             this.match = match;
         }
@@ -87,7 +87,7 @@ namespace DARTS_UnitTests.Datastructuur
 
             //Act
             match.ChangeTurn();
-          
+
             //Assert
             Assert.AreEqual(match.Sets[0].Legs[0].Turns.Count, 2, "New Turn was not created.");
             Assert.AreEqual(match.Sets[0].Legs[0].Turns[1].PlayerTurn, PlayerEnum.Player2, "It should be Player 2's turn now but it is not.");
@@ -115,7 +115,7 @@ namespace DARTS_UnitTests.Datastructuur
             match.Start();
             match.Sets[0].Legs[0].Player1LegScore = 0;
             match.Sets[0].Player1LegsWon = 2;
-           
+
             //Act
             match.ChangeTurn();
 

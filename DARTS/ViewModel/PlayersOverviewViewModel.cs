@@ -1,4 +1,5 @@
 ﻿using DARTS.Data.DataObjects;
+using DARTS.Data.Singletons;
 using DARTS.View;
 using DARTS.ViewModel.Command;
 using System;
@@ -75,7 +76,7 @@ namespace DARTS.ViewModel
         public PlayersOverviewViewModel(List<Player> players)
         {
             // view commands:
-            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(execute), canExecute => CanExecuteBackButtonClick());
+            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
             OpenPlayerMatchClickCommand = new RelayCommand(execute => OpenPlayerMatchButtonClick(execute), canExecute => CanExecuteOpenPlayerMatchButtonClick());
 
@@ -104,22 +105,9 @@ namespace DARTS.ViewModel
             _unfilteredPlayers.AddRange( _displayedPlayers);
         }
 
-        private void BackButtonClick(object parameter)
+        private void BackButtonClick()
         {
-            MainMenuView MainMenuWindow = new MainMenuView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            MainMenuViewModel MainMenuViewModel = new MainMenuViewModel();
-            MainMenuWindow.DataContext = MainMenuViewModel;
-            MainMenuWindow.Show();
-
-            (parameter as Window)?.Close();
-        }
-
-        private bool CanExecuteBackButtonClick()
-        {
-            return true;
+            GameInstance.Instance.MainWindow.ChangeToMainMenu();
         }
 
         private void OpenPlayerDetailsViewClick(object parameter)

@@ -11,7 +11,7 @@ namespace DARTS.Data.DataObjects
 
         private PlayerEnum _winnningPlayer, _beginningPlayer;
 
-        private ObjectState _legState = ObjectState.NotStarted;
+        private PlayState _legState = PlayState.NotStarted;
 
         private uint _player1LegScore, _player2LegScore;
         #endregion
@@ -35,7 +35,7 @@ namespace DARTS.Data.DataObjects
             set => _beginningPlayer = value;
         }
 
-        public ObjectState LegState
+        public PlayState LegState
         {
             get => _legState;
             set => _legState = value;
@@ -70,12 +70,12 @@ namespace DARTS.Data.DataObjects
             if (Player1LegScore == 0)
             {
                 WinningPlayer = PlayerEnum.Player1;
-                LegState = ObjectState.Finished;
+                LegState = PlayState.Finished;
             }
             else if (Player2LegScore == 0)
             {
                 WinningPlayer = PlayerEnum.Player2;
-                LegState = ObjectState.Finished;
+                LegState = PlayState.Finished;
             }
             else
             {
