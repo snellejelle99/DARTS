@@ -110,19 +110,6 @@ namespace DARTS.ViewModel
             GameInstance.Instance.MainWindow.ChangeToMainMenu();
         }
 
-        private void OpenPlayerDetailsViewClick(object parameter)
-        {
-            PlayerMatchStatisticsView PlayerMatchStatisticsWindow = new PlayerMatchStatisticsView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            PlayerMatchStatisticsViewModel PlayerMatchStatisticsModel = new PlayerMatchStatisticsViewModel(new List<Match>());
-            PlayerMatchStatisticsWindow.DataContext = PlayerMatchStatisticsWindow;
-            PlayerMatchStatisticsWindow.Show();
-
-            (parameter as Window)?.Close();
-        }
-
         private void FilterTextBoxTextChanged()
         {
             Filter(_filterTextBoxText);
@@ -153,15 +140,7 @@ namespace DARTS.ViewModel
 
         private void OpenPlayerMatchButtonClick(object parameter)
         {
-            PlayerMatchStatisticsView PlayerMatchStatisticsWindow = new PlayerMatchStatisticsView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            PlayerMatchStatisticsViewModel PlayerMatchStatisticsModel = new PlayerMatchStatisticsViewModel(new List<Match>());
-            PlayerMatchStatisticsWindow.DataContext = PlayerMatchStatisticsModel;
-            PlayerMatchStatisticsWindow.Show();
-
-            (parameter as Window)?.Close();
+            GameInstance.Instance.MainWindow.ChangeToPlayerMatchStatisticsView();
         }
 
         private bool CanExecuteOpenPlayerMatchButtonClick()
