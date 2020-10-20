@@ -1,6 +1,7 @@
 ﻿using DARTS.Data.DataObjects;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -48,7 +49,7 @@ namespace DARTS.Data
             dummyTuples.Add(dummyTuple3);
             dummyTurn.Throws = dummyTuples;
 
-            List<Turn> dummyTurnList = new List<Turn>();
+            BindingList<DataObjectBase> dummyTurnList = new BindingList<DataObjectBase>();
             dummyTurnList.Add(dummyTurn);
             dummyLeg.Turns = dummyTurnList;
 
@@ -91,7 +92,7 @@ namespace DARTS.Data
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
-            List<Turn> turns = new List<Turn>();
+            BindingList<DataObjectBase> turns = new BindingList<DataObjectBase>();
             Turn turn = new Turn();
             turn.PlayerTurn = PlayerEnum.Player2;
             turns.Add(turn);

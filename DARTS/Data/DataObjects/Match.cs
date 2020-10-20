@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography.X509Certificates;
@@ -7,7 +8,7 @@ using System.Windows.Media;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Match
+    public class Match : DataObjectBase
     {
         #region BackingStores
         private PlayerEnum _winnningPlayer, _beginningPlayer;
@@ -27,97 +28,114 @@ namespace DARTS.Data.DataObjects
 
 
         #region Properties
-        public Player Player1
+        public long Id
         {
-            get => _player1;
-            set => _player1 = value;
+            get => (long)FieldCollection[MatchFieldNames.Id].Value;
+            set => FieldCollection[MatchFieldNames.Id].Value = value;
+        }
+        public DataObjectBase Player1
+        {
+            get => (DataObjectBase)ObjectFieldCollection[MatchFieldNames.Player1].Value;
+            set => ObjectFieldCollection[MatchFieldNames.Player1].Value = value;
         }
 
-        public Player Player2
+        public DataObjectBase Player2
         {
-            get => _player2;
-            set => _player2 = value;
+            get => (DataObjectBase)ObjectFieldCollection[MatchFieldNames.Player2].Value;
+            set => ObjectFieldCollection[MatchFieldNames.Player2].Value = value;
         }
 
         public PlayerEnum WinningPlayer
         {
-            get => _winnningPlayer;
-            set => _winnningPlayer = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[MatchFieldNames.WinningPlayer].Value;
+                return (PlayerEnum)enumVal;
+            }
+            set => FieldCollection[MatchFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get => _beginningPlayer;
-            set => _beginningPlayer = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[MatchFieldNames.BeginningPlayer].Value;
+                return (PlayerEnum)enumVal;
+            }
+            set => FieldCollection[MatchFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState MatchState
         {
-            get => _matchState;
-            set => _matchState = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[MatchFieldNames.MatchState].Value;
+                return (PlayState)enumVal;
+            }
+            set => FieldCollection[MatchFieldNames.MatchState].Value = (int)value;
         }
 
-        public List<Set> Sets
+        public BindingList<DataObjectBase> Sets
         {
-            get => _sets;
-            set => _sets = value;
+            get => CollectionFieldCollection[MatchFieldNames.Sets].Value;
+            set => CollectionFieldCollection[MatchFieldNames.Sets].Value = value;
         }
 
         public int NumSets
         {
-            get => _numSets;
+            get => (int)FieldCollection[MatchFieldNames.NumSets].Value;
             set
             {
                 if (value % 2 == 0)
                 {
                     throw new ArgumentOutOfRangeException("Number of sets cannot be an even number.");
                 }
-                else _numSets = value;
+                else FieldCollection[MatchFieldNames.NumSets].Value = value;
             }
         }
 
         public int NumLegs
         {
-            get => _numLegs;
+            get => (int)FieldCollection[MatchFieldNames.NumLegs].Value;
             set
             {
                 if (value % 2 == 0)
                 {
-                    throw new ArgumentOutOfRangeException("Number of legs cannot be an even number.");
+                    throw new ArgumentOutOfRangeException("Number of sets cannot be an even number.");
                 }
-                else _numLegs = value;
+                else FieldCollection[MatchFieldNames.NumLegs].Value = value;
             }
         }
 
         public int Player1SetsWon
         {
-            get => _player1SetsWon;
+            get => (int)FieldCollection[MatchFieldNames.Player1SetsWon].Value;
             set
             {
                 if (value > NumSets)
                 {
                     throw new ArgumentOutOfRangeException("Sets won by a player can not be bigger than the number of sets in the match.");
                 }
-                else _player1SetsWon = value;
+                else FieldCollection[MatchFieldNames.Player1SetsWon].Value = value;
             }
         }
 
         public int Player2SetsWon
         {
-            get => _player2SetsWon;
+            get => (int)FieldCollection[MatchFieldNames.Player2SetsWon].Value;
             set
             {
                 if (value > NumSets)
                 {
                     throw new ArgumentOutOfRangeException("Sets won by a player can not be bigger than the number of sets in the match.");
                 }
-                else _player2SetsWon = value;
+                else FieldCollection[MatchFieldNames.Player2SetsWon].Value = value;
             }
         }
 
         public void Start()
         {
-            Sets = new List<Set>();
+            Sets = new BindingList<DataObjectBase>();
 
             if (BeginningPlayer.Equals(PlayerEnum.None))
             {
@@ -142,7 +160,7 @@ namespace DARTS.Data.DataObjects
         /// <returns>PlayerEnum.Player1 or Player2 if someone won, else returns PlayerEnum.None</returns>
         public PlayerEnum CheckWin()
         {
-            PlayerEnum winner = Sets[Sets.Count - 1].CheckWin();
+            PlayerEnum winner = GetCurrentSet().CheckWin();
 
             if (winner != PlayerEnum.None)
             {
@@ -234,7 +252,7 @@ namespace DARTS.Data.DataObjects
 
         public Turn GetCurrentTurn()
         {
-            return GetCurrentLeg().Turns[GetCurrentLeg().Turns.Count - 1];
+            return (Turn)GetCurrentLeg().Turns[GetCurrentLeg().Turns.Count - 1];
         }
         #endregion
 

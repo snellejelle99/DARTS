@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Turn
+    public class Turn : DataObjectBase
     {
         #region BackingStores
         private PlayerEnum _playerTurn;

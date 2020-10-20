@@ -1,13 +1,14 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Leg
+    public class Leg : DataObjectBase
     {
         #region BackingStores
-        private List<Turn> _turns;
 
         private PlayerEnum _winnningPlayer, _beginningPlayer;
 
@@ -17,46 +18,58 @@ namespace DARTS.Data.DataObjects
         #endregion
 
         #region Properties
-        public List<Turn> Turns
+        public BindingList<DataObjectBase> Turns
         {
-            get => _turns;
-            set => _turns = value;
+            get => CollectionFieldCollection[LegFieldNames.Turns].Value;
+            set => CollectionFieldCollection[LegFieldNames.Turns].Value = value;
         }
 
         public PlayerEnum WinningPlayer
         {
-            get => _winnningPlayer;
-            set => _winnningPlayer = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[LegFieldNames.WinningPlayer].Value;
+                return (PlayerEnum)enumVal;
+            }
+            set => FieldCollection[LegFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get => _beginningPlayer;
-            set => _beginningPlayer = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[LegFieldNames.BeginningPlayer].Value;
+                return (PlayerEnum)enumVal;
+            }
+            set => FieldCollection[LegFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState LegState
         {
-            get => _legState;
-            set => _legState = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[LegFieldNames.LegState].Value;
+                return (PlayState)enumVal;
+            }
+            set => FieldCollection[LegFieldNames.LegState].Value = (int)value;
         }
 
         public uint Player1LegScore
         {
-            get => _player1LegScore;
-            set => _player1LegScore = value;
+            get => (uint)FieldCollection[LegFieldNames.Player1LegScore].Value;
+            set => FieldCollection[LegFieldNames.Player1LegScore].Value = value;
         }
 
         public uint Player2LegScore
         {
-            get => _player2LegScore;
-            set => _player2LegScore = value;
+            get => (uint)FieldCollection[LegFieldNames.Player1LegScore].Value;
+            set => FieldCollection[LegFieldNames.Player1LegScore].Value = value;
         }
         #endregion
 
         public void Start()
         {
-            Turns = new List<Turn>();
+            Turns = new BindingList<DataObjectBase>();
 
             // TODO: impement factory pattern.
             Turn firstTurn = new Turn();
@@ -90,7 +103,8 @@ namespace DARTS.Data.DataObjects
             // TODO: impement factory pattern.(?)
             // Create the next turn and assign the other player.
             Turn nextTurn = new Turn();
-            nextTurn.PlayerTurn = Turns[Turns.Count - 1].PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+            Turn currentTurn = Turns[Turns.Count - 1] as Turn;
+            nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
 
             Turns.Add(nextTurn);
         }

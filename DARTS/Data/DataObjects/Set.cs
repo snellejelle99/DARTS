@@ -1,10 +1,12 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Set
+    public class Set : DataObjectBase
     {
         private List<Leg> _legs;
 
@@ -16,73 +18,85 @@ namespace DARTS.Data.DataObjects
 
         private const int PlayerPoints = 501;
 
-        public List<Leg> Legs
+        public BindingList<DataObjectBase> Legs
         {
-            get => _legs;
-            set => _legs = value;
+            get => CollectionFieldCollection[SetFieldNames.Legs].Value;
+            set => CollectionFieldCollection[SetFieldNames.Legs].Value = value;
         }
 
         public PlayerEnum WinningPlayer
         {
-            get => _winnningPlayer;
-            set => _winnningPlayer = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[SetFieldNames.WinningPlayer].Value;
+                return (PlayerEnum)enumVal;
+            }
+            set => FieldCollection[SetFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get => _beginnningPlayer;
-            set => _beginnningPlayer = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[SetFieldNames.BeginningPlayer].Value;
+                return (PlayerEnum)enumVal;
+            }
+            set => FieldCollection[SetFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState SetState
         {
-            get => _setState;
-            set => _setState = value;
+            get
+            {
+                int enumVal = (int)FieldCollection[SetFieldNames.SetState].Value;
+                return (PlayState)enumVal;
+            }
+            set => FieldCollection[SetFieldNames.SetState].Value = (int)value;
         }
 
         public int NumLegs
         {
-            get => _numLegs;
+            get => (int)FieldCollection[MatchFieldNames.NumLegs].Value;
             set
             {
                 if (value % 2 == 0)
                 {
-                    throw new ArgumentOutOfRangeException("Number of legs cannot be an even number.");
+                    throw new ArgumentOutOfRangeException("Number of sets cannot be an even number.");
                 }
-                else _numLegs = value;
+                else FieldCollection[MatchFieldNames.NumLegs].Value = value;
             }
         }
 
         public int Player1LegsWon
         {
-            get => _player1LegsWon;
+            get => (int)FieldCollection[SetFieldNames.Player1LegsWon].Value;
             set
             {
                 if (value > NumLegs)
                 {
                     throw new ArgumentOutOfRangeException("Legs won by a player can not be bigger than the number of legs in the set.");
                 }
-                else _player1LegsWon = value;
+                else FieldCollection[SetFieldNames.Player1LegsWon].Value = value;
             }
         }
 
         public int Player2LegsWon
         {
-            get => _player2LegsWon;
+            get => (int)FieldCollection[SetFieldNames.Player2LegsWon].Value;
             set
             {
                 if (value > NumLegs)
                 {
                     throw new ArgumentOutOfRangeException("Legs won by a player can not be bigger than the number of legs in the set.");
                 }
-                else _player2LegsWon = value;
+                else FieldCollection[SetFieldNames.Player2LegsWon].Value = value;
             }
         }
 
 
         public void Start()
         {
-            Legs = new List<Leg>();
+            Legs = new BindingList<DataObjectBase>();
 
             // TODO: impement factory pattern.
             Leg firstLeg = new Leg();
@@ -97,7 +111,7 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum CheckWin()
         {
-            PlayerEnum winner = Legs[Legs.Count - 1].CheckWin();
+            PlayerEnum winner = (Legs[Legs.Count - 1] as Leg).CheckWin();
 
             if (winner != PlayerEnum.None)
             {

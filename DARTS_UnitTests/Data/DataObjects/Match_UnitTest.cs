@@ -62,7 +62,7 @@ namespace DARTS_UnitTests.Datastructuur
             match.Start();
 
             // Assert
-            Assert.AreEqual(match.Sets[0].Legs[0].Turns[0].PlayerTurn, beginningPlayer, "The given PlayerEnum isn't equal to the PlayerEnum in the first turn object.");
+            Assert.AreEqual(match.GetCurrentTurn().PlayerTurn, beginningPlayer, "The given PlayerEnum isn't equal to the PlayerEnum in the first turn object.");
         }
 
         [TestMethod]
@@ -90,7 +90,7 @@ namespace DARTS_UnitTests.Datastructuur
 
             //Assert
             Assert.AreEqual(match.Sets[0].Legs[0].Turns.Count, 2, "New Turn was not created.");
-            Assert.AreEqual(match.Sets[0].Legs[0].Turns[1].PlayerTurn, PlayerEnum.Player2, "It should be Player 2's turn now but it is not.");
+            Assert.AreEqual(match.GetCurrentTurn().PlayerTurn, PlayerEnum.Player2, "It should be Player 2's turn now but it is not.");
         }
 
         [TestMethod]
