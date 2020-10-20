@@ -20,9 +20,6 @@
             <Label Content="Amout of displayed players:" VerticalContentAlignment="Center" DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="150" VerticalAlignment="Stretch" Height="30"/>
         </DockPanel>
         <ListView ItemsSource="{Binding DisplayedMatches}" SelectedItem="{Binding SelectedItem}" x:Name="ListViewPlayersOverview"  VerticalAlignment="Stretch">
-            <!--<Style>
-                <Setter Property="HorizontalAlignment" Value=""/>
-            </Style>-->
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player Name" Width="150" ></GridViewColumn>

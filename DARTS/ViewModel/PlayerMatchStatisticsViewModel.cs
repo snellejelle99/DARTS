@@ -19,7 +19,6 @@ namespace DARTS.ViewModel
     {
         private List<Match> _displayedMatches = new List<Match>();
         private List<Match> _unfilteredMatches = new List<Match>();
-        private Match _selectedItem;
         private string _amountOfResultsLabelText = "";
         private string _filterTextBoxText = "";
 
@@ -40,17 +39,6 @@ namespace DARTS.ViewModel
                 if (_displayedMatches.Count != _unfilteredMatches.Count)
                     newAmountOfResultsLabelText += " out of " + Convert.ToString(_unfilteredMatches.Count);
                 AmountOfResultsLabelText = newAmountOfResultsLabelText;
-            }
-        }
-
-        public Match SelectedItem
-        {
-            get { return _selectedItem; }
-            set
-            {
-                _selectedItem = value;
-                if (_selectedItem != null && _displayedMatches.Count() > 0)
-                    OpenPlayerDetailsViewClick();
             }
         }
 
@@ -107,11 +95,6 @@ namespace DARTS.ViewModel
         private bool CanExecuteBackButtonClick()
         {
             return true;
-        }
-
-        private void OpenPlayerDetailsViewClick()
-        {
-            //TODO: Create a new window for player detail information, with _selectedItem as argument #28
         }
 
         private void FilterTextBoxTextChanged()

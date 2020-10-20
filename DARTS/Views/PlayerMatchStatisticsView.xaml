@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DARTS.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="435" d:DesignWidth="800">
     <DockPanel Margin="10,0,10,0">
         <DockPanel DockPanel.Dock="Top" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Button Command="{Binding BackButtonClickCommand}" DockPanel.Dock="Left" Height="24" x:Name="BackButton" Content="Back to main menu" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Stretch"/>
@@ -18,10 +18,7 @@
             <Label Content="{Binding AmountOfResultsLabelText}" VerticalContentAlignment="Center" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel"  HorizontalAlignment="Right" HorizontalContentAlignment="Left" Height="30" VerticalAlignment="Stretch" Width="91"/>
             <Label Content="Amout of displayed players:" VerticalContentAlignment="Center" DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="150" VerticalAlignment="Stretch" Height="30"/>
         </DockPanel>
-        <ListView ItemsSource="{Binding DisplayedMatches}" SelectedItem="{Binding SelectedItem}" x:Name="ListViewPlayersOverview"  VerticalAlignment="Stretch">
-            <!--<Style>
-                <Setter Property="HorizontalAlignment" Value=""/>
-            </Style>-->
+        <ListView ItemsSource="{Binding DisplayedMatches}" x:Name="ListViewPlayersOverview"  VerticalAlignment="Stretch">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player Name" Width="150" ></GridViewColumn>

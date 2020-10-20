@@ -78,7 +78,7 @@ namespace DARTS.ViewModel
             // view commands:
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
-            OpenPlayerMatchClickCommand = new RelayCommand(execute => OpenPlayerMatchButtonClick(execute), canExecute => CanExecuteOpenPlayerMatchButtonClick());
+            OpenPlayerMatchClickCommand = new RelayCommand(execute => OpenPlayerMatchButtonClick(), canExecute => CanExecuteOpenPlayerMatchButtonClick());
 
         // TEMP: SetListItems #29
             _unfilteredPlayers.AddRange(players);
@@ -138,7 +138,7 @@ namespace DARTS.ViewModel
             return _filterTextBoxText != "";
         }
 
-        private void OpenPlayerMatchButtonClick(object parameter)
+        private void OpenPlayerMatchButtonClick()
         {
             GameInstance.Instance.MainWindow.ChangeToPlayerMatchStatisticsView();
         }
