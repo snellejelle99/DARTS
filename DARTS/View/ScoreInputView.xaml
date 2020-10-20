@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DARTS"
+        xmlns:validationrules="clr-namespace:DARTS.ValidationRules"
         mc:Ignorable="d"
         Title="Score Input" Height="450" Width="800">
     <Grid>
@@ -89,7 +90,7 @@
             <TextBox x:Name="tbScoreInput" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" MaxLength="2">
                 <Binding Path="Throws[0]" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
@@ -99,7 +100,7 @@
             <TextBox x:Name="tbScoreInput2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" MaxLength="2">
                 <Binding Path="Throws[1]" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>
@@ -109,7 +110,7 @@
             <TextBox x:Name="tbScoreInput3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" MaxLength="2">
                 <Binding Path="Throws[2]" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <local:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
+                        <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox>

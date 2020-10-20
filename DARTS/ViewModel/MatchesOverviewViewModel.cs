@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
+using DARTS.Data.Singletons;
 using DARTS.View;
 using DARTS.ViewModel.Command;
 
@@ -72,7 +73,7 @@ namespace DARTS.ViewModel
         }
         public MatchesOverviewViewModel(List<Match> matches)
         {
-            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute));
+            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
             OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
@@ -122,17 +123,9 @@ namespace DARTS.ViewModel
             return _filterText != null && _filterText != "";
         }
 
-        private void BackToMainMenuButton_Click(object parameter)
+        private void BackToMainMenuButton_Click()
         {
-            MainMenuView mainMenuWindow = new MainMenuView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            MainMenuViewModel mainMenuWindowModel = new MainMenuViewModel();
-            mainMenuWindow.DataContext = mainMenuWindowModel;
-            mainMenuWindow.Show();
-
-            (parameter as Window).Close();
+            GameInstance.Instance.MainWindow.ChangeToMainMenu();
         }
 
         private void OpenMatchButton_Click()
