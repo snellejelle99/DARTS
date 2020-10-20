@@ -66,7 +66,6 @@ namespace DARTS.Data
                 match.NumLegs = 5;
                 match.Player1SetsWon = 0;
                 match.Player2SetsWon = 3;
-                match.MatchResult = match.Player1SetsWon.ToString() + " / " + match.Player2SetsWon.ToString();
                 match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
                
                 List<Set> dummySetList = new List<Set>();

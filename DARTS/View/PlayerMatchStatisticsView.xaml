@@ -20,13 +20,24 @@
             <Label Content="Amout of displayed players:" VerticalContentAlignment="Center" DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="150" VerticalAlignment="Stretch" Height="30"/>
         </DockPanel>
         <ListView ItemsSource="{Binding DisplayedMatches}" SelectedItem="{Binding SelectedItem}" x:Name="ListViewPlayersOverview"  VerticalAlignment="Stretch">
+            <!--<Style>
+                <Setter Property="HorizontalAlignment" Value=""/>
+            </Style>-->
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player Name" Width="150"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player Name" Width="150" ></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Player2.Name}" Header="Opponent Name" Width="150"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding NumLegs}" Header="Legs" Width="150"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding NumSets}" Header="Sets" Width="150"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding MatchResult}" Header="Winner" Width="150"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player1SetsWon}" Header="" Width="50"></GridViewColumn>
+                    <GridViewColumn Header="Score" Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="-" ></Label>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player2SetsWon}" Header="" Width="50"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
