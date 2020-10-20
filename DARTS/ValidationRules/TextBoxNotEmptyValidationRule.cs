@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 
-namespace DARTS
+namespace DARTS.ValidationRules
 {
     public class TextBoxNotEmptyValidationRule : ValidationRule
     {

@@ -1,13 +1,5 @@
-﻿using System;
-using DARTS.View;
-using DARTS.ViewModel;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using DARTS.Data;
+﻿using System.Windows;
+using DARTS.Data.Singletons;
 
 namespace DARTS
 {
@@ -35,6 +27,7 @@ namespace DARTS
 
             view.DataContext = viewModel;
             view.Show();
+            GameInstance.Instance.MainWindow.Show();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using DARTS.ViewModel;
 using DARTS.Data.DataObjectFactories;
 using System.Globalization;
-using DARTS;
+using DARTS.ValidationRules;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Controls;
 
