@@ -95,10 +95,11 @@ namespace DARTS.Data
             Player player2 = (Player)playerFactory.Spawn();
             player2.Name = "Pieter";
 
-            int numSets = 11;
+            int numSets = 3;
             int numLegs = 3;
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
+
 
             BindingList<DataObjectBase> turns = new BindingList<DataObjectBase>();
             Turn turn = (Turn)turnFactory.Spawn();
@@ -127,11 +128,11 @@ namespace DARTS.Data
             match.Player2 = player2;
             match.NumSets = numSets;
             match.NumLegs = numLegs;
-            match.Player1SetsWon = 5;
-            match.Player2SetsWon = 4;
-            match.Sets = sets;
+            //match.Player1SetsWon = 5;
+            //match.Player2SetsWon = 4;
+            //match.Sets = sets;
             match.BeginningPlayer = beginningPlayer;
-            match.MatchState = PlayState.InProgress;
+            //match.MatchState = PlayState.InProgress;
 
             return match;
         }

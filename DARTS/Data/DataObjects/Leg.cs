@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
@@ -71,6 +72,32 @@ namespace DARTS.Data.DataObjects
             get => (uint)FieldCollection[LegFieldNames.Player1LegScore].Value;
             set => FieldCollection[LegFieldNames.Player1LegScore].Value = value;
         }
+
+        public uint CurrentPlayerLegScore
+        {
+            get
+            {
+                switch(Turns.Last().PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        return _player1LegScore;
+                    default:
+                        return _player2LegScore;
+                }
+            }
+            set
+            {
+                switch (Turns.Last().PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        _player1LegScore = value;
+                        break;
+                    default:
+                        _player2LegScore = value;
+                        break;
+                }
+            }            
+        }
         #endregion
         private TurnFactory TurnFactory
         {
@@ -84,6 +111,7 @@ namespace DARTS.Data.DataObjects
             // TODO: impement factory pattern.
             Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
+            firstTurn.Throws = new List<Tuple<int, ScoreType>>();
 
             Turns.Add(firstTurn);
         }
@@ -116,7 +144,22 @@ namespace DARTS.Data.DataObjects
             Turn currentTurn = Turns[Turns.Count - 1] as Turn;
             nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
 
+            
+
             Turns.Add(nextTurn);
+        }
+
+        public void SubtractScore()
+        {
+            foreach (Tuple<int, ScoreType> dart in Turns.Last().Throws)
+            {
+                if (CurrentPlayerLegScore > dart.Item1) CurrentPlayerLegScore -= (uint)dart.Item1;
+                else if (CurrentPlayerLegScore == dart.Item1)
+                {
+                    if (dart.Item2 == ScoreType.Double || dart.Item2 == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
+                }
+                else break;
+            }
         }
 
         public Leg()
