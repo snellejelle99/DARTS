@@ -1,8 +1,10 @@
 ﻿using DARTS.Data.DataObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using DARTS.Functionality;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace DARTS_UnitTests.Datastructuur
 {
@@ -123,6 +125,99 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.AreEqual(match.Sets.Count, 2, "New Set was not created.");
             Assert.AreEqual(match.Sets[0].WinningPlayer, PlayerEnum.Player1, "Expected Player1 to win the Set but this was not the case.");
             Assert.AreEqual(match.Sets[1].BeginningPlayer, PlayerEnum.Player2, "Expected Player2 to be the BeginningPlayer for this set, but this was not the case.");
+        }
+
+        [TestMethod]
+        [DataRow(ScoreType.Miss, 0, 0)]
+        [DataRow(ScoreType.Single, 10, 10)]
+        [DataRow(ScoreType.Double, 10, 20)]
+        [DataRow(ScoreType.Triple, 10, 30)]
+        [DataRow(ScoreType.Bull, 25, 25)]
+        [DataRow(ScoreType.Bullseye, 50, 50)]
+        public void Should_Subtract_Proper_Value_From_Leg_Score(ScoreType scoreType, int throwScore, int subtractScore)
+        {
+            // Arrange
+            match.Start();
+            uint StartingLegScore = match.GetCurrentLeg().Player1LegScore;
+            match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(throwScore, scoreType));
+
+            //Act
+            match.GetCurrentLeg().SubtractScore();
+
+            //Assert
+            Assert.AreEqual(match.GetCurrentLeg().Player1LegScore, StartingLegScore - subtractScore);
+        }
+
+        [TestMethod]
+        [DataRow(-1)]
+        [DataRow(21)]
+        [DataRow(26)]
+        [DataRow(51)]
+        public void CalculateThrowScore_Should_Throw_Exception_When_ThrowScore_Is_Out_Of_Allowed_Range(int throwScore)
+        {
+            // Assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(()=>ProcessThrow.CalculateThrowScore(throwScore, ScoreType.Single));
+        }
+
+        [TestMethod]
+        [DataRow(20, ScoreType.Miss)]
+        [DataRow(25, ScoreType.Single)]
+        [DataRow(25, ScoreType.Double)]
+        [DataRow(25, ScoreType.Triple)]
+        [DataRow(20, ScoreType.Bull)]
+        [DataRow(20, ScoreType.Bullseye)]
+        public void CalculateThrowScore_Should_Throw_Exception_When_ThrowScore_Does_Not_Match_ScoreType(int throwScore, ScoreType scoreType)
+        {
+            // Assert
+            Assert.ThrowsException<ArgumentException>(() => ProcessThrow.CalculateThrowScore(throwScore, scoreType));
+        }
+
+        [TestMethod]
+        public void Should_Set_Score_To_0_When_Score_Is_Double()
+        {
+            // Arrange
+            match.Start();
+            uint StartingLegScore = match.GetCurrentLeg().Player1LegScore = 36;
+            int ThrowScore = 18;
+            match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(ThrowScore, ScoreType.Double));
+
+            //Act
+            match.GetCurrentLeg().SubtractScore();
+
+            //Assert
+            Assert.AreEqual(match.GetCurrentLeg().Player1LegScore, StartingLegScore - (ThrowScore * 2));
+        }
+
+        [TestMethod]
+        public void Should_Not_Set_Score_To_0_When_Score_Is_Not_Double()
+        {
+            // Arrange
+            match.Start();
+            uint StartingLegScore = match.GetCurrentLeg().Player1LegScore = 20;
+            int ThrowScore = 20;
+            match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(ThrowScore, ScoreType.Single));
+
+            //Act
+            match.GetCurrentLeg().SubtractScore();
+
+            //Assert
+            Assert.AreEqual(match.GetCurrentLeg().Player1LegScore, StartingLegScore);
+        }
+
+        [TestMethod]
+        public void Should_Set_Score_To_Score_Before_Throw_When_Throw_Exceeds_LegScore()
+        {
+            // Arrange
+            match.Start();
+            uint StartingLegScore = match.GetCurrentLeg().Player1LegScore = 35;
+            int ThrowScore = 18;
+            match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(ThrowScore, ScoreType.Double));
+
+            //Act            
+            match.GetCurrentLeg().SubtractScore();
+
+            //Assert
+            Assert.AreEqual(match.GetCurrentLeg().Player1LegScore, StartingLegScore);
         }
     }
 }
