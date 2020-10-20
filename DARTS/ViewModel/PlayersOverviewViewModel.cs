@@ -80,11 +80,11 @@ namespace DARTS.ViewModel
             OpenPlayerMatchClickCommand = new RelayCommand(execute => OpenPlayerMatchButtonClick(execute), canExecute => CanExecuteOpenPlayerMatchButtonClick());
 
         // TEMP: SetListItems #29
-        _unfilteredPlayers.AddRange(players);
+            _unfilteredPlayers.AddRange(players);
             DisplayedPlayers = players;
-
             // view data:
             if (players.Count == 0) GetPlayersOverviewData();
+            DisplayedPlayers = players;
             // TODO: Retrieve players to display #29:
             //_unfilteredPlayers = get list of players to display...;
             //DisplayedPlayers = _unfilteredPlayers;
