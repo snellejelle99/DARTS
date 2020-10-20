@@ -155,6 +155,7 @@ namespace DARTS.ViewModel
                         {
                             player1Amount180s += specifiedMatch.Sets[i].Legs[j].Turns[k].PlayerTurn == PlayerEnum.Player1 ? 1 : 0;
                             player2Amount180s += specifiedMatch.Sets[i].Legs[j].Turns[k].PlayerTurn == PlayerEnum.Player2 ? 1 : 0;
+                            totalAmount180s = player1Amount180s + player2Amount180s;
                         }
                     }
                 }
