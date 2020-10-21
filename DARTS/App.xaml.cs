@@ -24,14 +24,7 @@ namespace DARTS
 
             //window.Show();
 
-
-            ScoreInputView view = new ScoreInputView();
-            Match m = DummyData.GetDummyMatch();
-            
-            ScoreInputViewModel viewModel = new ScoreInputViewModel(m);
-            view.DataContext = viewModel;
-            view.Show();
-           // GameInstance.Instance.MainWindow.Show();
+            GameInstance.Instance.MainWindow.Show();
         }
     }
 }

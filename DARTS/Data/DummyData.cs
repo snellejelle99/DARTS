@@ -139,8 +139,7 @@ namespace DARTS.Data
             match.NumLegs = numLegs;
             match.Player1SetsWon = 0;
             match.Player2SetsWon = 0;
-            match.WinningPlayer = PlayerEnum.None;
-            //match.Sets = sets;
+            match.WinningPlayer = PlayerEnum.None;          
             match.BeginningPlayer = beginningPlayer;
             match.MatchState = PlayState.InProgress;
             match.Post();

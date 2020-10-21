@@ -123,7 +123,7 @@ namespace DARTS.Data.DataObjects
         {
             Legs = new BindingList<DataObjectBase>();
             LegFactory = new LegFactory();
-            // TODO: impement factory pattern.
+        
             Leg firstLeg = CreateNewLeg();
             firstLeg.BeginningPlayer = BeginningPlayer;
             Legs.Add(firstLeg);
