@@ -25,6 +25,11 @@ namespace DARTS.Data.DataObjects
             set => FieldCollection[LegFieldNames.Id].Value = value;
         }
 
+        public long SetId
+        {
+            get => (int)FieldCollection[LegFieldNames.SetId].Value;
+            set => FieldCollection[LegFieldNames.SetId].Value = value;
+        }
         public BindingList<DataObjectBase> Turns
         {
             get => CollectionFieldCollection[LegFieldNames.Turns].Value;
@@ -77,23 +82,23 @@ namespace DARTS.Data.DataObjects
         {
             get
             {
-                switch(Turns.Last().PlayerTurn)
+                switch(((Turn)Turns.Last()).PlayerTurn)
                 {
                     case PlayerEnum.Player1:
-                        return _player1LegScore;
+                        return Player1LegScore;
                     default:
-                        return _player2LegScore;
+                        return Player2LegScore;
                 }
             }
             set
             {
-                switch (Turns.Last().PlayerTurn)
+                switch (((Turn)Turns.Last()).PlayerTurn)
                 {
                     case PlayerEnum.Player1:
-                        _player1LegScore = value;
+                        Player1LegScore = value;
                         break;
                     default:
-                        _player2LegScore = value;
+                        Player2LegScore = value;
                         break;
                 }
             }            
@@ -111,7 +116,9 @@ namespace DARTS.Data.DataObjects
             // TODO: impement factory pattern.
             Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
-            firstTurn.Throws = new List<Tuple<int, ScoreType>>();
+            firstTurn.ThrownPoints = 0;
+            firstTurn.Throws = new BindingList<DataObjectBase>();
+            firstTurn.LegId = Id;
 
             Turns.Add(firstTurn);
         }
@@ -143,7 +150,8 @@ namespace DARTS.Data.DataObjects
             Turn nextTurn = (Turn)TurnFactory.Spawn();
             Turn currentTurn = Turns[Turns.Count - 1] as Turn;
             nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-
+            nextTurn.ThrownPoints = 0;
+            nextTurn.LegId = Id;
             
 
             Turns.Add(nextTurn);
@@ -151,18 +159,18 @@ namespace DARTS.Data.DataObjects
 
         public void SubtractScore()
         {
-            foreach (Tuple<int, ScoreType> dart in Turns.Last().Throws)
+            foreach (Throw dart in ((Turn)Turns.Last()).Throws)
             {
-                if (CurrentPlayerLegScore > dart.Item1) CurrentPlayerLegScore -= (uint)dart.Item1;
-                else if (CurrentPlayerLegScore == dart.Item1)
+                if (CurrentPlayerLegScore > dart.Score) CurrentPlayerLegScore -= (uint)dart.Score;
+                else if (CurrentPlayerLegScore == dart.Score)
                 {
-                    if (dart.Item2 == ScoreType.Double || dart.Item2 == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
+                    if (dart.ScoreType == ScoreType.Double || dart.ScoreType == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
                 }
                 else break;
             }
         }
 
-        public Leg()
+        private Leg() : base()
         {
 
         }

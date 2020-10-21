@@ -1,5 +1,9 @@
 ﻿using System.Windows;
+using DARTS.Data;
+using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;
+using DARTS.View;
+using DARTS.ViewModel;
 
 namespace DARTS
 {
@@ -22,12 +26,12 @@ namespace DARTS
 
 
             ScoreInputView view = new ScoreInputView();
-
-            ScoreInputViewModel viewModel = new ScoreInputViewModel(DummyData.GetDummyMatch());
-
+            Match m = DummyData.GetDummyMatch();
+            
+            ScoreInputViewModel viewModel = new ScoreInputViewModel(m);
             view.DataContext = viewModel;
             view.Show();
-            GameInstance.Instance.MainWindow.Show();
+           // GameInstance.Instance.MainWindow.Show();
         }
     }
 }

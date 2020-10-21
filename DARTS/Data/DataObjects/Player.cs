@@ -28,7 +28,7 @@ namespace DARTS.Data.DataObjects
 
         #endregion
 
-        public Player()
+        private Player() : base()
         {
 
         }
