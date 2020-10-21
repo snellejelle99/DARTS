@@ -157,7 +157,6 @@ namespace DARTS.Data.DataObjects
             newSet.SetState = PlayState.InProgress;
             newSet.Player1LegsWon = 0;
             newSet.Player2LegsWon = 0;
-            newSet.MatchId = Id;
             newSet.Post();
             return newSet;
         }
