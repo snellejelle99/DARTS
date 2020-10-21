@@ -109,17 +109,23 @@ namespace DARTS.Data.DataObjects
             set;
         }
 
+        public Leg CreateNewLeg()
+        {
+            Leg newLeg = (Leg)LegFactory.Spawn();
+            newLeg.Player1LegScore = PlayerPoints;
+            newLeg.Player2LegScore = PlayerPoints;
+            newLeg.LegState = PlayState.InProgress;
+
+            return newLeg;
+        }
+
         public void Start()
         {
             Legs = new BindingList<DataObjectBase>();
             LegFactory = new LegFactory();
             // TODO: impement factory pattern.
-            Leg firstLeg = (Leg)LegFactory.Spawn();
+            Leg firstLeg = CreateNewLeg();
             firstLeg.BeginningPlayer = BeginningPlayer;
-            firstLeg.Player1LegScore = PlayerPoints;
-            firstLeg.Player2LegScore = PlayerPoints;
-            firstLeg.LegState = PlayState.InProgress;
-
             Legs.Add(firstLeg);
             firstLeg.Start();
         }
@@ -181,7 +187,7 @@ namespace DARTS.Data.DataObjects
             return (Leg)Legs[Legs.Count - 1];
         }
 
-        public Set()
+        private Set() : base()
         {
 
         }

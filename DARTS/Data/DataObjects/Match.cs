@@ -139,6 +139,18 @@ namespace DARTS.Data.DataObjects
             set;
         }
 
+        public Set CreateNewSet()
+        {
+            Set newSet = (Set)SetFactory.Spawn();
+            newSet.NumLegs = NumLegs;
+            newSet.SetState = PlayState.InProgress;
+            newSet.Player1LegsWon = 0;
+            newSet.Player2LegsWon = 0;
+            newSet.MatchId = Id;
+            newSet.Post();
+            return newSet;
+        }
+
         public void Start()
         {
             Sets = new BindingList<DataObjectBase>();
@@ -149,11 +161,8 @@ namespace DARTS.Data.DataObjects
             }
 
             // TODO: impement factory pattern.
-            Set firstSet = (Set)SetFactory.Spawn();
+            Set firstSet = CreateNewSet();
             firstSet.BeginningPlayer = BeginningPlayer;
-            firstSet.NumLegs = NumLegs;
-            firstSet.SetState = PlayState.InProgress;
-
             Sets.Add(firstSet);
             firstSet.Start();
         }
@@ -210,10 +219,8 @@ namespace DARTS.Data.DataObjects
 
                 else //If newest set already finished, start another one 
                 {
-                    Set nextSet = (Set)SetFactory.Spawn();
+                    Set nextSet = CreateNewSet();
                     nextSet.BeginningPlayer = GetCurrentSet().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-                    nextSet.NumLegs = NumLegs;
-                    nextSet.SetState = PlayState.InProgress;
 
                     Sets.Add(nextSet);
                     nextSet.Start();
@@ -262,7 +269,7 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
-        public Match()
+        private Match() : base()
         {
         }
     }
