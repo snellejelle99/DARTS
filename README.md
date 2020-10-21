@@ -2,7 +2,10 @@
 ![CI/CD Pipeline](https://github.com/snellejelle99/DARTS/workflows/CI/CD%20Pipeline/badge.svg)
 
 ## Description
-project info
+This project is made for the subject *management during graduation* by software engeneering students at NHL Stenden Hogeschool.
+The goal of this project is to test the software aspect management.
+We used github actions, git-flow model and pull-request with issues to show this aspect in this version control environment Github.
+For this project had to be made a dart competition tracker application based on the requirements of the product owners (teachers).
 
 ### Used Rules & Requirements
 This dart tracking application is build with the following rules and requirements in mind:
