@@ -71,7 +71,7 @@ namespace DARTS.Data
 
             for (int i = 0; i < 3; i++)
             {
-                Match match = new Match();
+                Match match = matchFactory.Spawn() as Match;
                 match.Player1 = dummyPlayers[i];
                 match.Player2 = dummyPlayers[i + 3];
                 match.NumSets = 3;
@@ -100,13 +100,10 @@ namespace DARTS.Data
 
             Player player1 = (Player)playerFactory.Spawn();
             player1.Name = "Klaas";
-            player1.Post();
-
+            
             Player player2 = (Player)playerFactory.Spawn();
             player2.Name = "Pieter";
-            player2.Post();
-            
-
+              
             int numSets = 3;
             int numLegs = 3;
 
@@ -146,8 +143,9 @@ namespace DARTS.Data
             //match.Sets = sets;
             match.BeginningPlayer = beginningPlayer;
             match.MatchState = PlayState.InProgress;
+            match.Post();
             match.Start();
-            //match.Post();
+            
             return match;
         }
     }

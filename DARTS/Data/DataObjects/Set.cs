@@ -127,7 +127,8 @@ namespace DARTS.Data.DataObjects
             Leg firstLeg = CreateNewLeg();
             firstLeg.BeginningPlayer = BeginningPlayer;
             Legs.Add(firstLeg);
-            firstLeg.Start();
+            Post();
+            firstLeg.Start();       
         }
 
         public PlayerEnum CheckWin()
@@ -171,13 +172,10 @@ namespace DARTS.Data.DataObjects
             else
             {
                 // TODO: impement factory pattern.
-                Leg nextLeg = (Leg)LegFactory.Spawn();
+                Leg nextLeg = CreateNewLeg();
                 nextLeg.BeginningPlayer = GetCurrentLeg().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-                nextLeg.Player1LegScore = PlayerPoints;
-                nextLeg.Player2LegScore = PlayerPoints;
-                nextLeg.LegState = PlayState.InProgress;
-
                 Legs.Add(nextLeg);
+                Post();
                 nextLeg.Start();
             }
         }

@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjects;
+﻿using DARTS.Data.DataObjectFactories;
+using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;
 using DARTS.View;
 using DARTS.ViewModel.Command;
@@ -93,12 +94,13 @@ namespace DARTS.ViewModel
 
         // TEMP: until data retrieval implementation is finished.
         private void GetPlayersOverviewData()
-        {    
+        {
+            PlayerFactory factory = new PlayerFactory();
             for (int i = 0; i < 3; i++)
             {
-                Player p = new Player();
+                Player p = factory.Spawn() as Player;
                 p.Name = "player" + Convert.ToString(i);
-                p.Id = i;
+                
                 _displayedPlayers.Add(p);
                 _displayedPlayers.Add(p);
             }

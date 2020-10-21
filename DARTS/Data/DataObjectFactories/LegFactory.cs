@@ -18,7 +18,9 @@ namespace DARTS.Data.DataObjectFactories
         protected override void InitializeFields()
         {
             CodeField idField = new CodeField("Id", true);
+            CodeField setIdField = new CodeField(LegFieldNames.SetId);
             _fieldCollection.Add("Id", idField);
+            _fieldCollection.Add(LegFieldNames.SetId, setIdField);
 
             _fieldCollection.Add(LegFieldNames.WinningPlayer, new DataField(LegFieldNames.WinningPlayer, SQLiteType.INTEGER));
             _fieldCollection.Add(LegFieldNames.BeginningPlayer, new DataField(LegFieldNames.BeginningPlayer, SQLiteType.INTEGER));
@@ -40,7 +42,7 @@ namespace DARTS.Data.DataObjectFactories
     public static class LegFieldNames
     {
         public const string Id = "Id";
-        public const string SetId = "Id";
+        public const string SetId = "SetId";
         public const string WinningPlayer = "WinningPlayer";
         public const string Turns = "Turns";
         public const string BeginningPlayer = "BeginningPlayer";

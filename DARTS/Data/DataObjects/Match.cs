@@ -33,6 +33,17 @@ namespace DARTS.Data.DataObjects
             get => (long)FieldCollection[MatchFieldNames.Id].Value;
             set => FieldCollection[MatchFieldNames.Id].Value = value;
         }
+
+        public long Player1Id
+        {
+            get => (long)FieldCollection[MatchFieldNames.Player1Id].Value;
+            set => FieldCollection[MatchFieldNames.Player1Id].Value = value;
+        }
+        public long Player2Id
+        {
+            get => (long)FieldCollection[MatchFieldNames.Player2Id].Value;
+            set => FieldCollection[MatchFieldNames.Player2Id].Value = value;
+        }
         public DataObjectBase Player1
         {
             get => (DataObjectBase)ObjectFieldCollection[MatchFieldNames.Player1].Value;
@@ -153,6 +164,8 @@ namespace DARTS.Data.DataObjects
 
         public void Start()
         {
+            Player1SetsWon = 0;
+            Player2SetsWon = 0;
             Sets = new BindingList<DataObjectBase>();
             SetFactory = new SetFactory();
             if (BeginningPlayer.Equals(PlayerEnum.None))
@@ -165,6 +178,7 @@ namespace DARTS.Data.DataObjects
             firstSet.BeginningPlayer = BeginningPlayer;
             Sets.Add(firstSet);
             firstSet.Start();
+            Post();
         }
         /// <summary>
         /// Called in ChangeTurn()
@@ -210,6 +224,7 @@ namespace DARTS.Data.DataObjects
         /// </summary>
         public void ChangeTurn()
         {
+            
             if (CheckWin() == PlayerEnum.None)
             {
                 if (GetCurrentSet().SetState == PlayState.InProgress) //If newest set still in progress, change the turn.
@@ -226,6 +241,7 @@ namespace DARTS.Data.DataObjects
                     nextSet.Start();
                 }
             }
+            Post();
         }
 
         private PlayerEnum ChooseRandomPlayer()

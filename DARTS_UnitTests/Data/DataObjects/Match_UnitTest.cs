@@ -5,6 +5,7 @@ using DARTS.Functionality;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using DARTS.Data.DataObjectFactories;
 
 namespace DARTS_UnitTests.Datastructuur
 {
@@ -17,10 +18,13 @@ namespace DARTS_UnitTests.Datastructuur
         public void TestInitialize()
         {
             // Arrange
-            Player player1 = new Player();
+            PlayerFactory playerFactory = new PlayerFactory();
+            MatchFactory matchFactory = new MatchFactory();
+
+            Player player1 = playerFactory.Spawn() as Player;
             player1.Name = "Klaas";
 
-            Player player2 = new Player();
+            Player player2 = playerFactory.Spawn() as Player;
             player2.Name = "Pieter";
 
             int numSets = 11;
@@ -28,13 +32,15 @@ namespace DARTS_UnitTests.Datastructuur
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
-            Match match = new Match();
+            Match match = matchFactory.Spawn() as Match;
             match.Player1 = player1;
             match.Player2 = player2;
             match.NumSets = numSets;
             match.NumLegs = numLegs;
             match.BeginningPlayer = beginningPlayer;
             match.MatchState = PlayState.InProgress;
+         
+            match.Post();
 
             this.match = match;
         }
@@ -44,6 +50,7 @@ namespace DARTS_UnitTests.Datastructuur
         {
             // Arrange
             match.BeginningPlayer = PlayerEnum.None;
+            //match.Post();
 
             // Act
             match.Start();
@@ -59,6 +66,7 @@ namespace DARTS_UnitTests.Datastructuur
             // Arrange
             PlayerEnum beginningPlayer = PlayerEnum.Player2;
             match.BeginningPlayer = beginningPlayer;
+            //match.Post();
 
             // Act
             match.Start();
@@ -73,9 +81,11 @@ namespace DARTS_UnitTests.Datastructuur
             // Arrange
             match.Start();
             match.GetCurrentLeg().Player1LegScore = 0;
+            //match.Post();
 
             // Act
             match.ChangeTurn();
+            //match.Post();
 
             // Assert
             Set firstSet = (Set)match.Sets[0];
@@ -122,6 +132,7 @@ namespace DARTS_UnitTests.Datastructuur
             Leg firstLeg = firstSet.Legs[0] as Leg;
             firstLeg.Player1LegScore = 0;
             firstSet.Player1LegsWon = 2;
+            match.Post();
 
             //Act
             match.ChangeTurn();

@@ -11,8 +11,12 @@ namespace DARTS.Data.DataObjectFactories
     {
         protected override void InitializeFields()
         {
-            CodeField idField = new CodeField("Id", true);
-            _fieldCollection.Add("Id", idField);
+            CodeField idField = new CodeField(MatchFieldNames.Id, true);
+            CodeField player1IdField = new CodeField(MatchFieldNames.Player1Id);
+            CodeField player2IdField = new CodeField(MatchFieldNames.Player2Id);
+            _fieldCollection.Add(MatchFieldNames.Id, idField);
+            _fieldCollection.Add(MatchFieldNames.Player1Id, player1IdField);
+            _fieldCollection.Add(MatchFieldNames.Player2Id, player2IdField);
 
             _fieldCollection.Add(MatchFieldNames.WinningPlayer, new DataField(MatchFieldNames.WinningPlayer, SQLiteType.INTEGER));
             _fieldCollection.Add(MatchFieldNames.BeginningPlayer, new DataField(MatchFieldNames.BeginningPlayer, SQLiteType.INTEGER));
@@ -22,8 +26,8 @@ namespace DARTS.Data.DataObjectFactories
             _fieldCollection.Add(MatchFieldNames.Player1SetsWon, new DataField(MatchFieldNames.Player1SetsWon, SQLiteType.INTEGER));
             _fieldCollection.Add(MatchFieldNames.Player2SetsWon, new DataField(MatchFieldNames.Player2SetsWon, SQLiteType.INTEGER));
 
-            _objectFieldCollection.Add(MatchFieldNames.Player1, new ObjectField(MatchFieldNames.Player1, typeof(PlayerFactory), idField));
-            _objectFieldCollection.Add(MatchFieldNames.Player2, new ObjectField(MatchFieldNames.Player2, typeof(PlayerFactory), idField));
+            _objectFieldCollection.Add(MatchFieldNames.Player1, new ObjectField(MatchFieldNames.Player1, typeof(PlayerFactory), player1IdField));
+            _objectFieldCollection.Add(MatchFieldNames.Player2, new ObjectField(MatchFieldNames.Player2, typeof(PlayerFactory), player2IdField));
 
             _collectionFieldCollection.Add(MatchFieldNames.Sets, new CollectionField(MatchFieldNames.Sets, typeof(SetFactory), SetFieldNames.MatchId, idField));
         }
@@ -38,6 +42,8 @@ namespace DARTS.Data.DataObjectFactories
     public static class MatchFieldNames
     {
         public const string Id = "Id";
+        public const string Player1Id = "Player1Id";
+        public const string Player2Id = "Player2Id";
         public const string Player1 = "Player1";
         public const string Player2 = "Player2";
         public const string WinningPlayer = "WinningPlayer";

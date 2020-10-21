@@ -15,6 +15,7 @@ namespace DARTS.Data.DataObjectFactories
             _fieldCollection.Add(TurnFieldNames.PlayerTurn, new DataField(TurnFieldNames.PlayerTurn, SQLiteType.INTEGER));
             _fieldCollection.Add(TurnFieldNames.ThrownPoints, new DataField(TurnFieldNames.ThrownPoints, SQLiteType.INTEGER));
 
+            _collectionFieldCollection.Add(TurnFieldNames.Throws, new CollectionField(TurnFieldNames.Throws, typeof(ThrowFactory), ThrowFieldNames.TurnId, idField));
 
         }
 

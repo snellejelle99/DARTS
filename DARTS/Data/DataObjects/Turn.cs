@@ -1,6 +1,7 @@
 ﻿using DARTS.Data.DataObjectFactories;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
@@ -38,10 +39,10 @@ namespace DARTS.Data.DataObjects
             set => FieldCollection[TurnFieldNames.PlayerTurn].Value = (int)value; 
         }
 
-        public List<Tuple<int, ScoreType>> Throws
+        public BindingList<DataObjectBase> Throws
         {
-            get => _throws;
-            set => _throws = value;
+            get => CollectionFieldCollection[TurnFieldNames.Throws].Value;
+            set => CollectionFieldCollection[TurnFieldNames.Throws].Value = value;
         }
 
         public int ThrownPoints
@@ -58,9 +59,9 @@ namespace DARTS.Data.DataObjects
         
         public void CalculateThrownPoints()
         {
-            foreach (Tuple<int, ScoreType> dart in Throws)
+            foreach (Throw dart in Throws)
             {
-                ThrownPoints += dart.Item1;
+                ThrownPoints += dart.Score;
             }
         }
     }

@@ -21,13 +21,13 @@ namespace DARTS.Data.DataObjects
         #region Properties
         public long Id
         {
-            get => (int)FieldCollection[LegFieldNames.Id].Value;
+            get => (long)FieldCollection[LegFieldNames.Id].Value;
             set => FieldCollection[LegFieldNames.Id].Value = value;
         }
 
         public long SetId
         {
-            get => (int)FieldCollection[LegFieldNames.SetId].Value;
+            get => (long)FieldCollection[LegFieldNames.SetId].Value;
             set => FieldCollection[LegFieldNames.SetId].Value = value;
         }
         public BindingList<DataObjectBase> Turns
@@ -74,8 +74,8 @@ namespace DARTS.Data.DataObjects
 
         public uint Player2LegScore
         {
-            get => (uint)FieldCollection[LegFieldNames.Player1LegScore].Value;
-            set => FieldCollection[LegFieldNames.Player1LegScore].Value = value;
+            get => (uint)FieldCollection[LegFieldNames.Player2LegScore].Value;
+            set => FieldCollection[LegFieldNames.Player2LegScore].Value = value;
         }
 
         public uint CurrentPlayerLegScore
