@@ -20,6 +20,6 @@ namespace DARTS.View
         public ScoreInputView()
         {
             InitializeComponent();
-        }
+        }     
     }
 }
