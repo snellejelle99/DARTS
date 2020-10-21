@@ -27,6 +27,9 @@
         <DataTemplate x:Name="ScoreInputViewTemplate" DataType="{x:Type viewmodels:ScoreInputViewModel}">
             <views:ScoreInputView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="PlayerMatchStatisticsViewTemplate" DataType="{x:Type viewmodels:PlayerMatchStatisticsViewModel}">
+            <views:PlayerMatchStatisticsView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <ContentControl Content="{Binding}"/>
