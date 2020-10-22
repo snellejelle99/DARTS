@@ -12,14 +12,16 @@ namespace DARTS.Data.DataObjects
 
         public long Id
         {
-            get => (int)FieldCollection[SetFieldNames.Id].Value;
+            get => (long)FieldCollection[SetFieldNames.Id].Value;
             set => FieldCollection[SetFieldNames.Id].Value = value;
         }
+
         public long MatchId
         {
-            get => (int)FieldCollection[SetFieldNames.MatchId].Value;
+            get => (long)FieldCollection[SetFieldNames.MatchId].Value;
             set => FieldCollection[SetFieldNames.MatchId].Value = value;
         }
+
         public BindingList<DataObjectBase> Legs
         {
             get => CollectionFieldCollection[SetFieldNames.Legs].Value;

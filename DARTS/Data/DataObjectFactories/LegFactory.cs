@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DARTS.Data.DataObjectFactories
 {
-    class LegFactory : DataObjectFactoryBase
+    public class LegFactory : DataObjectFactoryBase
     {
 
         public LegFactory() : base()
