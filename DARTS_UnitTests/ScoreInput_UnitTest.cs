@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using DARTS.ViewModel;
+using DARTS.Data.DataObjectFactories;
 using System.Globalization;
 using DARTS.ValidationRules;
 using System.ComponentModel.DataAnnotations;
@@ -21,11 +22,13 @@ namespace DARTS_UnitTests
         [TestInitialize]
         public void TestInitialize()
         {
+            PlayerFactory playerFactory = new PlayerFactory();
+            MatchFactory matchFactory = new MatchFactory();
             // Arrange
-            Player player1 = new Player();
+            Player player1 = (Player)playerFactory.Spawn();
             player1.Name = "Klaas";
 
-            Player player2 = new Player();
+            Player player2 = (Player)playerFactory.Spawn();
             player2.Name = "Pieter";
 
             int numSets = 11;
@@ -33,7 +36,7 @@ namespace DARTS_UnitTests
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
-            match = new Match();
+            match = (Match)matchFactory.Spawn();
             match.Player1 = player1;
             match.Player2 = player2;
             match.NumSets = numSets;

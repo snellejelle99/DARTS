@@ -1,103 +1,118 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Set
+    public class Set : DataObjectBase
     {
-        private List<Leg> _legs;
-
-        private PlayerEnum _winnningPlayer, _beginnningPlayer;
-
-        private PlayState _setState = PlayState.NotStarted;
-
-        private int _player1LegsWon, _player2LegsWon, _numLegs;
-
         private const int PlayerPoints = 501;
 
-        public List<Leg> Legs
+        public long Id
         {
-            get => _legs;
-            set => _legs = value;
+            get => (int)FieldCollection[SetFieldNames.Id].Value;
+            set => FieldCollection[SetFieldNames.Id].Value = value;
+        }
+        public long MatchId
+        {
+            get => (int)FieldCollection[SetFieldNames.MatchId].Value;
+            set => FieldCollection[SetFieldNames.MatchId].Value = value;
+        }
+        public BindingList<DataObjectBase> Legs
+        {
+            get => CollectionFieldCollection[SetFieldNames.Legs].Value;
+            set => CollectionFieldCollection[SetFieldNames.Legs].Value = value;
         }
 
         public PlayerEnum WinningPlayer
         {
-            get => _winnningPlayer;
-            set => _winnningPlayer = value;
+            get => (PlayerEnum)((int)FieldCollection[SetFieldNames.WinningPlayer].Value);
+            set => FieldCollection[SetFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get => _beginnningPlayer;
-            set => _beginnningPlayer = value;
+            get => (PlayerEnum)((int)FieldCollection[SetFieldNames.BeginningPlayer].Value);
+            set => FieldCollection[SetFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState SetState
         {
-            get => _setState;
-            set => _setState = value;
+            get => (PlayState)((int)FieldCollection[SetFieldNames.SetState].Value);
+            set => FieldCollection[SetFieldNames.SetState].Value = (int)value;
         }
 
         public int NumLegs
         {
-            get => _numLegs;
+            get => (int)FieldCollection[MatchFieldNames.NumLegs].Value;
             set
             {
                 if (value % 2 == 0)
                 {
-                    throw new ArgumentOutOfRangeException("Number of legs cannot be an even number.");
+                    throw new ArgumentOutOfRangeException("Number of sets cannot be an even number.");
                 }
-                else _numLegs = value;
+                else FieldCollection[MatchFieldNames.NumLegs].Value = value;
             }
         }
 
         public int Player1LegsWon
         {
-            get => _player1LegsWon;
+            get => (int)FieldCollection[SetFieldNames.Player1LegsWon].Value;
             set
             {
                 if (value > NumLegs)
                 {
                     throw new ArgumentOutOfRangeException("Legs won by a player can not be bigger than the number of legs in the set.");
                 }
-                else _player1LegsWon = value;
+                else FieldCollection[SetFieldNames.Player1LegsWon].Value = value;
             }
         }
 
         public int Player2LegsWon
         {
-            get => _player2LegsWon;
+            get => (int)FieldCollection[SetFieldNames.Player2LegsWon].Value;
             set
             {
                 if (value > NumLegs)
                 {
                     throw new ArgumentOutOfRangeException("Legs won by a player can not be bigger than the number of legs in the set.");
                 }
-                else _player2LegsWon = value;
+                else FieldCollection[SetFieldNames.Player2LegsWon].Value = value;
             }
         }
 
+        private LegFactory LegFactory
+        {
+            get;
+            set;
+        }
+
+        public Leg CreateNewLeg()
+        {
+            Leg newLeg = (Leg)LegFactory.Spawn();
+            newLeg.Player1LegScore = PlayerPoints;
+            newLeg.Player2LegScore = PlayerPoints;
+            newLeg.LegState = PlayState.InProgress;
+
+            return newLeg;
+        }
 
         public void Start()
         {
-            Legs = new List<Leg>();
-
-            // TODO: impement factory pattern.
-            Leg firstLeg = new Leg();
+            Legs = new BindingList<DataObjectBase>();
+            LegFactory = new LegFactory();
+        
+            Leg firstLeg = CreateNewLeg();
             firstLeg.BeginningPlayer = BeginningPlayer;
-            firstLeg.Player1LegScore = PlayerPoints;
-            firstLeg.Player2LegScore = PlayerPoints;
-            firstLeg.LegState = PlayState.InProgress;
-
             Legs.Add(firstLeg);
-            firstLeg.Start();
+            firstLeg.Start();       
         }
 
         public PlayerEnum CheckWin()
         {
-            PlayerEnum winner = Legs[Legs.Count - 1].CheckWin();
+            PlayerEnum winner = ((Leg)Legs[Legs.Count - 1]).CheckWin();
 
             if (winner != PlayerEnum.None)
             {
@@ -127,27 +142,28 @@ namespace DARTS.Data.DataObjects
         public void ChangeTurn()
         {
             //If nobody has won the leg yet change the turn.
-            if (Legs[Legs.Count - 1].LegState == PlayState.InProgress)
+            if (GetCurrentLeg().LegState == PlayState.InProgress)
             {
-                Legs[Legs.Count - 1].ChangeTurn();
+                GetCurrentLeg().ChangeTurn();
             }
 
             //If someone has won it start a new Leg and let the other player begin. Then start the leg.
             else
             {
                 // TODO: impement factory pattern.
-                Leg nextLeg = new Leg();
-                nextLeg.BeginningPlayer = Legs[Legs.Count - 1].BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-                nextLeg.Player1LegScore = PlayerPoints;
-                nextLeg.Player2LegScore = PlayerPoints;
-                nextLeg.LegState = PlayState.InProgress;
-
+                Leg nextLeg = CreateNewLeg();
+                nextLeg.BeginningPlayer = GetCurrentLeg().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
                 Legs.Add(nextLeg);
                 nextLeg.Start();
             }
         }
 
-        public Set()
+        public Leg GetCurrentLeg()
+        {
+            return (Leg)Legs[Legs.Count - 1];
+        }
+
+        private Set() : base()
         {
 
         }
