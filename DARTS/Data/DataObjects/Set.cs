@@ -107,13 +107,12 @@ namespace DARTS.Data.DataObjects
             Leg firstLeg = CreateNewLeg();
             firstLeg.BeginningPlayer = BeginningPlayer;
             Legs.Add(firstLeg);
-            Post();
             firstLeg.Start();       
         }
 
         public PlayerEnum CheckWin()
         {
-            PlayerEnum winner = (Legs[Legs.Count - 1] as Leg).CheckWin();
+            PlayerEnum winner = ((Leg)Legs[Legs.Count - 1]).CheckWin();
 
             if (winner != PlayerEnum.None)
             {
@@ -155,7 +154,6 @@ namespace DARTS.Data.DataObjects
                 Leg nextLeg = CreateNewLeg();
                 nextLeg.BeginningPlayer = GetCurrentLeg().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
                 Legs.Add(nextLeg);
-                Post();
                 nextLeg.Start();
             }
         }

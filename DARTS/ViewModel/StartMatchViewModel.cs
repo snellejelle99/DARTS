@@ -44,13 +44,13 @@ namespace DARTS.ViewModel
         private void StartMatchButton_Click()
         {
             // TODO: implement factory pattern.
-            Player player1 = PlayerFactory.Spawn() as Player;
+            Player player1 = (Player)PlayerFactory.Spawn();
             player1.Name = Player1;
 
-            Player player2 = PlayerFactory.Spawn() as Player;
+            Player player2 = (Player)PlayerFactory.Spawn();
             player2.Name = Player2;
 
-            Match match = MatchFactory.Spawn() as Match;
+            Match match = (Match)MatchFactory.Spawn();
             match.Player1 = player1;
             match.Player2 = player2;
             match.BeginningPlayer = SelectedPlayerEnum;

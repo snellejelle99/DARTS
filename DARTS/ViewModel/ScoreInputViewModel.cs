@@ -25,21 +25,12 @@ namespace DARTS.ViewModel
         #region Match object bindings
         public string Player1Name
         {
-            get
-            {
-                Player player1 = Match.Player1 as Player;
-                return player1.Name;
-            }
-            
+            get => ((Player)Match.Player1).Name;  
         }
 
         public string Player2Name
         {
-            get
-            {
-                Player player2 = Match.Player2 as Player;
-                return player2.Name;
-            }
+            get => ((Player)Match.Player2).Name;
         }
 
         public int Player1SetsWon

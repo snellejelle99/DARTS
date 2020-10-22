@@ -98,7 +98,7 @@ namespace DARTS.ViewModel
             PlayerFactory factory = new PlayerFactory();
             for (int i = 0; i < 3; i++)
             {
-                Player p = factory.Spawn() as Player;
+                Player p = (Player)factory.Spawn();
                 p.Name = "player" + Convert.ToString(i);
                 
                 _displayedPlayers.Add(p);

@@ -97,7 +97,6 @@ namespace DARTS.Data.DataObjects
             firstTurn.PlayerTurn = BeginningPlayer;
             firstTurn.ThrownPoints = 0;
             firstTurn.Throws = new BindingList<DataObjectBase>();
-            firstTurn.LegId = Id;
 
             Turns.Add(firstTurn);
         }
@@ -130,9 +129,7 @@ namespace DARTS.Data.DataObjects
             Turn currentTurn = Turns[Turns.Count - 1] as Turn;
             nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
             nextTurn.ThrownPoints = 0;
-            nextTurn.LegId = Id;
             
-
             Turns.Add(nextTurn);
         }
 

@@ -26,15 +26,15 @@ namespace DARTS_UnitTests.ViewModel
             List<Player> players = new List<Player>();
             for (int i = 0; i < playerAmount; i++)
             {
-                Player p = playerFactory.Spawn() as Player;
+                Player p = (Player)playerFactory.Spawn();
                 p.Name = "player" + Convert.ToString(i);
                 p.Id = i;
                 players.Add(p);
             }
 
-            Player asianGuy = playerFactory.Spawn() as Player;
-            asianGuy.Name = "草";
-            players.Add(asianGuy);
+            Player player = (Player)playerFactory.Spawn();
+            player.Name = "草";
+            players.Add(player);
 
             overview = new PlayersOverviewViewModel(players);
         }
