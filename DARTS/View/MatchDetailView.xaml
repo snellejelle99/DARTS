@@ -17,10 +17,10 @@
         <Label Content="{Binding TotalAmount180s}" ContentStringFormat="Total amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="337,109,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Player1Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="113,129,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Player2Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="584,129,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="ListViewSetsOverview"  ItemsSource="{Binding SetDetails}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}" Margin="10,184,574,10">
+        <ListView x:Name="ListViewSetsOverview"  ItemsSource="{Binding SpecifiedMatch.Sets}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}" Margin="10,184,574,10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Set" Width="Auto" DisplayMemberBinding="{Binding}" />
+                    <GridViewColumn Header="Set" Width="Auto" DisplayMemberBinding="{Binding SetDetails}" />
                 </GridView>
             </ListView.View>
         </ListView>

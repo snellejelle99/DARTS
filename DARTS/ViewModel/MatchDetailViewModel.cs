@@ -18,7 +18,7 @@ namespace DARTS.ViewModel
         private Match specifiedMatch;
         List<string> setDetails = new List<string>();
         List<string> legDetails = new List<string>();
-        private string _selectedItem;
+        private Set _selectedItem;
         private string player1Name;
         private string player2Name;
         private string setsWon;
@@ -127,11 +127,12 @@ namespace DARTS.ViewModel
         {
             get { return setDetails; }
         }
+
         public List<string> LegDetails
         {
             get { return legDetails; }
         }
-        public string SelectedItem
+        public Set SelectedItem
         {
             get { return _selectedItem; }
             set
@@ -202,6 +203,7 @@ namespace DARTS.ViewModel
                 setDetails.Add(string.Format("Set {0}: {1}-{2}: avg. thrown {3}", i + 1, specifiedMatch.Sets[i].Player1LegsWon, specifiedMatch.Sets[i].Player2LegsWon, totalThrown / amountOfThrows));
             }
         }
+
         private void OpenSetDetailsButton_Click()
         {
             //logic for displaying set details in leg listview
