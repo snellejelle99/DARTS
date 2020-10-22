@@ -211,7 +211,6 @@ namespace DARTS.Data.DataObjects
                     nextSet.Start();
                 }
             }
-            Post();
         }
 
         private PlayerEnum ChooseRandomPlayer()

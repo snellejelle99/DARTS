@@ -4,6 +4,7 @@ using DARTS.ViewModel.Command;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DARTS.ViewModel
@@ -19,13 +20,14 @@ namespace DARTS.ViewModel
         public int[] Throws { get; set; }
         public ScoreType[] ThrowTypes { get; set; }
         public ScoreType[] ScoreTypes { get; }
-        
+
         private Match Match { get; }
+        private Task AsyncPostTask { get; set; }
 
         #region Match object bindings
         public string Player1Name
         {
-            get => ((Player)Match.Player1).Name;  
+            get => ((Player)Match.Player1).Name;
         }
 
         public string Player2Name
@@ -122,7 +124,7 @@ namespace DARTS.ViewModel
             SubmitScoreButtonClickCommand = new RelayCommand(execute => SubmitScoreButtonClick(), canExecute => CanExecuteSubmitScoreButtonClick());
             PreviousTurnButtonClickCommand = new RelayCommand(execute => PreviousTurnButtonClick(), canExecute => CanExecutePreviousTurnButtonClick());
             StopMatchButtonClickCommand = new RelayCommand(execute => StopMatchButtonClick(), canExecute => true);
-        }        
+        }
 
         private void ResetScreen()
         {
@@ -145,12 +147,14 @@ namespace DARTS.ViewModel
         {
             for (int i = 0; i < Throws.Count(); i++)
             {
-                Match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(Throws[i], ThrowTypes[i]));                
+                Match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(Throws[i], ThrowTypes[i]));
             }
 
             Match.GetCurrentTurn().CalculateThrownPoints();
             Match.GetCurrentLeg().SubtractScore();
             Match.ChangeTurn();
+            AsyncPostTask = new Task(() => Match.Post());
+            AsyncPostTask.Start();
 
             ResetScreen();
         }
@@ -171,6 +175,8 @@ namespace DARTS.ViewModel
         /// <returns>True when all the throws have the correct ScoreType.</returns>
         private bool CanExecuteSubmitScoreButtonClick()
         {
+            if (AsyncPostTask != null && !AsyncPostTask.IsCompleted) return false;
+
             for (int i = 0; i < Throws.Length; i++)
             {
                 switch (ThrowTypes[i])

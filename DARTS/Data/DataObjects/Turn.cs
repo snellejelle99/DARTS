@@ -51,9 +51,9 @@ namespace DARTS.Data.DataObjects
         
         public void CalculateThrownPoints()
         {
-            foreach (Throw dart in Throws)
+            foreach (Throw thrownDart in Throws)
             {
-                ThrownPoints += dart.Score;
+                ThrownPoints += thrownDart.Score;
             }
         }
     }

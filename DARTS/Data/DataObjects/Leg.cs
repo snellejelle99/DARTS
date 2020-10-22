@@ -29,7 +29,7 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum WinningPlayer
         {
-            get => (PlayerEnum)((int)FieldCollection[LegFieldNames.WinningPlayer].Value);
+            get => (PlayerEnum)FieldCollection[LegFieldNames.WinningPlayer].Value;
             set => FieldCollection[LegFieldNames.WinningPlayer].Value = (int)value;
         }
 
@@ -92,11 +92,9 @@ namespace DARTS.Data.DataObjects
         {
             Turns = new BindingList<DataObjectBase>();
             TurnFactory = new TurnFactory();
-            // TODO: impement factory pattern.
             Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
             firstTurn.ThrownPoints = 0;
-            firstTurn.Throws = new BindingList<DataObjectBase>();
 
             Turns.Add(firstTurn);
         }

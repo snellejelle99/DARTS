@@ -21,7 +21,7 @@ namespace DARTS_UnitTests.Datastructuur
             PlayerFactory playerFactory = new PlayerFactory();
             MatchFactory matchFactory = new MatchFactory();
 
-            Player player1 =(Player)playerFactory.Spawn();
+            Player player1 = (Player)playerFactory.Spawn();
             player1.Name = "Klaas";
 
             Player player2 = (Player)playerFactory.Spawn();
@@ -32,15 +32,13 @@ namespace DARTS_UnitTests.Datastructuur
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
-            Match match = (Match)matchFactory.Spawn(); 
+            Match match = (Match)matchFactory.Spawn();
             match.Player1 = player1;
             match.Player2 = player2;
             match.NumSets = numSets;
             match.NumLegs = numLegs;
             match.BeginningPlayer = beginningPlayer;
             match.MatchState = PlayState.InProgress;
-         
-            match.Post();
 
             this.match = match;
         }
@@ -79,11 +77,11 @@ namespace DARTS_UnitTests.Datastructuur
             // Arrange
             match.Start();
             match.GetCurrentLeg().Player1LegScore = 0;
-      
+
 
             // Act
             match.ChangeTurn();
-       
+
 
             // Assert
             Set firstSet = (Set)match.Sets[0];
@@ -130,7 +128,6 @@ namespace DARTS_UnitTests.Datastructuur
             Leg firstLeg = firstSet.Legs[0] as Leg;
             firstLeg.Player1LegScore = 0;
             firstSet.Player1LegsWon = 2;
-            match.Post();
 
             //Act
             match.ChangeTurn();
@@ -170,7 +167,7 @@ namespace DARTS_UnitTests.Datastructuur
         public void CalculateThrowScore_Should_Throw_Exception_When_ThrowScore_Is_Out_Of_Allowed_Range(int throwScore)
         {
             // Assert
-            Assert.ThrowsException<ArgumentOutOfRangeException>(()=>ProcessThrow.CalculateThrowScore(throwScore, ScoreType.Single));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => ProcessThrow.CalculateThrowScore(throwScore, ScoreType.Single));
         }
 
         [TestMethod]
