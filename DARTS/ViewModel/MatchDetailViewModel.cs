@@ -15,8 +15,8 @@ namespace DARTS.ViewModel
 {
     public class MatchDetailViewModel : INotifyPropertyChanged
     {
-        private Match specifiedMatch { get; }
-        List<string> _setNames { get; } = new List<string>();
+        private Match specifiedMatch;
+        List<string> setDetails = new List<string>();
         private string player1Name;
         private string player2Name;
         private string setsWon;
@@ -25,19 +25,19 @@ namespace DARTS.ViewModel
         private int player2Amount180s = 0;
         private int player1AverageScore = 0;
         private int player2AverageScore = 0;
-        
+
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         public MatchDetailViewModel(Match match)
         {
-            //GetMatchesDetailData();
             specifiedMatch = match;
-
-            for (int i = 0; i < specifiedMatch.Sets.Count; i++)
-            {
-                _setNames.Add(string.Format("Set {0}", i + 1));
-            }
+            Player1Name = specifiedMatch.Player1.Name;
+            Player2Name = specifiedMatch.Player2.Name;
+            SetsWon = specifiedMatch.Player1SetsWon + " - " + specifiedMatch.Player2SetsWon;
+            CalculateAmountof180s();
+            AverageScorePerPlayer();
+            SetDetailsSetup();
         }
 
         public string SetsWon
@@ -114,23 +114,14 @@ namespace DARTS.ViewModel
             }
         }
 
-        //public Match SpecifiedMatch
-        //{
-        //    get { return specifiedMatch; }
-        //    set
-        //    {
-        //        specifiedMatch = value;
-        //        Player1Name = specifiedMatch.Player1.Name;
-        //        Player2Name = specifiedMatch.Player2.Name;
-        //        SetsWon = specifiedMatch.Player1SetsWon + " - " + specifiedMatch.Player2SetsWon;
-        //        CalculateAmountof180s();
-        //        AverageScorePerPlayer();
-        //    }
-        //}
-
-        public List<string> SetNames
+        public Match SpecifiedMatch
         {
-            get { return _setNames; }
+            get { return specifiedMatch; }
+        }
+
+        public List<string> SetDetails
+        {
+            get { return setDetails; }
         }
 
         private void AverageScorePerPlayer()
@@ -152,12 +143,12 @@ namespace DARTS.ViewModel
                     }
                 }
             }
-            if(player1AmountOfThrows != 0)
+            if (player1AmountOfThrows != 0)
                 player1AverageScore = player1TotalScore / player1AmountOfThrows;
-            if(player2AmountOfThrows != 0)
+            if (player2AmountOfThrows != 0)
                 player2AverageScore = player2TotalScore / player2AmountOfThrows;
         }
-        
+
         private void CalculateAmountof180s()
         {
             for (int i = 0; i < specifiedMatch.Sets.Count; i++)
@@ -177,10 +168,22 @@ namespace DARTS.ViewModel
             }
         }
 
-        //private void GetMatchesDetailData()
-        //{
-        //    //TODO: To be changed to get data from database: Function to add dummy data to matches overview:
-        //    SpecifiedMatch = DummyData.GetDummyMatch();
-        //}
+        private void SetDetailsSetup()
+        {
+            int totalThrown = 0;
+            int amountOfThrows = 0;
+            for (int i = 0; i < specifiedMatch.Sets.Count; i++)
+            {
+                for (int j = 0; j < specifiedMatch.Sets[i].Legs.Count; j++)
+                {
+                    for (int k = 0; k < specifiedMatch.Sets[i].Legs[j].Turns.Count; k++)
+                    {
+                        totalThrown += specifiedMatch.Sets[i].Legs[j].Turns[k].ThrownPoints;
+                        amountOfThrows += 1;
+                    }
+                }
+                setDetails.Add(string.Format("Set {0}: {1}-{2}: avg. thrown {3}", i + 1, specifiedMatch.Sets[i].Player1LegsWon, specifiedMatch.Sets[i].Player2LegsWon, totalThrown / amountOfThrows));
+            }
+        }
     }
 }

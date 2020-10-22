@@ -109,8 +109,8 @@ namespace DARTS.Data
             List<Set> sets = new List<Set>();
             Set set = new Set();
             set.NumLegs = numLegs;
-            set.Player1LegsWon = 1;
-            set.Player2LegsWon = 2;            
+            set.Player1LegsWon = 3;
+            set.Player2LegsWon = 1;            
             set.Legs = legs;
             sets.Add(set);
 

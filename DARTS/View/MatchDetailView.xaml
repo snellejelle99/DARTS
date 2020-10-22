@@ -12,20 +12,24 @@
         <Label Content="{Binding Player2Name}" FontSize="24" HorizontalAlignment="Left" Margin="593,48,0,0" VerticalAlignment="Top"/>
         <Label Content="Sets won:" FontSize="14" HorizontalAlignment="Left" Margin="373,9,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding SetsWon}" FontSize="24" HorizontalAlignment="Left" Margin="373,48,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Player1AverageScore}" FontSize="14" HorizontalAlignment="Left" Margin="134,95,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Player2AverageScore}" FontSize="14" HorizontalAlignment="Left" Margin="605,95,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Player1AverageScore}" ContentStringFormat="Average thrown: {0}" FontSize="14" HorizontalAlignment="Left" Margin="85,100,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Player2AverageScore}" ContentStringFormat="Average thrown: {0}" FontSize="14" Margin="605,95,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding TotalAmount180s}" ContentStringFormat="Total amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="337,109,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Player1Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="113,129,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Player2Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="584,129,0,0" VerticalAlignment="Top"/>
-        <ListView ItemsSource="{Binding SetNames}" Margin="66,163,66,24">
-            <GridView>
-                <GridViewColumn Header="Set" Width="150" DisplayMemberBinding="{Binding}" />
-            </GridView>
+        <ListView Name="lvUsers" Margin="0,198,0,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Age" Width="50" DisplayMemberBinding="{Binding Age}" />
+                </GridView>
+            </ListView.View>
+
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Player1SetsWon}"/>
+                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
