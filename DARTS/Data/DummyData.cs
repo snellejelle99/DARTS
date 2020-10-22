@@ -76,8 +76,11 @@ namespace DARTS.Data
                 match.Player2 = dummyPlayers[i + 3];
                 match.NumSets = 3;
                 match.NumLegs = 5;
+                match.Player1SetsWon = 0;
+                match.Player2SetsWon = 3;
                 match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
                 BindingList<DataObjectBase> dummySetList = new BindingList<DataObjectBase>();
+
                 for (int j = 0; j < 3; j++)
                 {
                     dummySetList.Add(dummySet);
