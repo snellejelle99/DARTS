@@ -110,7 +110,7 @@ namespace DARTS.ViewModel
             }
             else
             {
-                DisplayedMatches = _unfilteredMatches.Where(match => match.Player1.Name.ToLower().Contains(filterText.ToLower()) || match.Player2.Name.ToLower().Contains(filterText.ToLower())).ToList();
+                DisplayedMatches = _unfilteredMatches.Where(match => ((Player)match.Player1).Name.ToLower().Contains(filterText.ToLower()) || ((Player)match.Player2).Name.ToLower().Contains(filterText.ToLower())).ToList();
             }
         }
 
