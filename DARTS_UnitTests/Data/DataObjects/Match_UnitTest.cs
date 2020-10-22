@@ -39,6 +39,7 @@ namespace DARTS_UnitTests.Datastructuur
             match.NumLegs = numLegs;
             match.BeginningPlayer = beginningPlayer;
             match.MatchState = PlayState.InProgress;
+            match.pointsPerLeg = 501;
 
             this.match = match;
         }

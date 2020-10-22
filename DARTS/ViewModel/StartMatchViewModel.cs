@@ -21,6 +21,7 @@ namespace DARTS.ViewModel
         public string Player2 { get; set; }
         public int NumSets { get; set; }
         public int NumLegs { get; set; }
+        public bool Is501LegScore { get; set; }
         public PlayerEnum[] PlayerEnums { get; set; }
         public PlayerEnum SelectedPlayerEnum { get; set; }
 
@@ -35,6 +36,7 @@ namespace DARTS.ViewModel
             StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(), canExecute => CanExecuteStartMatchButtonClick());
             BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click());
 
+            Is501LegScore = true;
             PlayerEnums = (PlayerEnum[])Enum.GetValues(typeof(PlayerEnum));
             PlayerFactory = new PlayerFactory();
             MatchFactory = new MatchFactory();
@@ -68,6 +70,7 @@ namespace DARTS.ViewModel
             match.MatchState = PlayState.InProgress;
             match.NumSets = NumSets;
             match.NumLegs = NumLegs;
+            match.pointsPerLeg = Is501LegScore ? 501 : 301;
 
             match.Start();
             GameInstance.Instance.MainWindow.ChangeToScoreInputView(match);
