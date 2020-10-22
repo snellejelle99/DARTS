@@ -42,12 +42,24 @@ namespace DARTS.ViewModel
 
         private void StartMatchButton_Click()
         {
-            // TODO: implement factory pattern.
-            Player player1 = (Player)PlayerFactory.Spawn();
-            player1.Name = Player1;
+            Player player1, player2;
 
-            Player player2 = (Player)PlayerFactory.Spawn();
-            player2.Name = Player2;
+            List<DataObjectBase> results = PlayerFactory.Get("Name", Player1);
+            results.AddRange(PlayerFactory.Get("Name", Player2));
+            player1 = (Player)results.Find(x => ((Player)x).Name == Player1);
+            player2 = (Player)results.Find(x => ((Player)x).Name == Player2);
+
+            if (player1 == default)
+            {
+                player1 = (Player)PlayerFactory.Spawn();
+                player1.Name = Player1;
+            }
+
+            if (player2 == default)
+            {
+                player2 = (Player)PlayerFactory.Spawn();
+                player2.Name = Player2;
+            }
 
             Match match = (Match)MatchFactory.Spawn();
             match.Player1 = player1;
