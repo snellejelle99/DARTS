@@ -1,20 +1,25 @@
 ﻿using DARTS.Data.DataObjects;
+using DARTS.Functionality;
 using DARTS.ViewModel.Command;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 
 namespace DARTS.ViewModel
 {
-    public class ScoreInputViewModel
+    public class ScoreInputViewModel : INotifyPropertyChanged
     {
         public ICommand SubmitScoreButtonClickCommand { get; }
         public ICommand PreviousTurnButtonClickCommand { get; }
         public ICommand StopMatchButtonClickCommand { get; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public int[] Throws { get; set; }
         public ScoreType[] ThrowTypes { get; set; }
         public ScoreType[] ScoreTypes { get; }
+        
         private Match Match { get; }
 
         #region Match object bindings
@@ -40,29 +45,29 @@ namespace DARTS.ViewModel
 
         public int Player1LegsWon
         {
-            get => Match.Sets.Last().Player1LegsWon;
+            get => Match.GetCurrentSet().Player1LegsWon;
         }
 
         public int Player2LegsWon
         {
-            get => Match.Sets.Last().Player2LegsWon;
+            get => Match.GetCurrentSet().Player2LegsWon;
         }
 
         public uint Player1Score
         {
-            get => Match.Sets.Last().Legs.Last().Player1LegScore;
+            get => Match.GetCurrentLeg().Player1LegScore;
         }
 
         public uint Player2Score
         {
-            get => Match.Sets.Last().Legs.Last().Player2LegScore;
+            get => Match.GetCurrentLeg().Player2LegScore;
         }
 
         public string IsPlayer1Turn
         {
             get
             {
-                switch (Match.Sets.Last().Legs.Last().Turns.Last().PlayerTurn)
+                switch (Match.GetCurrentTurn().PlayerTurn)
                 {
                     case PlayerEnum.Player1:
                         return "Visible";
@@ -78,7 +83,7 @@ namespace DARTS.ViewModel
         {
             get
             {
-                switch (Match.Sets.Last().Legs.Last().Turns.Last().PlayerTurn)
+                switch (Match.GetCurrentTurn().PlayerTurn)
                 {
                     case PlayerEnum.Player1:
                         return "Hidden";
@@ -117,6 +122,13 @@ namespace DARTS.ViewModel
             SubmitScoreButtonClickCommand = new RelayCommand(execute => SubmitScoreButtonClick(), canExecute => CanExecuteSubmitScoreButtonClick());
             PreviousTurnButtonClickCommand = new RelayCommand(execute => PreviousTurnButtonClick(), canExecute => CanExecutePreviousTurnButtonClick());
             StopMatchButtonClickCommand = new RelayCommand(execute => StopMatchButtonClick(), canExecute => true);
+        }        
+
+        private void ResetScreen()
+        {
+            Throws = new int[3];
+            ThrowTypes = new ScoreType[] { 0, 0, 0 };
+            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(string.Empty));
         }
 
         private void StopMatchButtonClick()
@@ -131,7 +143,16 @@ namespace DARTS.ViewModel
 
         private void SubmitScoreButtonClick()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < Throws.Count(); i++)
+            {
+                Match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(Throws[i], ThrowTypes[i]));                
+            }
+
+            Match.GetCurrentTurn().CalculateThrownPoints();
+            Match.GetCurrentLeg().SubtractScore();
+            Match.ChangeTurn();
+
+            ResetScreen();
         }
 
         #region CanExecute Functions
@@ -162,6 +183,9 @@ namespace DARTS.ViewModel
                         break;
                     case ScoreType.Bullseye:
                         if (Throws[i] != 50) return false;
+                        break;
+                    default:
+                        if (!(Throws[i] > 0 && Throws[i] <= 20)) return false;
                         break;
                 }
             }

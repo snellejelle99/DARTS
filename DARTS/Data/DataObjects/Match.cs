@@ -114,7 +114,6 @@ namespace DARTS.Data.DataObjects
                 else _player2SetsWon = value;
             }
         }
-
         public void Start()
         {
             Sets = new List<Set>();

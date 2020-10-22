@@ -1,4 +1,5 @@
 ﻿using DARTS.Data.DataObjects;
+using DARTS.Data.Singletons;
 using DARTS.View;
 using DARTS.ViewModel.Command;
 using System;
@@ -25,6 +26,7 @@ namespace DARTS.ViewModel
 
         public ICommand BackButtonClickCommand { get; }
         public ICommand ClearFilterButtonClickCommand { get; }
+        public ICommand OpenPlayerMatchClickCommand { get; }
 
         public List<Player> DisplayedPlayers
         {
@@ -47,8 +49,6 @@ namespace DARTS.ViewModel
             set
             {
                 _selectedItem = value;
-                if (_selectedItem != null && _displayedPlayers.Count() > 0)
-                    OpenPlayerDetailsViewClick();
             }
         }
 
@@ -76,15 +76,16 @@ namespace DARTS.ViewModel
         public PlayersOverviewViewModel(List<Player> players)
         {
             // view commands:
-            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(execute));
+            BackButtonClickCommand = new RelayCommand(execute => BackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
+            OpenPlayerMatchClickCommand = new RelayCommand(execute => OpenPlayerMatchButtonClick(), canExecute => CanExecuteOpenPlayerMatchButtonClick());
 
-            // TEMP: SetListItems #29
+        // TEMP: SetListItems #29
             _unfilteredPlayers.AddRange(players);
             DisplayedPlayers = players;
-
             // view data:
             if (players.Count == 0) GetPlayersOverviewData();
+            DisplayedPlayers = players;
             // TODO: Retrieve players to display #29:
             //_unfilteredPlayers = get list of players to display...;
             //DisplayedPlayers = _unfilteredPlayers;
@@ -104,22 +105,9 @@ namespace DARTS.ViewModel
             _unfilteredPlayers.AddRange( _displayedPlayers);
         }
 
-        private void BackButtonClick(object parameter)
+        private void BackButtonClick()
         {
-            MainMenuView MainMenuWindow = new MainMenuView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            MainMenuViewModel MainMenuViewModel = new MainMenuViewModel();
-            MainMenuWindow.DataContext = MainMenuViewModel;
-            MainMenuWindow.Show();
-
-            (parameter as Window)?.Close();
-        }
-
-        private void OpenPlayerDetailsViewClick()
-        {
-            //TODO: Create a new window for player detail information, with _selectedItem as argument #28
+            GameInstance.Instance.MainWindow.ChangeToMainMenu();
         }
 
         private void FilterTextBoxTextChanged()
@@ -148,6 +136,16 @@ namespace DARTS.ViewModel
         private bool CanExecuteClearFilterButtonClick()
         {
             return _filterTextBoxText != "";
+        }
+
+        private void OpenPlayerMatchButtonClick()
+        {
+            GameInstance.Instance.MainWindow.ChangeToPlayerMatchStatisticsView();
+        }
+
+        private bool CanExecuteOpenPlayerMatchButtonClick()
+        {
+            return _selectedItem != null;
         }
     }
 }

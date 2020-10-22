@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
+using DARTS.Data.Singletons;
 using DARTS.View;
 using DARTS.ViewModel.Command;
 
@@ -20,11 +21,11 @@ namespace DARTS.ViewModel
 
         public OptionsMenuViewModel()
         {
-            ResetDatabaseButtonClickCommand = new RelayCommand(execute => ResetDatabaseButton_Click(execute), canExecute => CanExecuteResetDatabaseButtonClick());
-            GoBackButtonClickCommand = new RelayCommand(execute => GoBackButton_Click(execute));
+            ResetDatabaseButtonClickCommand = new RelayCommand(execute => ResetDatabaseButton_Click(), canExecute => CanExecuteResetDatabaseButtonClick());
+            GoBackButtonClickCommand = new RelayCommand(execute => GoBackButton_Click());
         }
 
-        private void ResetDatabaseButton_Click(object parameter)
+        private void ResetDatabaseButton_Click()
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to reset the database? \nThis action will delete all saved data.", "Reset database", MessageBoxButton.OKCancel);
             switch(result)
@@ -46,17 +47,9 @@ namespace DARTS.ViewModel
             return false;
         }
 
-        private void GoBackButton_Click(object parameter)
+        private void GoBackButton_Click()
         {
-            MainMenuView mainMenuWindow = new MainMenuView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            MainMenuViewModel mainMenuWindowModel = new MainMenuViewModel();
-            mainMenuWindow.DataContext = mainMenuWindowModel;
-            mainMenuWindow.Show();
-
-            (parameter as Window).Close();
+            GameInstance.Instance.MainWindow.ChangeToMainMenu();
         }
     }
 }

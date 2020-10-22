@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Navigation;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
+using DARTS.Data.Singletons;
 using DARTS.View;
 using DARTS.ViewModel.Command;
 
@@ -72,9 +73,9 @@ namespace DARTS.ViewModel
         }
         public MatchesOverviewViewModel(List<Match> matches)
         {
-            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click(execute), canExecute => CanExecuteBackToMainMenuButtonClick());
+            BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
-            OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(execute), canExecute => CanExecuteOpenMatchButtonClick());
+            OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
             _unfilteredMatches = matches;
             DisplayedMatches = _unfilteredMatches;
@@ -122,36 +123,14 @@ namespace DARTS.ViewModel
             return _filterText != null && _filterText != "";
         }
 
-        private void BackToMainMenuButton_Click(object parameter)
+        private void BackToMainMenuButton_Click()
         {
-            MainMenuView mainMenuWindow = new MainMenuView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            MainMenuViewModel mainMenuWindowModel = new MainMenuViewModel();
-            mainMenuWindow.DataContext = mainMenuWindowModel;
-            mainMenuWindow.Show();
-
-            (parameter as Window).Close();
+            GameInstance.Instance.MainWindow.ChangeToMainMenu();
         }
 
-        private bool CanExecuteBackToMainMenuButtonClick()
+        private void OpenMatchButton_Click()
         {
-            return true;
-        }
-
-        private void OpenMatchButton_Click(object parameter)
-        {
-            Match specifiedmatch = DummyData.GetDummyMatch();
-            MatchDetailView mainMenuWindow = new MatchDetailView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            MatchDetailViewModel mainMenuWindowModel = new MatchDetailViewModel(specifiedmatch);
-            mainMenuWindow.DataContext = mainMenuWindowModel;
-            mainMenuWindow.Show();
-
-            (parameter as Window).Close();
+            //TODO: Create a new window for match detail information
         }
 
         private bool CanExecuteOpenMatchButtonClick()
