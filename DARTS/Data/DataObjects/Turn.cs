@@ -10,13 +10,13 @@ namespace DARTS.Data.DataObjects
     {
         public long Id
         {
-            get => (int)FieldCollection[TurnFieldNames.Id].Value;
+            get => (long)FieldCollection[TurnFieldNames.Id].Value;
             set => FieldCollection[TurnFieldNames.Id].Value = value;
         }
 
         public long LegId
         {
-            get => (int)FieldCollection[TurnFieldNames.LegId].Value;
+            get => (long)FieldCollection[TurnFieldNames.LegId].Value;
             set => FieldCollection[TurnFieldNames.LegId].Value = value;
         }
 
