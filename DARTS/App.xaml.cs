@@ -1,9 +1,5 @@
 ﻿using System.Windows;
-using DARTS.Data;
-using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;
-using DARTS.View;
-using DARTS.ViewModel;
 
 namespace DARTS
 {
