@@ -10,23 +10,6 @@ namespace DARTS.Data.DataObjects
 {
     public class Match : DataObjectBase
     {
-        #region BackingStores
-        private PlayerEnum _winnningPlayer, _beginningPlayer;
-
-        private PlayState _matchState = PlayState.NotStarted;
-
-        private Player _player1;
-
-        private Player _player2;
-
-        private List<Set> _sets;
-
-        private int _numSets, _numLegs;
-
-        private int _player1SetsWon, _player2SetsWon;
-        #endregion
-
-
         #region Properties
         public long Id
         {
@@ -58,31 +41,19 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum WinningPlayer
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[MatchFieldNames.WinningPlayer].Value;
-                return (PlayerEnum)enumVal;
-            }
+            get => (PlayerEnum)((int)FieldCollection[MatchFieldNames.WinningPlayer].Value);
             set => FieldCollection[MatchFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[MatchFieldNames.BeginningPlayer].Value;
-                return (PlayerEnum)enumVal;
-            }
+            get => (PlayerEnum)((int)FieldCollection[MatchFieldNames.BeginningPlayer].Value);
             set => FieldCollection[MatchFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState MatchState
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[MatchFieldNames.MatchState].Value;
-                return (PlayState)enumVal;
-            }
+            get => (PlayState)((int)FieldCollection[MatchFieldNames.MatchState].Value);
             set => FieldCollection[MatchFieldNames.MatchState].Value = (int)value;
         }
 
@@ -157,7 +128,7 @@ namespace DARTS.Data.DataObjects
             newSet.SetState = PlayState.InProgress;
             newSet.Player1LegsWon = 0;
             newSet.Player2LegsWon = 0;
-            newSet.Post();
+           // newSet.Post();
             return newSet;
         }
 

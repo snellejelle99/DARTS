@@ -11,7 +11,7 @@ namespace DARTS.Data.DataObjectFactories
             CodeField idField = new CodeField(TurnFieldNames.Id, true);
             _fieldCollection.Add(TurnFieldNames.Id,idField);
 
-            _fieldCollection.Add(TurnFieldNames.LegId, new DataField(TurnFieldNames.LegId, SQLiteType.INTEGER));
+            _fieldCollection.Add(TurnFieldNames.LegId, new CodeField(TurnFieldNames.LegId));
             _fieldCollection.Add(TurnFieldNames.PlayerTurn, new DataField(TurnFieldNames.PlayerTurn, SQLiteType.INTEGER));
             _fieldCollection.Add(TurnFieldNames.ThrownPoints, new DataField(TurnFieldNames.ThrownPoints, SQLiteType.INTEGER));
 

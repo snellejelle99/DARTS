@@ -8,14 +8,6 @@ namespace DARTS.Data.DataObjects
 {
     public class Turn : DataObjectBase
     {
-        #region BackingStores
-        private PlayerEnum _playerTurn;
-
-        private List<Tuple<int, ScoreType>> _throws;
-
-        private int _thrownPoints;
-        #endregion
-
         public long Id
         {
             get => (int)FieldCollection[TurnFieldNames.Id].Value;

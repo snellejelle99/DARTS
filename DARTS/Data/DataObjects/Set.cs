@@ -8,14 +8,6 @@ namespace DARTS.Data.DataObjects
 {
     public class Set : DataObjectBase
     {
-        private List<Leg> _legs;
-
-        private PlayerEnum _winnningPlayer, _beginnningPlayer;
-
-        private PlayState _setState = PlayState.NotStarted;
-
-        private int _player1LegsWon, _player2LegsWon, _numLegs;
-
         private const int PlayerPoints = 501;
 
         public long Id
@@ -36,31 +28,19 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum WinningPlayer
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[SetFieldNames.WinningPlayer].Value;
-                return (PlayerEnum)enumVal;
-            }
+            get => (PlayerEnum)((int)FieldCollection[SetFieldNames.WinningPlayer].Value);
             set => FieldCollection[SetFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[SetFieldNames.BeginningPlayer].Value;
-                return (PlayerEnum)enumVal;
-            }
+            get => (PlayerEnum)((int)FieldCollection[SetFieldNames.BeginningPlayer].Value);
             set => FieldCollection[SetFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState SetState
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[SetFieldNames.SetState].Value;
-                return (PlayState)enumVal;
-            }
+            get => (PlayState)((int)FieldCollection[SetFieldNames.SetState].Value);
             set => FieldCollection[SetFieldNames.SetState].Value = (int)value;
         }
 

@@ -6,13 +6,6 @@ namespace DARTS.Data.DataObjects
 {
     public class Player : DataObjectBase
     {
-        #region BackingStores
-        private string _name;
-
-        private int _id;
-
-        #endregion
-
         #region Properties
         public string Name
         {

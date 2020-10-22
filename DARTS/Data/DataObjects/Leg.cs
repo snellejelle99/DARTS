@@ -9,15 +9,6 @@ namespace DARTS.Data.DataObjects
 {
     public class Leg : DataObjectBase
     {
-        #region BackingStores
-
-        private PlayerEnum _winnningPlayer, _beginningPlayer;
-
-        private PlayState _legState = PlayState.NotStarted;
-
-        private uint _player1LegScore, _player2LegScore;
-        #endregion
-
         #region Properties
         public long Id
         {
@@ -38,31 +29,19 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum WinningPlayer
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[LegFieldNames.WinningPlayer].Value;
-                return (PlayerEnum)enumVal;
-            }
+            get => (PlayerEnum)((int)FieldCollection[LegFieldNames.WinningPlayer].Value);
             set => FieldCollection[LegFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[LegFieldNames.BeginningPlayer].Value;
-                return (PlayerEnum)enumVal;
-            }
+            get => (PlayerEnum)(int)FieldCollection[LegFieldNames.BeginningPlayer].Value;
             set => FieldCollection[LegFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState LegState
         {
-            get
-            {
-                int enumVal = (int)FieldCollection[LegFieldNames.LegState].Value;
-                return (PlayState)enumVal;
-            }
+            get => (PlayState)(int)FieldCollection[LegFieldNames.LegState].Value;        
             set => FieldCollection[LegFieldNames.LegState].Value = (int)value;
         }
 

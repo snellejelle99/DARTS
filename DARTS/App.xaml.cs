@@ -24,7 +24,13 @@ namespace DARTS
 
             //window.Show();
 
-            GameInstance.Instance.MainWindow.Show();
+            ScoreInputView view = new ScoreInputView();
+            ScoreInputViewModel model = new ScoreInputViewModel(DummyData.GetDummyMatch());
+            view.DataContext = model;
+            view.Show();
+
+
+           // GameInstance.Instance.MainWindow.Show();
         }
     }
 }

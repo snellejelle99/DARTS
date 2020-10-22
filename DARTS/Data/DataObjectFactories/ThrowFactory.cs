@@ -15,8 +15,8 @@ namespace DARTS.Data.DataObjectFactories
             _fieldCollection.Add(ThrowFieldNames.Id, idField);
 
             _fieldCollection.Add(ThrowFieldNames.TurnId, new CodeField(ThrowFieldNames.TurnId));
-            _fieldCollection.Add(ThrowFieldNames.Score, new CodeField(ThrowFieldNames.Score));
-            _fieldCollection.Add(ThrowFieldNames.ScoreType, new CodeField(ThrowFieldNames.ScoreType));
+            _fieldCollection.Add(ThrowFieldNames.Score, new DataField(ThrowFieldNames.Score, SQLiteType.INTEGER));
+            _fieldCollection.Add(ThrowFieldNames.ScoreType, new DataField(ThrowFieldNames.ScoreType, SQLiteType.INTEGER));
 
 
         }
