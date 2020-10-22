@@ -130,7 +130,14 @@ namespace DARTS.ViewModel
 
         private void OpenMatchButton_Click()
         {
-            //TODO: Create a new window for match detail information
+            Match specifiedmatch = DummyData.GetDummyMatch();
+            MatchDetailView mainMenuWindow = new MatchDetailView
+            {
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
+            };
+            MatchDetailViewModel mainMenuWindowModel = new MatchDetailViewModel(specifiedmatch);
+            mainMenuWindow.DataContext = mainMenuWindowModel;
+            mainMenuWindow.Show();
         }
 
         private bool CanExecuteOpenMatchButtonClick()

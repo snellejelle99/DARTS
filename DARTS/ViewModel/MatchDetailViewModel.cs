@@ -17,6 +17,8 @@ namespace DARTS.ViewModel
     {
         private Match specifiedMatch;
         List<string> setDetails = new List<string>();
+        List<string> legDetails = new List<string>();
+        private string _selectedItem;
         private string player1Name;
         private string player2Name;
         private string setsWon;
@@ -25,6 +27,7 @@ namespace DARTS.ViewModel
         private int player2Amount180s = 0;
         private int player1AverageScore = 0;
         private int player2AverageScore = 0;
+        public ICommand OpenSetDetailsClickCommand { get; }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,6 +38,7 @@ namespace DARTS.ViewModel
             Player1Name = specifiedMatch.Player1.Name;
             Player2Name = specifiedMatch.Player2.Name;
             SetsWon = specifiedMatch.Player1SetsWon + " - " + specifiedMatch.Player2SetsWon;
+            OpenSetDetailsClickCommand = new RelayCommand(execute => OpenSetDetailsButton_Click(), canExecute => CanExecuteSetDetailsButtonClick());
             CalculateAmountof180s();
             AverageScorePerPlayer();
             SetDetailsSetup();
@@ -123,6 +127,19 @@ namespace DARTS.ViewModel
         {
             get { return setDetails; }
         }
+        public List<string> LegDetails
+        {
+            get { return legDetails; }
+        }
+        public string SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+            }
+        }
 
         private void AverageScorePerPlayer()
         {
@@ -184,6 +201,14 @@ namespace DARTS.ViewModel
                 }
                 setDetails.Add(string.Format("Set {0}: {1}-{2}: avg. thrown {3}", i + 1, specifiedMatch.Sets[i].Player1LegsWon, specifiedMatch.Sets[i].Player2LegsWon, totalThrown / amountOfThrows));
             }
+        }
+        private void OpenSetDetailsButton_Click()
+        {
+            //logic for displaying set details in leg listview
+        }
+        private bool CanExecuteSetDetailsButtonClick()
+        {
+            return _selectedItem != null;
         }
     }
 }

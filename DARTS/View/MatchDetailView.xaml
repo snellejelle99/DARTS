@@ -17,23 +17,29 @@
         <Label Content="{Binding TotalAmount180s}" ContentStringFormat="Total amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="337,109,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Player1Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="113,129,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Player2Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="584,129,0,0" VerticalAlignment="Top"/>
-        <ListView Name="lvUsers" Margin="0,198,0,0">
+        <ListView x:Name="ListViewSetsOverview"  ItemsSource="{Binding SetDetails}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}" Margin="10,184,574,10">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="120" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Age" Width="50" DisplayMemberBinding="{Binding Age}" />
+                    <GridViewColumn Header="Set" Width="Auto" DisplayMemberBinding="{Binding}" />
                 </GridView>
             </ListView.View>
-
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
         </ListView>
+        <ListView Margin="292,184,292,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Margin="574,184,10,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="->" HorizontalAlignment="Left" Margin="243,289,0,0" VerticalAlignment="Top" Width="28" Command="{Binding OpenSetDetailsClickCommand}"/>
+        <Button Content="-&gt;" HorizontalAlignment="Left" Margin="529,289,0,0" VerticalAlignment="Top" Width="28"/>
+
     </Grid>
 </Window>

@@ -94,38 +94,39 @@ namespace DARTS.Data
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
-            //List<Turn> turns = new List<Turn>();
-            //Turn turn = new Turn();
-            //turn.PlayerTurn = PlayerEnum.Player2;
-            //turns.Add(turn);
+            List<Turn> turns = new List<Turn>();
+            Turn turn = new Turn();
+            turn.PlayerTurn = PlayerEnum.Player1;
+            turn.ThrownPoints = 180;
+            turns.Add(turn);
 
-            //List<Leg> legs = new List<Leg>();
-            //Leg leg = new Leg();
-            //leg.Player1LegScore = 441;
-            //leg.Player2LegScore = 501;
-            //leg.BeginningPlayer = beginningPlayer;
-            //leg.LegState = PlayState.InProgress;
-            //leg.Turns = turns;
-            //legs.Add(leg);
+            List<Leg> legs = new List<Leg>();
+            Leg leg = new Leg();
+            leg.Player1LegScore = 441;
+            leg.Player2LegScore = 501;
+            leg.BeginningPlayer = beginningPlayer;
+            leg.LegState = PlayState.InProgress;
+            leg.Turns = turns;
+            legs.Add(leg);
 
-            //List<Set> sets = new List<Set>();
-            //Set set = new Set();
-            //set.NumLegs = numLegs;
-            //set.Player1LegsWon = 1;
-            //set.Player2LegsWon = 2;            
-            //set.Legs = legs;
-            //sets.Add(set);
+            List<Set> sets = new List<Set>();
+            Set set = new Set();
+            set.NumLegs = numLegs;
+            set.Player1LegsWon = 2;
+            set.Player2LegsWon = 1;
+            set.Legs = legs;
+            sets.Add(set);
 
             Match match = new Match();
             match.Player1 = player1;
             match.Player2 = player2;
             match.NumSets = numSets;
             match.NumLegs = numLegs;
-            //match.Player1SetsWon = 5;
-            //match.Player2SetsWon = 4;
-            //match.Sets = sets;
+            match.Player1SetsWon = 2;
+            match.Player2SetsWon = 1;
+            match.Sets = sets;
             match.BeginningPlayer = beginningPlayer;
-            //match.MatchState = PlayState.InProgress;
+            match.MatchState = PlayState.InProgress;
 
             return match;
         }
