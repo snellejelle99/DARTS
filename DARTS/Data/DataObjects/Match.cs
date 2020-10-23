@@ -27,6 +27,11 @@ namespace DARTS.Data.DataObjects
             get => (long)FieldCollection[MatchFieldNames.Player2Id].Value;
             set => FieldCollection[MatchFieldNames.Player2Id].Value = value;
         }
+        public int pointsPerLeg
+        {
+            get => (int)FieldCollection[MatchFieldNames.PointsPerLeg].Value;
+            set => FieldCollection[MatchFieldNames.PointsPerLeg].Value = value;
+        }
         public DataObjectBase Player1
         {
             get => (DataObjectBase)ObjectFieldCollection[MatchFieldNames.Player1].Value;
@@ -128,7 +133,8 @@ namespace DARTS.Data.DataObjects
             newSet.SetState = PlayState.InProgress;
             newSet.Player1LegsWon = 0;
             newSet.Player2LegsWon = 0;
-           // newSet.Post();
+            newSet.PlayerPoints = pointsPerLeg;
+
             return newSet;
         }
 

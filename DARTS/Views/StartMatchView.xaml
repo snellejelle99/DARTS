@@ -50,7 +50,7 @@
         </TextBox>
 
         <TextBlock Text="Amount of points per leg" Canvas.Top="180" FontSize="20" Canvas.Left="535" Width="226"/>
-        <RadioButton GroupName="pointsPerLeg" Content="501" Canvas.Left="535" Canvas.Top="209" FontSize="15" VerticalContentAlignment="Center" IsChecked="True"/>
+        <RadioButton GroupName="pointsPerLeg" Content="501" Canvas.Left="535" Canvas.Top="209" FontSize="15" VerticalContentAlignment="Center" IsChecked="{Binding Is501LegScore}"/>
         <RadioButton GroupName="pointsPerLeg" Content="301" Canvas.Left="535" Canvas.Top="232" FontSize="15" VerticalContentAlignment="Center"/>
 
         <Label Content="Enter amount of legs per set" Canvas.Left="35" Canvas.Top="270" FontSize="20" Width="320"/>

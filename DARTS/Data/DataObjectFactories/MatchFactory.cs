@@ -25,6 +25,7 @@ namespace DARTS.Data.DataObjectFactories
             _fieldCollection.Add(MatchFieldNames.NumLegs, new DataField(MatchFieldNames.NumLegs, SQLiteType.INTEGER));
             _fieldCollection.Add(MatchFieldNames.Player1SetsWon, new DataField(MatchFieldNames.Player1SetsWon, SQLiteType.INTEGER));
             _fieldCollection.Add(MatchFieldNames.Player2SetsWon, new DataField(MatchFieldNames.Player2SetsWon, SQLiteType.INTEGER));
+            _fieldCollection.Add(MatchFieldNames.PointsPerLeg, new DataField(MatchFieldNames.PointsPerLeg, SQLiteType.INTEGER));
 
             _objectFieldCollection.Add(MatchFieldNames.Player1, new ObjectField(MatchFieldNames.Player1, typeof(PlayerFactory), player1IdField));
             _objectFieldCollection.Add(MatchFieldNames.Player2, new ObjectField(MatchFieldNames.Player2, typeof(PlayerFactory), player2IdField));
@@ -54,5 +55,6 @@ namespace DARTS.Data.DataObjectFactories
         public const string NumLegs = "NumLegs";
         public const string Player1SetsWon = "Player1SetsWon";
         public const string Player2SetsWon = "Player2SetsWon";
+        public const string PointsPerLeg = "PointsPerLeg";
     }
 }
