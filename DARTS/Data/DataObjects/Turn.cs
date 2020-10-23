@@ -1,36 +1,46 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Turn
+    public class Turn : DataObjectBase
     {
-        #region BackingStores
-        private PlayerEnum _playerTurn;
+        public long Id
+        {
+            get => (long)FieldCollection[TurnFieldNames.Id].Value;
+            set => FieldCollection[TurnFieldNames.Id].Value = value;
+        }
 
-        private List<Tuple<int, ScoreType>> _throws;
-
-        private int _thrownPoints;
-        #endregion
+        public long LegId
+        {
+            get => (long)FieldCollection[TurnFieldNames.LegId].Value;
+            set => FieldCollection[TurnFieldNames.LegId].Value = value;
+        }
 
         #region Properties
         public PlayerEnum PlayerTurn
         {
-            get => _playerTurn;
-            set => _playerTurn = value;
+            get
+            {
+                int intVal = (int)FieldCollection[TurnFieldNames.PlayerTurn].Value;
+                return (PlayerEnum)intVal;
+            }
+            set => FieldCollection[TurnFieldNames.PlayerTurn].Value = (int)value; 
         }
 
-        public List<Tuple<int, ScoreType>> Throws
+        public BindingList<DataObjectBase> Throws
         {
-            get => _throws;
-            set => _throws = value;
+            get => CollectionFieldCollection[TurnFieldNames.Throws].Value;
+            set => CollectionFieldCollection[TurnFieldNames.Throws].Value = value;
         }
 
         public int ThrownPoints
         {
-            get => _thrownPoints;
-            set => _thrownPoints = value;
+            get => (int)FieldCollection[TurnFieldNames.ThrownPoints].Value;
+            set => FieldCollection[TurnFieldNames.ThrownPoints].Value = value;
         }
         #endregion
 
@@ -47,9 +57,9 @@ namespace DARTS.Data.DataObjects
         }
         public void CalculateThrownPoints()
         {
-            foreach (Tuple<int, ScoreType> dart in Throws)
+            foreach (Throw thrownDart in Throws)
             {
-                ThrownPoints += dart.Item1;
+                ThrownPoints += thrownDart.Score;
             }
         }
     }

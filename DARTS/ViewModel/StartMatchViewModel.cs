@@ -8,9 +8,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using DARTS.Data;
+using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;
-using DARTS.View;
 using DARTS.ViewModel.Command;
 
 namespace DARTS.ViewModel
@@ -27,24 +27,41 @@ namespace DARTS.ViewModel
         public ICommand StartMatchButtonClickCommand { get; }
         public ICommand BackToMainMenuButtonClickCommand { get; }
     
+        private PlayerFactory PlayerFactory { get; set; }
+        private MatchFactory MatchFactory { get; set; }
+
         public StartMatchViewModel()
         {
             StartMatchButtonClickCommand = new RelayCommand(execute => StartMatchButton_Click(), canExecute => CanExecuteStartMatchButtonClick());
             BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click());
 
             PlayerEnums = (PlayerEnum[])Enum.GetValues(typeof(PlayerEnum));
+            PlayerFactory = new PlayerFactory();
+            MatchFactory = new MatchFactory();
         }
 
         private void StartMatchButton_Click()
         {
-            // TODO: implement factory pattern.
-            Player player1 = new Player();
-            player1.Name = Player1;
+            Player player1, player2;
 
-            Player player2 = new Player();
-            player2.Name = Player2;
+            List<DataObjectBase> results = PlayerFactory.Get("Name", Player1);
+            results.AddRange(PlayerFactory.Get("Name", Player2));
+            player1 = (Player)results.Find(x => ((Player)x).Name == Player1);
+            player2 = (Player)results.Find(x => ((Player)x).Name == Player2);
 
-            Match match = new Match();
+            if (player1 == default)
+            {
+                player1 = (Player)PlayerFactory.Spawn();
+                player1.Name = Player1;
+            }
+
+            if (player2 == default)
+            {
+                player2 = (Player)PlayerFactory.Spawn();
+                player2.Name = Player2;
+            }
+
+            Match match = (Match)MatchFactory.Spawn();
             match.Player1 = player1;
             match.Player2 = player2;
             match.BeginningPlayer = SelectedPlayerEnum;

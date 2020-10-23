@@ -1,85 +1,89 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Leg
+    public class Leg : DataObjectBase
     {
-        #region BackingStores
-        private List<Turn> _turns;
-
-        private PlayerEnum _winnningPlayer, _beginningPlayer;
-
-        private PlayState _legState = PlayState.NotStarted;
-
-        private uint _player1LegScore, _player2LegScore;
-        #endregion
-
         #region Properties
-        public List<Turn> Turns
+        public long Id
         {
-            get => _turns;
-            set => _turns = value;
+            get => (long)FieldCollection[LegFieldNames.Id].Value;
+            set => FieldCollection[LegFieldNames.Id].Value = value;
+        }
+
+        public long SetId
+        {
+            get => (long)FieldCollection[LegFieldNames.SetId].Value;
+            set => FieldCollection[LegFieldNames.SetId].Value = value;
+        }
+        public BindingList<DataObjectBase> Turns
+        {
+            get => CollectionFieldCollection[LegFieldNames.Turns].Value;
+            set => CollectionFieldCollection[LegFieldNames.Turns].Value = value;
         }
 
         public PlayerEnum WinningPlayer
         {
-            get => _winnningPlayer;
-            set => _winnningPlayer = value;
+            get => (PlayerEnum)FieldCollection[LegFieldNames.WinningPlayer].Value;
+            set => FieldCollection[LegFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get => _beginningPlayer;
-            set => _beginningPlayer = value;
+            get => (PlayerEnum)(int)FieldCollection[LegFieldNames.BeginningPlayer].Value;
+            set => FieldCollection[LegFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState LegState
         {
-            get => _legState;
-            set => _legState = value;
+            get => (PlayState)(int)FieldCollection[LegFieldNames.LegState].Value;        
+            set => FieldCollection[LegFieldNames.LegState].Value = (int)value;
         }
 
         public uint Player1LegScore
         {
-            get => _player1LegScore;
-            set => _player1LegScore = value;
+            get => (uint)FieldCollection[LegFieldNames.Player1LegScore].Value;
+            set => FieldCollection[LegFieldNames.Player1LegScore].Value = value;
         }
 
         public uint Player2LegScore
         {
-            get => _player2LegScore;
-            set => _player2LegScore = value;
+            get => (uint)FieldCollection[LegFieldNames.Player2LegScore].Value;
+            set => FieldCollection[LegFieldNames.Player2LegScore].Value = value;
         }
 
         public uint CurrentPlayerLegScore
         {
             get
             {
-                switch (Turns.Last().PlayerTurn)
+                switch(((Turn)Turns.Last()).PlayerTurn)
                 {
                     case PlayerEnum.Player1:
-                        return _player1LegScore;
+                        return Player1LegScore;
                     default:
-                        return _player2LegScore;
+                        return Player2LegScore;
                 }
             }
             set
             {
-                switch (Turns.Last().PlayerTurn)
+                switch (((Turn)Turns.Last()).PlayerTurn)
                 {
                     case PlayerEnum.Player1:
-                        _player1LegScore = value;
+                        Player1LegScore = value;
                         break;
                     default:
-                        _player2LegScore = value;
+                        Player2LegScore = value;
                         break;
                 }
             }
         }
         #endregion
+        
         public string LegDetails
         {
             get
@@ -94,14 +98,18 @@ namespace DARTS.Data.DataObjects
             }
         }
 
+        private TurnFactory TurnFactory
+        {
+            get;
+            set;
+        }
         public void Start()
         {
-            Turns = new List<Turn>();
-
-            // TODO: impement factory pattern.
-            Turn firstTurn = new Turn();
+            Turns = new BindingList<DataObjectBase>();
+            TurnFactory = new TurnFactory();
+            Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
-            firstTurn.Throws = new List<Tuple<int, ScoreType>>();
+            firstTurn.ThrownPoints = 0;
 
             Turns.Add(firstTurn);
         }
@@ -130,26 +138,28 @@ namespace DARTS.Data.DataObjects
         {
             // TODO: impement factory pattern.(?)
             // Create the next turn and assign the other player.
-            Turn nextTurn = new Turn();
-            nextTurn.PlayerTurn = Turns[Turns.Count - 1].PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-            nextTurn.Throws = new List<Tuple<int, ScoreType>>();
+            Turn nextTurn = (Turn)TurnFactory.Spawn();
+            Turn currentTurn = Turns[Turns.Count - 1] as Turn;
+            nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+            nextTurn.ThrownPoints = 0;
+            
             Turns.Add(nextTurn);
         }
 
         public void SubtractScore()
         {
-            foreach (Tuple<int, ScoreType> dart in Turns.Last().Throws)
+            foreach (Throw dart in ((Turn)Turns.Last()).Throws)
             {
-                if (CurrentPlayerLegScore > dart.Item1) CurrentPlayerLegScore -= (uint)dart.Item1;
-                else if (CurrentPlayerLegScore == dart.Item1)
+                if (CurrentPlayerLegScore > dart.Score) CurrentPlayerLegScore -= (uint)dart.Score;
+                else if (CurrentPlayerLegScore == dart.Score)
                 {
-                    if (dart.Item2 == ScoreType.Double || dart.Item2 == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
+                    if (dart.ScoreType == ScoreType.Double || dart.ScoreType == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
                 }
                 else break;
             }
         }
 
-        public Leg()
+        private Leg() : base()
         {
 
         }

@@ -103,8 +103,8 @@ namespace DARTS.ViewModel
         {
             string loweredFilterText = filterText.ToLower();
             DisplayedMatches = _unfilteredMatches.Where(Match =>
-                Match.Player1.Name.ToLower().Contains(loweredFilterText) || 
-                Match.Player2.Name.ToLower().Contains(loweredFilterText) || 
+                ((Player)Match.Player1).Name.ToLower().Contains(loweredFilterText) || 
+                ((Player)Match.Player2).Name.ToLower().Contains(loweredFilterText) || 
                 Match.Sets.Count.ToString().ToLower().Contains(loweredFilterText)
             ).ToList();
         }
