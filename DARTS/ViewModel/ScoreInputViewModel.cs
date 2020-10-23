@@ -1,4 +1,5 @@
 ﻿using DARTS.Data.DataObjects;
+using DARTS.Data.Singletons;
 using DARTS.Functionality;
 using DARTS.ViewModel.Command;
 using System;
@@ -135,12 +136,57 @@ namespace DARTS.ViewModel
 
         private void StopMatchButtonClick()
         {
-            throw new NotImplementedException();
+            GameInstance.Instance.MainWindow.ChangeToMainMenu();
         }
+
+
 
         private void PreviousTurnButtonClick()
         {
-            throw new NotImplementedException();
+            Leg curLeg = Match.GetCurrentLeg();
+
+            if(curLeg.Turns.Count > 1)
+            {
+                Turn curTurn = Match.GetCurrentTurn();
+                Turn prevTurn = (Turn)Match.GetCurrentLeg().Turns[Match.GetCurrentLeg().Turns.Count - 2];
+
+                switch (prevTurn.PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        curLeg.Player1LegScore += (uint)prevTurn.ThrownPoints;
+                        break;
+                    case PlayerEnum.Player2:
+                        curLeg.Player2LegScore += (uint)prevTurn.ThrownPoints;
+                        break;
+                }
+                curLeg.Turns.Remove(curTurn);
+                curLeg.Turns.Remove(prevTurn);
+                Match.Post();
+
+                Match.ChangeTurn();
+                ResetScreen();
+
+            }
+
+            else //else maybe we need to get the previous set/leg
+            {
+
+            }
+
+            if (Match.GetCurrentSet().Legs.Count > 1)
+            {
+                if (Match.Sets.Count > 1)
+                {
+
+                }
+
+                else
+                {
+
+                }
+            }
+
+            
         }
 
         private void SubmitScoreButtonClick()
@@ -152,9 +198,9 @@ namespace DARTS.ViewModel
 
             Match.GetCurrentTurn().CalculateThrownPoints();
             Match.GetCurrentLeg().SubtractScore();
-            Match.ChangeTurn();
             AsyncPostTask = new Task(() => Match.Post());
             AsyncPostTask.Start();
+            Match.ChangeTurn();
 
             ResetScreen();
         }

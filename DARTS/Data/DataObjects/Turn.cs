@@ -23,11 +23,7 @@ namespace DARTS.Data.DataObjects
         #region Properties
         public PlayerEnum PlayerTurn
         {
-            get
-            {
-                int intVal = (int)FieldCollection[TurnFieldNames.PlayerTurn].Value;
-                return (PlayerEnum)intVal;
-            }
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[TurnFieldNames.PlayerTurn].Value);
             set => FieldCollection[TurnFieldNames.PlayerTurn].Value = (int)value; 
         }
 
@@ -39,7 +35,7 @@ namespace DARTS.Data.DataObjects
 
         public int ThrownPoints
         {
-            get => (int)FieldCollection[TurnFieldNames.ThrownPoints].Value;
+            get => Convert.ToInt32(FieldCollection[TurnFieldNames.ThrownPoints].Value);
             set => FieldCollection[TurnFieldNames.ThrownPoints].Value = value;
         }
         #endregion
