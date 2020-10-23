@@ -92,9 +92,9 @@ namespace DARTS.Data.DataObjects
                 int totalThrown = 0, amountOfThrows = 0;
                 for (int i = 0; i < Legs.Count; i++)
                 {
-                    for (int j = 0; j < Legs[i].Turns.Count; j++)
+                    for (int j = 0; j < ((Leg)Legs[i]).Turns.Count; j++)
                     {
-                        totalThrown += Legs[i].Turns[j].ThrownPoints;
+                        totalThrown += ((Turn)((Leg)Legs[i]).Turns[j]).ThrownPoints;
                         amountOfThrows += 1;
                     }
                 }

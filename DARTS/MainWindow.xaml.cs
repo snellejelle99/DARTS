@@ -1,6 +1,7 @@
 ﻿using DARTS.Data.DataObjects;
 using DARTS.ViewModel;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 
 namespace DARTS
@@ -28,7 +29,7 @@ namespace DARTS
 
         public void ChangeToMatchesOverview()
         {
-            DataContext = new MatchesOverviewViewModel(new List<Match>());
+            DataContext = new MatchesOverviewViewModel(new List<DataObjectBase>());
         }
 
         public void ChangeToOptionsMenuView()

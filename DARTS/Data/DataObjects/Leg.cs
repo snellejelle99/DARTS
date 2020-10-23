@@ -91,7 +91,7 @@ namespace DARTS.Data.DataObjects
                 int totalThrown = 0, amountOfThrows = 0;
                 for (int i = 0; i < Turns.Count; i++)
                 {
-                    totalThrown += Turns[i].ThrownPoints;
+                    totalThrown += ((Turn)Turns[i]).ThrownPoints;
                     amountOfThrows += 1;
                 }
                 return string.Format("Leg: {0}-{1}: avg. thrown {2}", Player1LegScore, Player2LegScore, totalThrown / amountOfThrows);

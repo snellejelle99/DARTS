@@ -86,13 +86,14 @@ namespace DARTS.Data
                     dummySetList.Add(dummySet);
                 }
                 match.Sets = dummySetList;
+                match.Post();
                 dummyMatches.Add(match);
             }
 
             return dummyMatches;
         }
 
-        public static Match GetDummyMatch() 
+        public static Match GetDummyMatch()
         {
 
             PlayerFactory playerFactory = new PlayerFactory();
@@ -103,52 +104,51 @@ namespace DARTS.Data
 
             Player player1 = (Player)playerFactory.Spawn();
             player1.Name = "Klaas";
-            
+
             Player player2 = (Player)playerFactory.Spawn();
             player2.Name = "Pieter";
-              
+
             int numSets = 3;
             int numLegs = 3;
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
-            List<Turn> turns = new List<Turn>();
-            Turn turn = new Turn();
-            turn.PlayerTurn = PlayerEnum.Player1;
-            turn.ThrownPoints = 180;
-            turns.Add(turn);
 
-            List<Leg> legs = new List<Leg>();
-            Leg leg = new Leg();
-            leg.Player1LegScore = 441;
-            leg.Player2LegScore = 501;
-            leg.BeginningPlayer = beginningPlayer;
-            leg.LegState = PlayState.InProgress;
-            leg.Turns = turns;
-            legs.Add(leg);
+            //BindingList<DataObjectBase> turns = new BindingList<DataObjectBase>();
+            //Turn turn = (Turn)turnFactory.Spawn();
+            //turn.PlayerTurn = PlayerEnum.Player2;
+            //turns.Add(turn);
 
-            List<Set> sets = new List<Set>();
-            Set set = new Set();
-            set.NumLegs = numLegs;
-            set.Player1LegsWon = 2;
-            set.Player2LegsWon = 1;
-            set.Legs = legs;
-            sets.Add(set);
+            //BindingList<DataObjectBase> legs = new BindingList<DataObjectBase>();
+            //Leg leg = (Leg)legFactory.Spawn();
+            //leg.Player1LegScore = 441;
+            //leg.Player2LegScore = 501;
+            //leg.BeginningPlayer = beginningPlayer;
+            //leg.LegState = PlayState.InProgress;
+            //leg.Turns = turns;
+            //legs.Add(leg);
+
+            //BindingList<DataObjectBase> sets = new BindingList<DataObjectBase>();
+            //Set set = (Set)setFactory.Spawn();
+            //set.NumLegs = numLegs;
+            //set.Player1LegsWon = 1;
+            //set.Player2LegsWon = 2;
+            //set.Legs = legs;
+            //sets.Add(set);
 
             Match match = (Match)matchFactory.Spawn();
             match.Player1 = player1;
             match.Player2 = player2;
             match.NumSets = numSets;
             match.NumLegs = numLegs;
-
             match.Player1SetsWon = 0;
             match.Player2SetsWon = 0;
-            match.WinningPlayer = PlayerEnum.None;          
+            match.WinningPlayer = PlayerEnum.None;
             match.BeginningPlayer = beginningPlayer;
             match.MatchState = PlayState.InProgress;
             match.Post();
             match.Start();
-            
+
             return match;
         }
     }

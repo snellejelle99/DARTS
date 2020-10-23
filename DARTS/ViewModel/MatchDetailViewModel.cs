@@ -12,33 +12,34 @@ namespace DARTS.ViewModel
     public class MatchDetailViewModel : INotifyPropertyChanged
     {
         private Match specifiedMatch;
-        private List<Leg> _specifiedLegs = new List<Leg>();
-        private List<Turn> _specifiedTurns = new List<Turn>();
+        private BindingList<DataObjectBase> _specifiedLegs = new BindingList<DataObjectBase>();
+        private BindingList<DataObjectBase> _specifiedTurns = new BindingList<DataObjectBase>();
         private Set _selectedSet;
         private Leg _selectedLeg;
+
         private string player1Name;
         private string player2Name;
         private string setsWon;
+
         private int totalAmount180s = 0;
         private int player1Amount180s = 0;
         private int player2Amount180s = 0;
         private int player1AverageScore = 0;
         private int player2AverageScore = 0;
+
         public ICommand OpenSetDetailsClickCommand { get; }
         public ICommand OpenLegDetailsClickCommand { get; }
         public ICommand BackToOverviewButtonClickCommand { get; }
         public ICommand ClearLegsClickCommand { get; }
         public ICommand ClearTurnsClickCommand { get; }
 
-
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MatchDetailViewModel(Match match)
         {
             specifiedMatch = match;
-            Player1Name = specifiedMatch.Player1.Name;
-            Player2Name = specifiedMatch.Player2.Name;
+            Player1Name = ((Player)specifiedMatch.Player1).Name;
+            Player2Name = ((Player)specifiedMatch.Player2).Name;
             SetsWon = specifiedMatch.Player1SetsWon + " - " + specifiedMatch.Player2SetsWon;
             BackToOverviewButtonClickCommand = new RelayCommand(execute => BackToOverviewButton_Click());
             OpenSetDetailsClickCommand = new RelayCommand(execute => OpenSetDetailsButton_Click(), canExecute => CanExecuteSetDetailsButtonClick());
@@ -112,7 +113,6 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Player1Name));
             }
         }
-
         public string Player2Name
         {
             get { return player2Name; }
@@ -122,12 +122,11 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Player2Name));
             }
         }
-
         public Match SpecifiedMatch
         {
             get { return specifiedMatch; }
         }
-        public List<Leg> SpecifiedLegs
+        public BindingList<DataObjectBase> SpecifiedLegs
         {
             get { return _specifiedLegs; }
             set
@@ -136,7 +135,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SpecifiedLegs)));
             }
         }
-        public List<Turn> SpecifiedTurns
+        public BindingList<DataObjectBase> SpecifiedTurns
         {
             get { return _specifiedTurns; }
             set
@@ -172,14 +171,14 @@ namespace DARTS.ViewModel
             int player2AmountOfThrows = 0;
             for (int i = 0; i < specifiedMatch.Sets.Count; i++)
             {
-                for (int j = 0; j < specifiedMatch.Sets[i].Legs.Count; j++)
+                for (int j = 0; j < ((Set)specifiedMatch.Sets[i]).Legs.Count; j++)
                 {
-                    for (int k = 0; k < specifiedMatch.Sets[i].Legs[j].Turns.Count; k++)
+                    for (int k = 0; k < ((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns.Count; k++)
                     {
-                        player1TotalScore += specifiedMatch.Sets[i].Legs[j].Turns[k].PlayerTurn == PlayerEnum.Player1 ? specifiedMatch.Sets[i].Legs[j].Turns[k].ThrownPoints : 0;
-                        player1AmountOfThrows += specifiedMatch.Sets[i].Legs[j].Turns[k].PlayerTurn == PlayerEnum.Player1 ? 1 : 0;
-                        player2TotalScore += specifiedMatch.Sets[i].Legs[j].Turns[k].PlayerTurn == PlayerEnum.Player2 ? specifiedMatch.Sets[i].Legs[j].Turns[k].ThrownPoints : 0;
-                        player2AmountOfThrows += specifiedMatch.Sets[i].Legs[j].Turns[k].PlayerTurn == PlayerEnum.Player2 ? 1 : 0;
+                        player1TotalScore += ((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).PlayerTurn == PlayerEnum.Player1 ? ((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).ThrownPoints : 0;
+                        player1AmountOfThrows += ((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).PlayerTurn == PlayerEnum.Player1 ? 1 : 0;
+                        player2TotalScore += ((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).PlayerTurn == PlayerEnum.Player2 ? ((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).ThrownPoints : 0;
+                        player2AmountOfThrows += ((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).PlayerTurn == PlayerEnum.Player2 ? 1 : 0;
                     }
                 }
             }
@@ -193,14 +192,14 @@ namespace DARTS.ViewModel
         {
             for (int i = 0; i < specifiedMatch.Sets.Count; i++)
             {
-                for (int j = 0; j < specifiedMatch.Sets[i].Legs.Count; j++)
+                for (int j = 0; j < ((Set)specifiedMatch.Sets[i]).Legs.Count; j++)
                 {
-                    for (int k = 0; k < specifiedMatch.Sets[i].Legs[j].Turns.Count; k++)
+                    for (int k = 0; k < ((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns.Count; k++)
                     {
-                        if (specifiedMatch.Sets[i].Legs[j].Turns[k].ThrownPoints == 180)
+                        if (((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).ThrownPoints == 180)
                         {
-                            player1Amount180s += specifiedMatch.Sets[i].Legs[j].Turns[k].PlayerTurn == PlayerEnum.Player1 ? 1 : 0;
-                            player2Amount180s += specifiedMatch.Sets[i].Legs[j].Turns[k].PlayerTurn == PlayerEnum.Player2 ? 1 : 0;
+                            player1Amount180s += ((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).PlayerTurn == PlayerEnum.Player1 ? 1 : 0;
+                            player2Amount180s += ((Turn)((Leg)((Set)specifiedMatch.Sets[i]).Legs[j]).Turns[k]).PlayerTurn == PlayerEnum.Player2 ? 1 : 0;
                             totalAmount180s = player1Amount180s + player2Amount180s;
                         }
                     }
@@ -219,9 +218,18 @@ namespace DARTS.ViewModel
         {
             return _selectedSet != null;
         }
+        private void ClearLegsButton_Click()
+        {
+            SpecifiedLegs = new BindingList<DataObjectBase>();
+            SpecifiedTurns = new BindingList<DataObjectBase>();
+        }
         private bool CanExecuteClearLegsButtonClick()
         {
             return SpecifiedLegs.Count() != 0;
+        }
+        private void ClearTurnsButton_Click()
+        {
+            SpecifiedTurns = new BindingList<DataObjectBase>();
         }
         private bool CanExecuteClearTurnsButtonClick()
         {
@@ -230,15 +238,6 @@ namespace DARTS.ViewModel
         private void OpenLegDetailsButton_Click()
         {
             SpecifiedTurns = _selectedLeg.Turns;
-        }
-        private void ClearLegsButton_Click()
-        {
-            SpecifiedLegs = new List<Leg>();
-            SpecifiedTurns = new List<Turn>();
-        }
-        private void ClearTurnsButton_Click()
-        {
-            SpecifiedTurns = new List<Turn>();
         }
         private bool CanExecuteLegDetailsButtonClick()
         {
