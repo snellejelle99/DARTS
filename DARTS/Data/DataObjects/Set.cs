@@ -8,7 +8,7 @@ namespace DARTS.Data.DataObjects
 {
     public class Set : DataObjectBase
     {
-        private const int PlayerPoints = 501;
+        public int PlayerPoints { get; set; }
 
         public long Id
         {
@@ -111,8 +111,8 @@ namespace DARTS.Data.DataObjects
         public Leg CreateNewLeg()
         {
             Leg newLeg = (Leg)LegFactory.Spawn();
-            newLeg.Player1LegScore = PlayerPoints;
-            newLeg.Player2LegScore = PlayerPoints;
+            newLeg.Player1LegScore = (uint)PlayerPoints;
+            newLeg.Player2LegScore = (uint)PlayerPoints;
             newLeg.LegState = PlayState.InProgress;
 
             return newLeg;
