@@ -125,8 +125,8 @@ namespace DARTS_UnitTests.Datastructuur
         {
             //Arrange
             match.Start();
-            Set firstSet = match.Sets[0] as Set;
-            Leg firstLeg = firstSet.Legs[0] as Leg;
+            Set firstSet = (Set)match.Sets[0];
+            Leg firstLeg = (Leg)firstSet.Legs[0];
             firstLeg.Player1LegScore = 0;
             firstSet.Player1LegsWon = 2;
 

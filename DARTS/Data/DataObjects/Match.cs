@@ -46,7 +46,7 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum WinningPlayer
         {
-            get => (PlayerEnum)((int)FieldCollection[MatchFieldNames.WinningPlayer].Value);
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[MatchFieldNames.WinningPlayer].Value);
             set => FieldCollection[MatchFieldNames.WinningPlayer].Value = (int)value;
         }
 
@@ -96,7 +96,7 @@ namespace DARTS.Data.DataObjects
 
         public int Player1SetsWon
         {
-            get => (int)FieldCollection[MatchFieldNames.Player1SetsWon].Value;
+            get => Convert.ToInt32(FieldCollection[MatchFieldNames.Player1SetsWon].Value);
             set
             {
                 if (value > NumSets)
@@ -109,7 +109,7 @@ namespace DARTS.Data.DataObjects
 
         public int Player2SetsWon
         {
-            get => (int)FieldCollection[MatchFieldNames.Player2SetsWon].Value;
+            get => Convert.ToInt32(FieldCollection[MatchFieldNames.Player2SetsWon].Value);
             set
             {
                 if (value > NumSets)

@@ -11,7 +11,7 @@ namespace DARTS.Data
 {
     public class DummyData
     {
-        public static List<Match> TempAddListItems()
+        public static BindingList<DataObjectBase> TempAddListItems()
         {
             PlayerFactory playerFactory = new PlayerFactory();
             LegFactory legFactory = new LegFactory();
@@ -38,12 +38,14 @@ namespace DARTS.Data
             dummySet.Player1LegsWon = 2;
             dummySet.Player2LegsWon = 3;
             dummySet.WinningPlayer = PlayerEnum.Player1;
+            dummySet.SetState = PlayState.NotStarted;
 
             Leg dummyLeg = (Leg)legFactory.Spawn();
             dummyLeg.BeginningPlayer = PlayerEnum.Player1;
             dummyLeg.Player1LegScore = 501;
             dummyLeg.Player2LegScore = 501;
             dummyLeg.WinningPlayer = PlayerEnum.Player1;
+            dummyLeg.LegState = PlayState.NotStarted;
 
             Turn dummyTurn = (Turn)turnFactory.Spawn();
             dummyTurn.PlayerTurn = PlayerEnum.Player1;
@@ -67,17 +69,20 @@ namespace DARTS.Data
             dummyLegList.Add(dummyLeg);
             dummySet.Legs = dummyLegList;
 
-            List<Match> dummyMatches = new List<Match>();
+            BindingList<DataObjectBase> dummyMatches = new BindingList<DataObjectBase>();
 
             for (int i = 0; i < 3; i++)
             {
-                Match match = matchFactory.Spawn() as Match;
+                Match match = (Match)matchFactory.Spawn();
                 match.Player1 = dummyPlayers[i];
                 match.Player2 = dummyPlayers[i + 3];
                 match.NumSets = 3;
                 match.NumLegs = 5;
                 match.Player1SetsWon = 0;
                 match.Player2SetsWon = 3;
+                match.MatchState = PlayState.Finished;
+                match.pointsPerLeg = 501;
+                match.BeginningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
                 match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
                 BindingList<DataObjectBase> dummySetList = new BindingList<DataObjectBase>();
 

@@ -61,7 +61,7 @@ namespace DARTS.Data.DataObjects
 
         public int Player1LegsWon
         {
-            get => (int)FieldCollection[SetFieldNames.Player1LegsWon].Value;
+            get => Convert.ToInt32(FieldCollection[SetFieldNames.Player1LegsWon].Value);
             set
             {
                 if (value > NumLegs)
@@ -74,7 +74,7 @@ namespace DARTS.Data.DataObjects
 
         public int Player2LegsWon
         {
-            get => (int)FieldCollection[SetFieldNames.Player2LegsWon].Value;
+            get => Convert.ToInt32(FieldCollection[SetFieldNames.Player2LegsWon].Value);
             set
             {
                 if (value > NumLegs)

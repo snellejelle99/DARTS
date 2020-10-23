@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DARTS\DARTS.csproj" />
-    <ProjectReference Include="..\DARTS_WAP\DARTS_WAP.wapproj" />
   </ItemGroup>
 
 </Project>

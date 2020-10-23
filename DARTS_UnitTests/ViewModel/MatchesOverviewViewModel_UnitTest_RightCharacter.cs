@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DARTS.ViewModel;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
+using System.ComponentModel;
 
 namespace DARTS_UnitTests.ViewModel
 {
@@ -16,7 +17,7 @@ namespace DARTS_UnitTests.ViewModel
         {
             // Arrange
             //TEMP: should be done with database system and TestInitialize
-            List<Match> dummyMatches = DummyData.TempAddListItems();
+            BindingList<DataObjectBase> dummyMatches = DummyData.TempAddListItems();
             overview = new MatchesOverviewViewModel(dummyMatches);
         }
 

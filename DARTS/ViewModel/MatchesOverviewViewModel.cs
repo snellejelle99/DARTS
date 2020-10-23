@@ -71,13 +71,13 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AmountOfDisplayedMatches)));
             }
         }
-        public MatchesOverviewViewModel(List<DataObjectBase> matches)
+        public MatchesOverviewViewModel(BindingList<DataObjectBase> matches)
         {
             BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
             OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
-            _unfilteredMatches = matches;
+            _unfilteredMatches = matches.ToList();
             DisplayedMatches = _unfilteredMatches;
 
             if (matches.Count == 0) GetMatchesOverviewData();

@@ -16,8 +16,8 @@ namespace DARTS.ViewModel
 {
     public class PlayerMatchStatisticsViewModel : INotifyPropertyChanged
     {
-        private List<Match> _displayedMatches = new List<Match>();
-        private List<Match> _unfilteredMatches = new List<Match>();
+        private BindingList<DataObjectBase> _displayedMatches = new BindingList<DataObjectBase>();
+        private BindingList<DataObjectBase> _unfilteredMatches = new BindingList<DataObjectBase>();
         private string _amountOfResultsLabelText = "";
         private string _filterTextBoxText = "";
 
@@ -26,7 +26,7 @@ namespace DARTS.ViewModel
         public ICommand BackButtonClickCommand { get; }
         public ICommand ClearFilterButtonClickCommand { get; }
 
-        public List<Match> DisplayedMatches
+        public BindingList<DataObjectBase> DisplayedMatches
         {
             get { return _displayedMatches; }
             set
@@ -62,14 +62,14 @@ namespace DARTS.ViewModel
             }
         } 
 
-        public PlayerMatchStatisticsViewModel(List<Match> matches)
+        public PlayerMatchStatisticsViewModel(BindingList<DataObjectBase> matches)
         {
             // view commands:
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(), canExecute => CanExecuteBackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
 
             // TEMP: SetListItems #29
-            _unfilteredMatches.AddRange(matches);
+            _unfilteredMatches = matches;
             DisplayedMatches = matches;
 
             // view data:
@@ -109,7 +109,7 @@ namespace DARTS.ViewModel
             }
             else
             {
-                DisplayedMatches = _unfilteredMatches.Where(match => ((Player)match.Player1).Name.ToLower().Contains(filterText.ToLower()) || ((Player)match.Player2).Name.ToLower().Contains(filterText.ToLower())).ToList();
+                DisplayedMatches = new BindingList<DataObjectBase>(_unfilteredMatches.Where(match => ((Player)((Match)match).Player1).Name.ToLower().Contains(filterText.ToLower()) || ((Player)((Match)match).Player2).Name.ToLower().Contains(filterText.ToLower())).ToList());
             }
         }
 

@@ -48,13 +48,13 @@ namespace DARTS.Data.DataObjects
 
         public uint Player1LegScore
         {
-            get => (uint)FieldCollection[LegFieldNames.Player1LegScore].Value;
+            get => Convert.ToUInt32(FieldCollection[LegFieldNames.Player1LegScore].Value);
             set => FieldCollection[LegFieldNames.Player1LegScore].Value = value;
         }
 
         public uint Player2LegScore
         {
-            get => (uint)FieldCollection[LegFieldNames.Player2LegScore].Value;
+            get => Convert.ToUInt32(FieldCollection[LegFieldNames.Player2LegScore].Value);
             set => FieldCollection[LegFieldNames.Player2LegScore].Value = value;
         }
 
@@ -140,7 +140,7 @@ namespace DARTS.Data.DataObjects
             // TODO: impement factory pattern.(?)
             // Create the next turn and assign the other player.
             Turn nextTurn = (Turn)TurnFactory.Spawn();
-            Turn currentTurn = Turns[Turns.Count - 1] as Turn;
+            Turn currentTurn = (Turn)Turns[Turns.Count - 1];
             nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
             nextTurn.ThrownPoints = 0;
             
