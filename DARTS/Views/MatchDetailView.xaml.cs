@@ -3,11 +3,11 @@
 namespace DARTS.Views
 {
     /// <summary>
-    /// Interaction logic for MatchesOverviewView.xaml
+    /// Interaction logic for PlayerMatchStatisticsView.xaml
     /// </summary>
-    public partial class MatchesOverviewView : UserControl
+    public partial class MatchDetailView : UserControl
     {
-        public MatchesOverviewView()
+        public MatchDetailView()
         {
             InitializeComponent();
         }

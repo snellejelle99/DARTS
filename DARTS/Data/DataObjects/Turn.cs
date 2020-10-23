@@ -38,7 +38,13 @@ namespace DARTS.Data.DataObjects
         {
             
         }
-        
+        public string TurnDetails
+        {
+            get
+            {
+                return string.Format("Turn: {0}: thrown {1}", PlayerTurn, ThrownPoints);
+            }
+        }
         public void CalculateThrownPoints()
         {
             foreach (Tuple<int, ScoreType> dart in Throws)

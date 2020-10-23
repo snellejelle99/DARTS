@@ -58,7 +58,7 @@ namespace DARTS.Data.DataObjects
         {
             get
             {
-                switch(Turns.Last().PlayerTurn)
+                switch (Turns.Last().PlayerTurn)
                 {
                     case PlayerEnum.Player1:
                         return _player1LegScore;
@@ -77,9 +77,22 @@ namespace DARTS.Data.DataObjects
                         _player2LegScore = value;
                         break;
                 }
-            }            
+            }
         }
         #endregion
+        public string LegDetails
+        {
+            get
+            {
+                int totalThrown = 0, amountOfThrows = 0;
+                for (int i = 0; i < Turns.Count; i++)
+                {
+                    totalThrown += Turns[i].ThrownPoints;
+                    amountOfThrows += 1;
+                }
+                return string.Format("Leg: {0}-{1}: avg. thrown {2}", Player1LegScore, Player2LegScore, totalThrown / amountOfThrows);
+            }
+        }
 
         public void Start()
         {

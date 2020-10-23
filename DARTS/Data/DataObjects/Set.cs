@@ -83,8 +83,7 @@ namespace DARTS.Data.DataObjects
         {
             get
             {
-                int totalThrown = 0;
-                int amountOfThrows = 0;
+                int totalThrown = 0, amountOfThrows = 0;
                 for (int i = 0; i < Legs.Count; i++)
                 {
                     for (int j = 0; j < Legs[i].Turns.Count; j++)

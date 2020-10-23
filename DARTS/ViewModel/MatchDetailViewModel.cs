@@ -2,23 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using Accessibility;
-using DARTS.Data;
 using DARTS.Data.DataObjects;
-using DARTS.View;
 using DARTS.ViewModel.Command;
+using DARTS.Data.Singletons;
 
 namespace DARTS.ViewModel
 {
     public class MatchDetailViewModel : INotifyPropertyChanged
     {
         private Match specifiedMatch;
-        List<string> setDetails = new List<string>();
-        List<string> legDetails = new List<string>();
-        private Set _selectedItem;
+        private List<Leg> _specifiedLegs = new List<Leg>();
+        private List<Turn> _specifiedTurns = new List<Turn>();
+        private Set _selectedSet;
+        private Leg _selectedLeg;
         private string player1Name;
         private string player2Name;
         private string setsWon;
@@ -28,6 +25,11 @@ namespace DARTS.ViewModel
         private int player1AverageScore = 0;
         private int player2AverageScore = 0;
         public ICommand OpenSetDetailsClickCommand { get; }
+        public ICommand OpenLegDetailsClickCommand { get; }
+        public ICommand BackToOverviewButtonClickCommand { get; }
+        public ICommand ClearLegsClickCommand { get; }
+        public ICommand ClearTurnsClickCommand { get; }
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,10 +40,13 @@ namespace DARTS.ViewModel
             Player1Name = specifiedMatch.Player1.Name;
             Player2Name = specifiedMatch.Player2.Name;
             SetsWon = specifiedMatch.Player1SetsWon + " - " + specifiedMatch.Player2SetsWon;
+            BackToOverviewButtonClickCommand = new RelayCommand(execute => BackToOverviewButton_Click());
             OpenSetDetailsClickCommand = new RelayCommand(execute => OpenSetDetailsButton_Click(), canExecute => CanExecuteSetDetailsButtonClick());
+            OpenLegDetailsClickCommand = new RelayCommand(execute => OpenLegDetailsButton_Click(), canExecute => CanExecuteLegDetailsButtonClick());
+            ClearLegsClickCommand = new RelayCommand(execute => ClearLegsButton_Click(), canExecute => CanExecuteClearLegsButtonClick());
+            ClearTurnsClickCommand = new RelayCommand(execute => ClearTurnsButton_Click(), canExecute => CanExecuteClearTurnsButtonClick());
             CalculateAmountof180s();
             AverageScorePerPlayer();
-            SetDetailsSetup();
         }
 
         public string SetsWon
@@ -122,23 +127,40 @@ namespace DARTS.ViewModel
         {
             get { return specifiedMatch; }
         }
-
-        public List<string> SetDetails
+        public List<Leg> SpecifiedLegs
         {
-            get { return setDetails; }
-        }
-
-        public List<string> LegDetails
-        {
-            get { return legDetails; }
-        }
-        public Set SelectedItem
-        {
-            get { return _selectedItem; }
+            get { return _specifiedLegs; }
             set
             {
-                _selectedItem = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedItem)));
+                _specifiedLegs = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SpecifiedLegs)));
+            }
+        }
+        public List<Turn> SpecifiedTurns
+        {
+            get { return _specifiedTurns; }
+            set
+            {
+                _specifiedTurns = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SpecifiedTurns)));
+            }
+        }
+        public Set SelectedSet
+        {
+            get { return _selectedSet; }
+            set
+            {
+                _selectedSet = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSet)));
+            }
+        }
+        public Leg SelectedLeg
+        {
+            get { return _selectedLeg; }
+            set
+            {
+                _selectedLeg = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedLeg)));
             }
         }
 
@@ -185,32 +207,42 @@ namespace DARTS.ViewModel
                 }
             }
         }
-
-        private void SetDetailsSetup()
+        private void BackToOverviewButton_Click()
         {
-            int totalThrown = 0;
-            int amountOfThrows = 0;
-            for (int i = 0; i < specifiedMatch.Sets.Count; i++)
-            {
-                for (int j = 0; j < specifiedMatch.Sets[i].Legs.Count; j++)
-                {
-                    for (int k = 0; k < specifiedMatch.Sets[i].Legs[j].Turns.Count; k++)
-                    {
-                        totalThrown += specifiedMatch.Sets[i].Legs[j].Turns[k].ThrownPoints;
-                        amountOfThrows += 1;
-                    }
-                }
-                setDetails.Add(string.Format("Set {0}: {1}-{2}: avg. thrown {3}", i + 1, specifiedMatch.Sets[i].Player1LegsWon, specifiedMatch.Sets[i].Player2LegsWon, totalThrown / amountOfThrows));
-            }
+            GameInstance.Instance.MainWindow.ChangeToMatchesOverview();
         }
-
         private void OpenSetDetailsButton_Click()
         {
-            //logic for displaying set details in leg listview
+            SpecifiedLegs = _selectedSet.Legs;
         }
         private bool CanExecuteSetDetailsButtonClick()
         {
-            return _selectedItem != null;
+            return _selectedSet != null;
+        }
+        private bool CanExecuteClearLegsButtonClick()
+        {
+            return SpecifiedLegs.Count() != 0;
+        }
+        private bool CanExecuteClearTurnsButtonClick()
+        {
+            return SpecifiedTurns.Count() != 0;
+        }
+        private void OpenLegDetailsButton_Click()
+        {
+            SpecifiedTurns = _selectedLeg.Turns;
+        }
+        private void ClearLegsButton_Click()
+        {
+            SpecifiedLegs = new List<Leg>();
+            SpecifiedTurns = new List<Turn>();
+        }
+        private void ClearTurnsButton_Click()
+        {
+            SpecifiedTurns = new List<Turn>();
+        }
+        private bool CanExecuteLegDetailsButtonClick()
+        {
+            return _selectedLeg != null;
         }
     }
 }

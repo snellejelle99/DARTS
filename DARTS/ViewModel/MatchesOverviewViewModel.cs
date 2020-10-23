@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;
-using DARTS.View;
 using DARTS.ViewModel.Command;
 
 namespace DARTS.ViewModel
@@ -130,14 +127,8 @@ namespace DARTS.ViewModel
 
         private void OpenMatchButton_Click()
         {
-            Match specifiedmatch = DummyData.GetDummyMatch();
-            MatchDetailView mainMenuWindow = new MatchDetailView
-            {
-                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen
-            };
-            MatchDetailViewModel mainMenuWindowModel = new MatchDetailViewModel(specifiedmatch);
-            mainMenuWindow.DataContext = mainMenuWindowModel;
-            mainMenuWindow.Show();
+            Match specifiedmatch = SelectedItem;
+            GameInstance.Instance.MainWindow.ChangeToMatchDetailView(specifiedmatch);
         }
 
         private bool CanExecuteOpenMatchButtonClick()

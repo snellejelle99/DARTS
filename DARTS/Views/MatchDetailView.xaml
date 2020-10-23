@@ -1,13 +1,14 @@
-﻿<Window x:Class="DARTS.View.MatchDetailView"
+﻿<UserControl x:Class="DARTS.Views.MatchDetailView"
         x:Name="MatchDetailWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DARTS.View"
+        xmlns:local="clr-namespace:DARTS.Views"
         mc:Ignorable="d"
-        Title="MatchDetailView" Height="450" Width="800">
+        d:DesignHeight="435" d:DesignWidth="800">
     <Grid>
+        <Button Content="Back to overview" HorizontalAlignment="Left" Margin="14,14,0,0" VerticalAlignment="Top" Command="{Binding BackToOverviewButtonClickCommand}"/>
         <Label Content="{Binding Player1Name}" FontSize="24" HorizontalAlignment="Left" Margin="122,48,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.496,1.353"/>
         <Label Content="{Binding Player2Name}" FontSize="24" HorizontalAlignment="Left" Margin="593,48,0,0" VerticalAlignment="Top"/>
         <Label Content="Sets won:" FontSize="14" HorizontalAlignment="Left" Margin="373,9,0,0" VerticalAlignment="Top"/>
@@ -24,14 +25,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="ListViewLegsOverview"  ItemsSource="{Binding SpecifiedLegs}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedLeg}" Margin="292,184,292,10">
+        <ListView x:Name="ListViewLegsOverview"  ItemsSource="{Binding SpecifiedLegs}" SelectedItem="{Binding SelectedLeg}" Margin="292,184,292,35">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Leg" Width="Auto" DisplayMemberBinding="{Binding LegDetails}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="ListViewTurnsOverview"  ItemsSource="{Binding SpecifiedTurns}" VerticalAlignment="Stretch" Margin="574,184,10,10">
+        <ListView x:Name="ListViewTurnsOverview"  ItemsSource="{Binding SpecifiedTurns}" Margin="574,184,10,35">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Turn" Width="Auto" DisplayMemberBinding="{Binding TurnDetails}" />
@@ -40,5 +41,7 @@
         </ListView>
         <Button Content="->" HorizontalAlignment="Left" Margin="243,289,0,0" VerticalAlignment="Top" Width="28" Command="{Binding OpenSetDetailsClickCommand}"/>
         <Button Content="-&gt;" HorizontalAlignment="Left" Margin="529,289,0,0" VerticalAlignment="Top" Width="28" Command="{Binding OpenLegDetailsClickCommand}"/>
+        <Button Content="Clear Legs" HorizontalAlignment="Center" Margin="0,390,0,0" VerticalAlignment="Top" Command="{Binding ClearLegsClickCommand}"/>
+        <Button Content="Clear Turns" HorizontalAlignment="Left" Margin="650,390,0,0" VerticalAlignment="Top" Command="{Binding ClearTurnsClickCommand}"/>
     </Grid>
-</Window>
+</UserControl>
