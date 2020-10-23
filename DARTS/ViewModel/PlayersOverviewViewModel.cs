@@ -16,6 +16,8 @@ namespace DARTS.ViewModel
 {
     public class PlayersOverviewViewModel : INotifyPropertyChanged
     {
+        static PlayerFactory _playerFactory;
+
         private List<Player> _displayedPlayers = new List<Player>();
         private List<Player> _unfilteredPlayers = new List<Player>();
         private Player _selectedItem;
@@ -80,30 +82,18 @@ namespace DARTS.ViewModel
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
             OpenPlayerMatchClickCommand = new RelayCommand(execute => OpenPlayerMatchButtonClick(), canExecute => CanExecuteOpenPlayerMatchButtonClick());
 
-        // TEMP: SetListItems #29
-            _unfilteredPlayers.AddRange(players);
-            DisplayedPlayers = players;
-            // view data:
-            if (players.Count == 0) GetPlayersOverviewData();
-            DisplayedPlayers = players;
-            // TODO: Retrieve players to display #29:
-            //_unfilteredPlayers = get list of players to display...;
-            //DisplayedPlayers = _unfilteredPlayers;
-        }
+            // viewModel data:
+            _playerFactory = new PlayerFactory();
 
-        // TEMP: until data retrieval implementation is finished.
-        private void GetPlayersOverviewData()
-        {
-            PlayerFactory factory = new PlayerFactory();
-            for (int i = 0; i < 3; i++)
-            {
-                Player p = (Player)factory.Spawn();
-                p.Name = "player" + Convert.ToString(i);
-                
-                _displayedPlayers.Add(p);
-                _displayedPlayers.Add(p);
-            }
-            _unfilteredPlayers.AddRange( _displayedPlayers);
+            Player testPlayer = (Player)_playerFactory.Spawn();
+
+            testPlayer.Name = "TestPlayer";
+
+            testPlayer.Post();
+
+            _unfilteredPlayers = _playerFactory.Get().Cast<Player>().ToList();
+
+            DisplayedPlayers = _unfilteredPlayers;
         }
 
         private void BackButtonClick()
