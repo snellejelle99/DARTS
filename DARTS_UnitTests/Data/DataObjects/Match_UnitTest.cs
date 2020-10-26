@@ -5,6 +5,7 @@ using DARTS.Functionality;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using DARTS.Data.DataObjectFactories;
 
 namespace DARTS_UnitTests.Datastructuur
 {
@@ -17,10 +18,13 @@ namespace DARTS_UnitTests.Datastructuur
         public void TestInitialize()
         {
             // Arrange
-            Player player1 = new Player();
+            PlayerFactory playerFactory = new PlayerFactory();
+            MatchFactory matchFactory = new MatchFactory();
+
+            Player player1 = (Player)playerFactory.Spawn();
             player1.Name = "Klaas";
 
-            Player player2 = new Player();
+            Player player2 = (Player)playerFactory.Spawn();
             player2.Name = "Pieter";
 
             int numSets = 11;
@@ -28,13 +32,14 @@ namespace DARTS_UnitTests.Datastructuur
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
 
-            Match match = new Match();
+            Match match = (Match)matchFactory.Spawn();
             match.Player1 = player1;
             match.Player2 = player2;
             match.NumSets = numSets;
             match.NumLegs = numLegs;
             match.BeginningPlayer = beginningPlayer;
             match.MatchState = PlayState.InProgress;
+            match.pointsPerLeg = 501;
 
             this.match = match;
         }
@@ -64,7 +69,7 @@ namespace DARTS_UnitTests.Datastructuur
             match.Start();
 
             // Assert
-            Assert.AreEqual(match.Sets[0].Legs[0].Turns[0].PlayerTurn, beginningPlayer, "The given PlayerEnum isn't equal to the PlayerEnum in the first turn object.");
+            Assert.AreEqual(match.GetCurrentTurn().PlayerTurn, beginningPlayer, "The given PlayerEnum isn't equal to the PlayerEnum in the first turn object.");
         }
 
         [TestMethod]
@@ -72,13 +77,17 @@ namespace DARTS_UnitTests.Datastructuur
         {
             // Arrange
             match.Start();
-            match.Sets[0].Legs[0].Player1LegScore = 0;
+            match.GetCurrentLeg().Player1LegScore = 0;
+
 
             // Act
             match.ChangeTurn();
 
+
             // Assert
-            Assert.AreEqual(PlayerEnum.Player1, match.Sets[0].Legs[0].WinningPlayer, "Expected Player 1 to win, but this was not the case.");
+            Set firstSet = (Set)match.Sets[0];
+            Leg firstLeg = (Leg)firstSet.Legs[0];
+            Assert.AreEqual(PlayerEnum.Player1, firstLeg.WinningPlayer, "Expected Player 1 to win, but this was not the case.");
         }
 
         [TestMethod]
@@ -91,8 +100,8 @@ namespace DARTS_UnitTests.Datastructuur
             match.ChangeTurn();
 
             //Assert
-            Assert.AreEqual(match.Sets[0].Legs[0].Turns.Count, 2, "New Turn was not created.");
-            Assert.AreEqual(match.Sets[0].Legs[0].Turns[1].PlayerTurn, PlayerEnum.Player2, "It should be Player 2's turn now but it is not.");
+            Assert.AreEqual(match.GetCurrentLeg().Turns.Count, 2, "New Turn was not created.");
+            Assert.AreEqual(match.GetCurrentTurn().PlayerTurn, PlayerEnum.Player2, "It should be Player 2's turn now but it is not.");
         }
 
         [TestMethod]
@@ -100,14 +109,15 @@ namespace DARTS_UnitTests.Datastructuur
         {
             //Arrange
             match.Start();
-            match.Sets[0].Legs[0].Player1LegScore = 0;
+            match.GetCurrentLeg().Player1LegScore = 0;
+            Set firstSet = (Set)match.Sets[0];
 
             //Act
             match.ChangeTurn();
 
             //Assert
-            Assert.AreEqual(match.Sets[0].Legs.Count, 2, "New Leg was not created.");
-            Assert.AreEqual(match.Sets[0].Legs[1].BeginningPlayer, PlayerEnum.Player2, "Expected Player2 to be the BeginningPlayer for this leg, but this was not the case.");
+            Assert.AreEqual(firstSet.Legs.Count, 2, "New Leg was not created.");
+            Assert.AreEqual(((Leg)firstSet.Legs[1]).BeginningPlayer, PlayerEnum.Player2, "Expected Player2 to be the BeginningPlayer for this leg, but this was not the case.");
         }
 
         [TestMethod]
@@ -115,16 +125,18 @@ namespace DARTS_UnitTests.Datastructuur
         {
             //Arrange
             match.Start();
-            match.Sets[0].Legs[0].Player1LegScore = 0;
-            match.Sets[0].Player1LegsWon = 2;
+            Set firstSet = match.Sets[0] as Set;
+            Leg firstLeg = firstSet.Legs[0] as Leg;
+            firstLeg.Player1LegScore = 0;
+            firstSet.Player1LegsWon = 2;
 
             //Act
             match.ChangeTurn();
 
             //Assert
             Assert.AreEqual(match.Sets.Count, 2, "New Set was not created.");
-            Assert.AreEqual(match.Sets[0].WinningPlayer, PlayerEnum.Player1, "Expected Player1 to win the Set but this was not the case.");
-            Assert.AreEqual(match.Sets[1].BeginningPlayer, PlayerEnum.Player2, "Expected Player2 to be the BeginningPlayer for this set, but this was not the case.");
+            Assert.AreEqual(firstSet.WinningPlayer, PlayerEnum.Player1, "Expected Player1 to win the Set but this was not the case.");
+            Assert.AreEqual(((Set)match.Sets[1]).BeginningPlayer, PlayerEnum.Player2, "Expected Player2 to be the BeginningPlayer for this set, but this was not the case.");
         }
 
         [TestMethod]
@@ -156,7 +168,7 @@ namespace DARTS_UnitTests.Datastructuur
         public void CalculateThrowScore_Should_Throw_Exception_When_ThrowScore_Is_Out_Of_Allowed_Range(int throwScore)
         {
             // Assert
-            Assert.ThrowsException<ArgumentOutOfRangeException>(()=>ProcessThrow.CalculateThrowScore(throwScore, ScoreType.Single));
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => ProcessThrow.CalculateThrowScore(throwScore, ScoreType.Single));
         }
 
         [TestMethod]

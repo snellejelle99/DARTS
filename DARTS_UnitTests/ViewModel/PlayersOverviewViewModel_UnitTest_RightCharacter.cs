@@ -7,6 +7,7 @@ using DARTS.Data.DataObjects;
 using System.Windows.Controls;
 using System.Linq;
 using System.Runtime.InteropServices;
+using DARTS.Data.DataObjectFactories;
 
 namespace DARTS_UnitTests.ViewModel
 {
@@ -15,6 +16,7 @@ namespace DARTS_UnitTests.ViewModel
     {
         private PlayersOverviewViewModel overview;
         private int playerAmount = 3;
+        private PlayerFactory playerFactory = new PlayerFactory();
 
         [TestInitialize]
         public void TestInitialize()
@@ -24,13 +26,16 @@ namespace DARTS_UnitTests.ViewModel
             List<Player> players = new List<Player>();
             for (int i = 0; i < playerAmount; i++)
             {
-                Player p = new Player();
+                Player p = (Player)playerFactory.Spawn();
                 p.Name = "player" + Convert.ToString(i);
-                p.ID = i;
+                p.Id = i;
                 players.Add(p);
             }
 
-            players.Add(new Player() { Name = "草", ID = 4 });
+            Player player = (Player)playerFactory.Spawn();
+            player.Name = "草";
+            players.Add(player);
+
             overview = new PlayersOverviewViewModel(players);
         }
 

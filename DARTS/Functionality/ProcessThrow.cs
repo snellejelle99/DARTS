@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjects;
+﻿using DARTS.Data.DataObjectFactories;
+using DARTS.Data.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -16,7 +17,7 @@ namespace DARTS.Functionality
         /// <param name="ThrowScore">the regular score without multiplication</param>
         /// <param name="type">the Scoretype</param>
         /// <returns></returns>
-        public static Tuple<int, ScoreType> CalculateThrowScore(int ThrowScore, ScoreType type)
+        public static Throw CalculateThrowScore(int ThrowScore, ScoreType type)
         {
             if ((ThrowScore >= 0 && ThrowScore <= 20) || ThrowScore == 25 || ThrowScore == 50)
             {
@@ -46,7 +47,12 @@ namespace DARTS.Functionality
             }
             else throw new ArgumentOutOfRangeException("Given ThrowScore isn't between 0 and 20 or isn't 25 or 50.");
 
-            return new Tuple<int, ScoreType>(ThrowScore, type);         
+            ThrowFactory throwFactory = new ThrowFactory();
+            Throw _throw = (Throw)throwFactory.Spawn();
+            _throw.Score = ThrowScore;
+            _throw.ScoreType = type;
+
+            return _throw;
         }
 
 
