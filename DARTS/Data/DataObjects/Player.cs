@@ -32,7 +32,7 @@ namespace DARTS.Data.DataObjects
         {
             MatchFactory matchFactory = new MatchFactory();
             List<DataObjectBase> result = matchFactory.Get(MatchFieldNames.Player1Id, this.Id);
-            result.Concat(matchFactory.Get(MatchFieldNames.Player2Id, this.Id));
+            result = result.Concat(matchFactory.Get(MatchFieldNames.Player2Id, this.Id)).ToList();
             return result;
         }
     }
