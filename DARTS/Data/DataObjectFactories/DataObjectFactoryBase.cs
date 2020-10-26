@@ -16,6 +16,8 @@ namespace DARTS.Data.DataFactory
         protected Dictionary<string, ObjectField> _objectFieldCollection = new Dictionary<string, ObjectField>();
         protected Dictionary<string, CollectionField> _collectionFieldCollection = new Dictionary<string, CollectionField>();
 
+        private static bool IsSQLTransactionActive = false;
+        private bool SQLTransactionMustEndHere = false;
         public string TableName
         {
             get;
@@ -198,6 +200,17 @@ namespace DARTS.Data.DataFactory
         /// <param name="objectBase">The DataObject to Post</param>
         public void Post(DataObjectBase objectBase)
         {
+            SQLiteConnection dbConnection = DataBaseProvider.Instance.GetDataBaseConnection();
+
+            //start sql transaction
+            if (!IsSQLTransactionActive)
+            {
+                SQLiteCommand beginCommand = new SQLiteCommand("begin", dbConnection);
+                beginCommand.ExecuteNonQuery();
+                IsSQLTransactionActive = true;
+                SQLTransactionMustEndHere = true;
+            }
+
             //First post all objects in the received object
             foreach (KeyValuePair<string, ObjectField> entry in objectBase.ObjectFieldCollection)
             {
@@ -206,9 +219,6 @@ namespace DARTS.Data.DataFactory
                     entry.Value.PostValue();
                 }
             }
-
-            SQLiteConnection dbConnection = DataBaseProvider.Instance.GetDataBaseConnection();
-            SQLiteCommand cmd = dbConnection.CreateCommand();
 
             StringBuilder queryBuilder = new StringBuilder();
             queryBuilder.Append($"INSERT OR REPLACE INTO \"{TableName}\" (");
@@ -227,7 +237,9 @@ namespace DARTS.Data.DataFactory
             }
             queryBuilder.Replace(',', ')', queryBuilder.Length - 1, 1);
 
+            SQLiteCommand cmd = dbConnection.CreateCommand();
             cmd.CommandText = queryBuilder.ToString();
+
             foreach (KeyValuePair<string, DataField> entry in objectBase.FieldCollection)
             {
                 cmd.Parameters.Add(new SQLiteParameter($"@{entry.Value.Name}", entry.Value.Value));
@@ -244,7 +256,8 @@ namespace DARTS.Data.DataFactory
                 {
                     if (entry.Value.PrimaryKey == true)
                     {
-                        entry.Value.Value = LastRowID64;
+                        if (entry.Value.Value == null || (long)entry.Value.Value != LastRowID64)
+                            entry.Value.Value = LastRowID64;
                         foreach (KeyValuePair<string, CollectionField> collectionFieldEntry in objectBase.CollectionFieldCollection)
                         {
                             if (!collectionFieldEntry.Value.ValuesSynced()) collectionFieldEntry.Value.PostValues();
@@ -254,6 +267,15 @@ namespace DARTS.Data.DataFactory
                 }
 
                 objectBase.ObjectState = ObjectState.Synced;
+            }
+
+            //end sql transaction
+            if (SQLTransactionMustEndHere)
+            {
+                SQLiteCommand endCommand = new SQLiteCommand("end", dbConnection);
+                endCommand.ExecuteNonQuery();
+                IsSQLTransactionActive = false;
+                SQLTransactionMustEndHere = false;
             }
         }
     }
