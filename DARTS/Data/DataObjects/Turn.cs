@@ -44,7 +44,7 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
-        public Turn()
+        private Turn() : base()
         {
             
         }

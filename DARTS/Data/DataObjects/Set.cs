@@ -103,7 +103,6 @@ namespace DARTS.Data.DataObjects
 
         public void Start()
         {
-            Legs = new BindingList<DataObjectBase>();
             LegFactory = new LegFactory();
         
             Leg firstLeg = CreateNewLeg();

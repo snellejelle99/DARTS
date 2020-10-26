@@ -142,7 +142,6 @@ namespace DARTS.Data.DataObjects
         {
             Player1SetsWon = 0;
             Player2SetsWon = 0;
-            Sets = new BindingList<DataObjectBase>();
             SetFactory = new SetFactory();
             if (BeginningPlayer.Equals(PlayerEnum.None))
             {
