@@ -22,5 +22,13 @@ namespace DARTS.Views
         {
             InitializeComponent();
         }
+        private void SelectScore(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            if (tb != null)
+            {
+                tb.SelectAll();
+            }
+        }
     }
 }

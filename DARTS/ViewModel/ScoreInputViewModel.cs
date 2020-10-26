@@ -4,6 +4,7 @@ using DARTS.ViewModel.Command;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DARTS.ViewModel
@@ -122,7 +123,7 @@ namespace DARTS.ViewModel
             SubmitScoreButtonClickCommand = new RelayCommand(execute => SubmitScoreButtonClick(), canExecute => CanExecuteSubmitScoreButtonClick());
             PreviousTurnButtonClickCommand = new RelayCommand(execute => PreviousTurnButtonClick(), canExecute => CanExecutePreviousTurnButtonClick());
             StopMatchButtonClickCommand = new RelayCommand(execute => StopMatchButtonClick(), canExecute => true);
-        }        
+        }
 
         private void ResetScreen()
         {
