@@ -75,7 +75,7 @@ namespace DARTS.ViewModel
             }
         } 
 
-        public PlayersOverviewViewModel(List<Player> players)
+        public PlayersOverviewViewModel()
         {
             // view commands:
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick());
@@ -84,12 +84,6 @@ namespace DARTS.ViewModel
 
             // viewModel data:
             _playerFactory = new PlayerFactory();
-
-            Player testPlayer = (Player)_playerFactory.Spawn();
-
-            testPlayer.Name = "TestPlayer";
-
-            testPlayer.Post();
 
             _unfilteredPlayers = _playerFactory.Get().Cast<Player>().ToList();
 

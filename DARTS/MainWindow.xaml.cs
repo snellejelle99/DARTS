@@ -38,7 +38,7 @@ namespace DARTS
 
         public void ChangeToPlayerOverviewView()
         {
-            DataContext = new PlayersOverviewViewModel(new List<Player>());
+            DataContext = new PlayersOverviewViewModel();
         }
 
         public void ChangeToScoreInputView(Match match)
