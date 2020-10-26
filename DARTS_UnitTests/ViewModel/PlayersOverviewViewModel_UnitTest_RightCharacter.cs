@@ -1,76 +1,43 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using DARTS.ViewModel;
-using DARTS.Data.DataObjects;
-using System.Windows.Controls;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using DARTS.Data.DataBase;
 using DARTS.Data.DataObjectFactories;
+using DARTS.ViewModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DARTS_UnitTests.ViewModel
 {
     [TestClass]
     public class PlayersOverviewViewModel_UnitTest_RightCharacter
     {
-        private PlayersOverviewViewModel overview;
-        private int playerAmount = 3;
-        private PlayerFactory playerFactory = new PlayerFactory();
+        private static PlayersOverviewViewModel overview;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [ClassInitialize]
+        public static void InitializeClass(TestContext context)
         {
-            // Arrange
-            //TEMP: should be done with database system and TestInitialize
-            List<Player> players = new List<Player>();
-            for (int i = 0; i < playerAmount; i++)
-            {
-                Player p = (Player)playerFactory.Spawn();
-                p.Name = "player" + Convert.ToString(i);
-                p.Id = i;
-                players.Add(p);
-            }
-
-            Player player = (Player)playerFactory.Spawn();
-            player.Name = "草";
-            players.Add(player);
-
-            overview = new PlayersOverviewViewModel(players);
+            //Arrange
+            Mock_DatabaseTestData.AddDatabaseTestData();
+            overview = new PlayersOverviewViewModel();
         }
 
         [TestMethod]
-        public void Set_Filter_Should_Find_Three_Players()
-        {     
-            // Act
-
-            string character = "a";
-            overview.FilterTextBoxText = character;
-
-            // Assert
-            Assert.AreEqual(playerAmount, overview.DisplayedPlayers.Count);
-        }
-
-        [TestMethod]
-        public void Set_Filter_Should_Find_Zero_Players()
+        [DataRow("player", 6)]
+        [DataRow("PLAYER", 6)]
+        [DataRow("player1", 1)]
+        [DataRow("PLAYER1", 1)]
+        [DataRow("1", 1)]
+        [DataRow("草", 0)]
+        public void Set_FilterText_Should_Return_Filtered_Matches(string filterInput, int expectedAmount)
         {
             // Act
-            string character = "x";
-            overview.FilterTextBoxText = character;
+            overview.FilterTextBoxText = filterInput;
 
             // Assert
-            Assert.AreEqual(0, overview.DisplayedPlayers.Count);
+            Assert.AreEqual(expectedAmount, overview.DisplayedPlayers.Count);
         }
 
-        [TestMethod]
-        public void Set_filter_Should_Accept_All_Characters()
+        [ClassCleanup]
+        public void Test_Cleanup()
         {
-            // Act
-            string character = "草";
-            overview.FilterTextBoxText = character;
-
-            // Assert
-            Assert.AreEqual(1, overview.DisplayedPlayers.Count);
+            DataBaseProvider.Instance.Dispose();
         }
     }
 }
