@@ -154,7 +154,6 @@ namespace DARTS.Data.DataObjects
             firstSet.BeginningPlayer = BeginningPlayer;
             Sets.Add(firstSet);
             firstSet.Start();
-            Post();
         }
         /// <summary>
         /// Called in ChangeTurn()
