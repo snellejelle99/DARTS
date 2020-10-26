@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows.Media;
@@ -255,7 +256,12 @@ namespace DARTS.Data.DataObjects
 
         public Turn GetCurrentTurn()
         {
-            return (Turn)GetCurrentLeg().Turns[GetCurrentLeg().Turns.Count - 1];
+            foreach(Turn turn in GetCurrentLeg().Turns)
+            {
+                if (turn.TurnState != PlayState.Finished)
+                    return turn;
+            }
+            return null;
         }
         #endregion
 

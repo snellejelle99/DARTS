@@ -12,6 +12,7 @@ namespace DARTS.Data.DataObjectFactories
             _fieldCollection.Add(TurnFieldNames.Id,idField);
 
             _fieldCollection.Add(TurnFieldNames.LegId, new CodeField(TurnFieldNames.LegId));
+            _fieldCollection.Add(TurnFieldNames.TurnState, new DataField(TurnFieldNames.TurnState, SQLiteType.INTEGER));
             _fieldCollection.Add(TurnFieldNames.PlayerTurn, new DataField(TurnFieldNames.PlayerTurn, SQLiteType.INTEGER));
             _fieldCollection.Add(TurnFieldNames.ThrownPoints, new DataField(TurnFieldNames.ThrownPoints, SQLiteType.INTEGER));
 
@@ -30,6 +31,7 @@ namespace DARTS.Data.DataObjectFactories
     {
         public const string Id = "Id";
         public const string LegId = "LegId";
+        public const string TurnState = "TurnState";
         public const string PlayerTurn = "PlayerTurn";
         public const string Throws = "Throws";
         public const string ThrownPoints = "ThrownPoints";

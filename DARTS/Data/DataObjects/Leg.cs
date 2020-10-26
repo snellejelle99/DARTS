@@ -62,7 +62,7 @@ namespace DARTS.Data.DataObjects
         {
             get
             {
-                switch(((Turn)Turns.Last()).PlayerTurn)
+                switch(GetOldestUnfinishedTurn().PlayerTurn)
                 {
                     case PlayerEnum.Player1:
                         return Player1LegScore;
@@ -72,7 +72,7 @@ namespace DARTS.Data.DataObjects
             }
             set
             {
-                switch (((Turn)Turns.Last()).PlayerTurn)
+                switch (GetOldestUnfinishedTurn().PlayerTurn)
                 {
                     case PlayerEnum.Player1:
                         Player1LegScore = value;
@@ -82,6 +82,18 @@ namespace DARTS.Data.DataObjects
                         break;
                 }
             }            
+        }
+
+        public bool UnfinishedTurns
+        {
+            get
+            {
+                foreach (Turn turn in Turns)
+                    if (turn.TurnState == PlayState.InProgress)
+                        return true;
+
+                return false;
+            }
         }
         #endregion
         private TurnFactory TurnFactory
@@ -96,6 +108,7 @@ namespace DARTS.Data.DataObjects
             Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
             firstTurn.ThrownPoints = 0;
+            firstTurn.TurnState = PlayState.InProgress;
 
             Turns.Add(firstTurn);
         }
@@ -119,24 +132,37 @@ namespace DARTS.Data.DataObjects
 
             return WinningPlayer;
         }
+        
+        public Turn GetOldestUnfinishedTurn()
+        {
+            foreach (Turn turn in Turns)
+                if (turn.TurnState != PlayState.Finished)
+                    return turn;
+
+            return null;
+        }
 
         public void ChangeTurn()
         {
-            Turn nextTurn = (Turn)TurnFactory.Spawn();
-            nextTurn.ThrownPoints = 0;
-            if (Turns.Count > 0)
+            if (GetOldestUnfinishedTurn() == null)
             {
-                Turn currentTurn = (Turn)Turns.Last();
-                nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-            }
-            else nextTurn.PlayerTurn = BeginningPlayer;
- 
-            Turns.Add(nextTurn);
+                Turn nextTurn = (Turn)TurnFactory.Spawn();
+                nextTurn.ThrownPoints = 0;
+                nextTurn.TurnState = PlayState.InProgress;
+                if (Turns.Count > 0)
+                {
+                    Turn currentTurn = (Turn)Turns.Last();
+                    nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                }
+                else nextTurn.PlayerTurn = BeginningPlayer;
+
+                Turns.Add(nextTurn);
+            }                   
         }
 
         public void SubtractScore()
         {
-            foreach (Throw dart in ((Turn)Turns.Last()).Throws)
+            foreach (Throw dart in GetOldestUnfinishedTurn().Throws)
             {
                 if (CurrentPlayerLegScore > dart.Score) CurrentPlayerLegScore -= (uint)dart.Score;
                 else if (CurrentPlayerLegScore == dart.Score)
@@ -145,6 +171,7 @@ namespace DARTS.Data.DataObjects
                 }
                 else break;
             }
+            GetOldestUnfinishedTurn().TurnState = PlayState.Finished;
         }
 
         private Leg() : base()

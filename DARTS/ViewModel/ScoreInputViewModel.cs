@@ -147,7 +147,6 @@ namespace DARTS.ViewModel
 
             if(curLeg.Turns.Count > 1)
             {
-                Turn curTurn = Match.GetCurrentTurn();
                 Turn prevTurn = (Turn)Match.GetCurrentLeg().Turns[Match.GetCurrentLeg().Turns.Count - 2];
 
                 switch (prevTurn.PlayerTurn)
@@ -159,10 +158,15 @@ namespace DARTS.ViewModel
                         curLeg.Player2LegScore += (uint)prevTurn.ThrownPoints;
                         break;
                 }
-                curLeg.Turns.Remove(curTurn);
-                curLeg.Turns.Remove(prevTurn);
-                Match.Post();
 
+                foreach (Throw Throw in prevTurn.Throws)
+                {
+                    Throw.Score = 0;
+                    Throw.ScoreType = ScoreType.Miss;
+                }
+
+                prevTurn.ThrownPoints = 0;               
+                prevTurn.TurnState = PlayState.InProgress;
                 Match.ChangeTurn();
                 ResetScreen();
 

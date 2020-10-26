@@ -24,9 +24,14 @@ namespace DARTS.Data.DataObjects
         public PlayerEnum PlayerTurn
         {
             get => (PlayerEnum)Convert.ToInt32(FieldCollection[TurnFieldNames.PlayerTurn].Value);
-            set => FieldCollection[TurnFieldNames.PlayerTurn].Value = (int)value; 
+            set => FieldCollection[TurnFieldNames.PlayerTurn].Value = (int)value;
         }
 
+        public PlayState TurnState
+        {
+            get => (PlayState)Convert.ToInt32(FieldCollection[TurnFieldNames.TurnState].Value);
+            set => FieldCollection[TurnFieldNames.TurnState].Value = (int)value;
+        }
         public BindingList<DataObjectBase> Throws
         {
             get => CollectionFieldCollection[TurnFieldNames.Throws].Value;
@@ -42,9 +47,9 @@ namespace DARTS.Data.DataObjects
 
         public Turn()
         {
-            
+
         }
-        
+
         public void CalculateThrownPoints()
         {
             foreach (Throw thrownDart in Throws)
