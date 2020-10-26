@@ -8,18 +8,20 @@ namespace DARTS.Data.DataObjects
 {
     public class Set : DataObjectBase
     {
-        private const int PlayerPoints = 501;
+        public int PlayerPoints { get; set; }
 
         public long Id
         {
-            get => (int)FieldCollection[SetFieldNames.Id].Value;
+            get => (long)FieldCollection[SetFieldNames.Id].Value;
             set => FieldCollection[SetFieldNames.Id].Value = value;
         }
+
         public long MatchId
         {
-            get => (int)FieldCollection[SetFieldNames.MatchId].Value;
+            get => (long)FieldCollection[SetFieldNames.MatchId].Value;
             set => FieldCollection[SetFieldNames.MatchId].Value = value;
         }
+
         public BindingList<DataObjectBase> Legs
         {
             get => CollectionFieldCollection[SetFieldNames.Legs].Value;
@@ -92,8 +94,8 @@ namespace DARTS.Data.DataObjects
         public Leg CreateNewLeg()
         {
             Leg newLeg = (Leg)LegFactory.Spawn();
-            newLeg.Player1LegScore = PlayerPoints;
-            newLeg.Player2LegScore = PlayerPoints;
+            newLeg.Player1LegScore = (uint)PlayerPoints;
+            newLeg.Player2LegScore = (uint)PlayerPoints;
             newLeg.LegState = PlayState.InProgress;
 
             return newLeg;

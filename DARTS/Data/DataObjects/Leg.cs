@@ -10,6 +10,7 @@ namespace DARTS.Data.DataObjects
     public class Leg : DataObjectBase
     {
         #region Properties
+        private int PlayerPoints { get; set; }
         public long Id
         {
             get => (long)FieldCollection[LegFieldNames.Id].Value;

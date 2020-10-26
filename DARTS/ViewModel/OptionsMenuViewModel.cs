@@ -9,7 +9,6 @@ using System.Windows.Input;
 using DARTS.Data;
 using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;
-using DARTS.View;
 using DARTS.ViewModel.Command;
 
 namespace DARTS.ViewModel
