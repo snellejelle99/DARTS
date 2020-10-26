@@ -20,6 +20,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
+            <TextBox.InputBindings>
+                <KeyBinding 
+                        Key="Return"
+                        Command="{Binding StartMatchButtonClickCommand}"/>
+            </TextBox.InputBindings>
         </TextBox>
 
         <TextBlock Text="Enter player two name" Canvas.Left="285" Canvas.Top="73" FontSize="20"/>
@@ -32,6 +37,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
+            <TextBox.InputBindings>
+                <KeyBinding 
+                        Key="Return"
+                        Command="{Binding StartMatchButtonClickCommand}"/>
+            </TextBox.InputBindings>
         </TextBox>
 
         <Label Content="Choose starting player" Canvas.Left="535" Canvas.Top="73" FontSize="20" Width="226"/>
@@ -39,7 +49,7 @@
 
         <TextBlock Text="Enter amount of sets in the match" Canvas.Top="185" FontSize="20" Canvas.Left="35" Width="320"/>
         <TextBox Name="tbSetsInMatch" Width="320" Canvas.Left="35" Canvas.Top="217" Height="30"
-                 FontSize="20" MaxLength="2">
+                 FontSize="20" MaxLength="2" GotKeyboardFocus="SelectScore" GotMouseCapture="SelectScore">
             <TextBox.Text>
                 <Binding Path="NumSets" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -47,6 +57,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
+            <TextBox.InputBindings>
+                <KeyBinding 
+                        Key="Return"
+                        Command="{Binding StartMatchButtonClickCommand}"/>
+            </TextBox.InputBindings>
         </TextBox>
 
         <TextBlock Text="Amount of points per leg" Canvas.Top="180" FontSize="20" Canvas.Left="535" Width="226"/>
@@ -55,7 +70,7 @@
 
         <Label Content="Enter amount of legs per set" Canvas.Left="35" Canvas.Top="270" FontSize="20" Width="320"/>
         <TextBox Name="tbLegsInSet" TextWrapping="Wrap" Width="320" Canvas.Left="35" Canvas.Top="312" Height="30"
-                 FontSize="20" MaxLength="2">
+                 FontSize="20" MaxLength="2" GotKeyboardFocus="SelectScore" GotMouseCapture="SelectScore">
             <TextBox.Text>
                 <Binding Path="NumLegs" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -63,6 +78,11 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
+            <TextBox.InputBindings>
+                <KeyBinding 
+                        Key="Return"
+                        Command="{Binding StartMatchButtonClickCommand}"/>
+            </TextBox.InputBindings>
         </TextBox>
 
         <Button Name="startButton" Content="Start match" Canvas.Left="636" Canvas.Top="369" Width="120" FontSize="20" Command="{Binding StartMatchButtonClickCommand}">
