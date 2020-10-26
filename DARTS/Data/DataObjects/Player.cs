@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
@@ -24,6 +26,14 @@ namespace DARTS.Data.DataObjects
         private Player() : base()
         {
 
+        }
+
+        public List<DataObjectBase> GetMatches()
+        {
+            MatchFactory matchFactory = new MatchFactory();
+            List<DataObjectBase> result = matchFactory.Get(MatchFieldNames.Player1Id, this.Id);
+            result.Concat(matchFactory.Get(MatchFieldNames.Player2Id, this.Id));
+            return result;
         }
     }
 }

@@ -46,9 +46,9 @@ namespace DARTS
             DataContext = new ScoreInputViewModel(match);
         }
 
-        public void ChangeToPlayerMatchStatisticsView()
+        public void ChangeToPlayerMatchStatisticsView(List<Match> matches)
         {
-            DataContext = new PlayerMatchStatisticsViewModel(new List<Match>());
+            DataContext = new PlayerMatchStatisticsViewModel(matches);
         }
     }
 }

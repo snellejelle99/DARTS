@@ -131,7 +131,7 @@ namespace DARTS.ViewModel
 
         private void OpenPlayerMatchButtonClick()
         {
-            GameInstance.Instance.MainWindow.ChangeToPlayerMatchStatisticsView();
+            GameInstance.Instance.MainWindow.ChangeToPlayerMatchStatisticsView(_selectedItem.GetMatches().Cast<Match>().ToList());
         }
 
         private bool CanExecuteOpenPlayerMatchButtonClick()
