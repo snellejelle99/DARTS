@@ -69,7 +69,7 @@ namespace DARTS_UnitTests
 
             for (int i = 0; i < 3; i++)
             {
-                Match match = matchFactory.Spawn() as Match;
+                Match match = (Match)matchFactory.Spawn();
                 match.Player1 = dummyPlayers[i];
                 match.Player2 = dummyPlayers[i + 3];
                 match.NumSets = 3;
