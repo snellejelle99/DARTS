@@ -134,7 +134,7 @@ namespace DARTS.Data.DataObjects
         {
             Set newSet = (Set)SetFactory.Spawn();
             newSet.NumLegs = NumLegs;
-            newSet.SetState = PlayState.InProgress;
+            newSet.SetState = PlayState.NotStarted;
             newSet.Player1LegsWon = 0;
             newSet.Player2LegsWon = 0;
             newSet.PlayerPoints = PointsPerLeg;
@@ -218,6 +218,7 @@ namespace DARTS.Data.DataObjects
                 {
                     Set nextSet = CreateNewSet();
                     nextSet.BeginningPlayer = GetCurrentSet().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                    GetCurrentSet().SetState = PlayState.Finished;
 
                     Sets.Add(nextSet);
                     nextSet.Start();

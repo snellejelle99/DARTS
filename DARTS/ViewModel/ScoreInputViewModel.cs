@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DARTS.ViewModel
@@ -143,54 +144,96 @@ namespace DARTS.ViewModel
 
         private void PreviousTurnButtonClick()
         {
-            Leg curLeg = Match.GetCurrentLeg();
-
-            if(curLeg.Turns.Count > 1)
+            if (MessageBox.Show("Are you sure you want to revert the previous turn and re-enter it?", "Previous Turn", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                Turn prevTurn = (Turn)Match.GetCurrentLeg().Turns[Match.GetCurrentLeg().Turns.Count - 2];
+                Leg currentLeg = Match.GetCurrentLeg();
+                Set currentSet = Match.GetCurrentSet();
+                Turn currentTurn = Match.GetCurrentTurn();
 
-                switch (prevTurn.PlayerTurn)
+                Leg previousLeg;
+                Set previousSet;
+                Turn previousTurn = null;
+
+                if (currentLeg.Turns.Count > 1)
                 {
-                    case PlayerEnum.Player1:
-                        curLeg.Player1LegScore += (uint)prevTurn.ThrownPoints;
-                        break;
-                    case PlayerEnum.Player2:
-                        curLeg.Player2LegScore += (uint)prevTurn.ThrownPoints;
-                        break;
+                    previousTurn = (Turn)Match.GetCurrentLeg().Turns[Match.GetCurrentLeg().Turns.Count - 2];
                 }
 
-                foreach (Throw Throw in prevTurn.Throws)
+                else if (currentSet.Legs.Count > 1)
                 {
-                    Throw.Score = 0;
-                    Throw.ScoreType = ScoreType.Miss;
+                    previousLeg = (Leg)currentSet.Legs[currentSet.Legs.Count - 2];
+                    previousTurn = (Turn)previousLeg.Turns.Last();
+
+                    previousLeg.LegState = PlayState.InProgress;
+                    previousLeg.WinningPlayer = PlayerEnum.None;
+
+                    currentLeg.LegState = PlayState.NotStarted;
+                    currentLeg = previousLeg;
+
+                    switch (previousTurn.PlayerTurn)
+                    {
+                        case PlayerEnum.Player1:
+                            currentSet.Player1LegsWon -= 1;
+                            break;
+
+                        case PlayerEnum.Player2:
+                            currentSet.Player2LegsWon -= 1;
+                            break;
+                    }
                 }
 
-                prevTurn.ThrownPoints = 0;               
-                prevTurn.TurnState = PlayState.InProgress;
-                Match.ChangeTurn();
-                ResetScreen();
+                else if (Match.Sets.Count > 1)
+                {
+                    previousSet = (Set)Match.Sets[Match.Sets.Count - 2];
+                    previousTurn = (Turn)((Leg)previousSet.Legs.Last()).Turns.Last();
+                    previousLeg = (Leg)previousSet.Legs.Last();
 
+                    currentSet.SetState = PlayState.NotStarted;
+                    previousSet.SetState = PlayState.InProgress;
+                    previousLeg.LegState = PlayState.InProgress;
+                    currentLeg.LegState = PlayState.NotStarted;
+                    currentLeg = previousLeg;
+
+                    switch (previousTurn.PlayerTurn)
+                    {
+                        case PlayerEnum.Player1:
+                            previousSet.Player1LegsWon -= 1;
+                            Match.Player1SetsWon -= 1;
+                            break;
+
+                        case PlayerEnum.Player2:
+                            previousSet.Player2LegsWon -= 1;
+                            Match.Player2SetsWon -= 1;
+                            break;
+                    }
+                }
+
+                if (previousTurn != null)
+                {
+                    switch (previousTurn.PlayerTurn)
+                    {
+                        case PlayerEnum.Player1:
+                            currentLeg.Player1LegScore += (uint)previousTurn.ThrownPoints;
+                            break;
+                        case PlayerEnum.Player2:
+                            currentLeg.Player2LegScore += (uint)previousTurn.ThrownPoints;
+                            break;
+                    }
+
+                    foreach (Throw Throw in previousTurn.Throws)
+                    {
+                        Throw.Score = 0;
+                        Throw.ScoreType = ScoreType.Miss;
+                    }
+
+                    previousTurn.ThrownPoints = 0;
+                    previousTurn.TurnState = PlayState.InProgress;
+                    currentTurn.TurnState = PlayState.NotStarted;
+
+                    Match.ChangeTurn();
+                    ResetScreen();
+                }          
             }
-
-            else //else maybe we need to get the previous set/leg
-            {
-
-            }
-
-            if (Match.GetCurrentSet().Legs.Count > 1)
-            {
-                if (Match.Sets.Count > 1)
-                {
-
-                }
-
-                else
-                {
-
-                }
-            }
-
-            
         }
 
         private void SubmitScoreButtonClick()
@@ -211,12 +254,12 @@ namespace DARTS.ViewModel
 
         #region CanExecute Functions
         /// <summary>
-        /// Checks if there are more than one turn in the current leg.
+        /// Checks if there are more than one turn in the current leg, more than one leg in the current set, or more than one set in the match.
         /// </summary>
-        /// <returns>True when there are more than one turn in the current leg.</returns>
+        /// <returns>True when there are more than one turn/leg/set in the current leg/set/match.</returns>
         private bool CanExecutePreviousTurnButtonClick()
         {
-            return (Match.GetCurrentLeg().Turns.Count > 1);
+            return Match.GetCurrentLeg().Turns.Count > 1 || Match.GetCurrentSet().Legs.Count > 1 || Match.Sets.Count > 1;
         }
 
         /// <summary>

@@ -96,13 +96,13 @@ namespace DARTS.Data.DataObjects
             Leg newLeg = (Leg)LegFactory.Spawn();
             newLeg.Player1LegScore = (uint)PlayerPoints;
             newLeg.Player2LegScore = (uint)PlayerPoints;
-            newLeg.LegState = PlayState.InProgress;
-
+           
             return newLeg;
         }
 
         public void Start()
         {
+            SetState = PlayState.InProgress;
             LegFactory = new LegFactory();
         
             Leg firstLeg = CreateNewLeg();

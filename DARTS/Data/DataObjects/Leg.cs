@@ -84,12 +84,12 @@ namespace DARTS.Data.DataObjects
             }            
         }
 
-        public bool UnfinishedTurns
+        public bool HasUnfinishedTurns
         {
             get
             {
                 foreach (Turn turn in Turns)
-                    if (turn.TurnState == PlayState.InProgress)
+                    if (turn.TurnState != PlayState.Finished)
                         return true;
 
                 return false;
@@ -104,6 +104,7 @@ namespace DARTS.Data.DataObjects
         }
         public void Start()
         {
+            LegState = PlayState.InProgress;
             TurnFactory = new TurnFactory();
             Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
