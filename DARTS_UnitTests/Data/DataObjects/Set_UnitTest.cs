@@ -41,5 +41,28 @@ namespace DARTS_UnitTests.Data.DataObjects
             // Assert.
             Assert.IsNotNull(set.MatchId);
         }
+
+        [TestMethod]
+        public void Reading_Set_Properties_Should_Not_Cause_Exceptions()
+        {
+            SetFactory setFactory = new SetFactory();
+            Set set = (Set)setFactory.Spawn();
+            set.WinningPlayer = PlayerEnum.Player1;
+            set.BeginningPlayer = PlayerEnum.Player1;
+            set.SetState = PlayState.InProgress;
+            set.NumLegs = 1;
+            set.Player1LegsWon = 0;
+            set.Player2LegsWon = 0;
+
+            set.Post();
+            set = (Set)setFactory.Get(set.Id);
+
+            Assert.IsNotNull(set.WinningPlayer);
+            Assert.IsNotNull(set.BeginningPlayer);
+            Assert.IsNotNull(set.SetState);
+            Assert.IsNotNull(set.NumLegs);
+            Assert.IsNotNull(set.Player1LegsWon);
+            Assert.IsNotNull(set.Player2LegsWon);
+        }
     }
 }

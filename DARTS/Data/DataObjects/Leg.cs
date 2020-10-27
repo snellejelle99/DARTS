@@ -10,7 +10,6 @@ namespace DARTS.Data.DataObjects
     public class Leg : DataObjectBase
     {
         #region Properties
-        private int PlayerPoints { get; set; }
         public long Id
         {
             get => (long)FieldCollection[LegFieldNames.Id].Value;
@@ -22,6 +21,7 @@ namespace DARTS.Data.DataObjects
             get => (long)FieldCollection[LegFieldNames.SetId].Value;
             set => FieldCollection[LegFieldNames.SetId].Value = value;
         }
+
         public BindingList<DataObjectBase> Turns
         {
             get => CollectionFieldCollection[LegFieldNames.Turns].Value;
@@ -30,31 +30,31 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum WinningPlayer
         {
-            get => (PlayerEnum)FieldCollection[LegFieldNames.WinningPlayer].Value;
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[LegFieldNames.WinningPlayer].Value);
             set => FieldCollection[LegFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get => (PlayerEnum)(int)FieldCollection[LegFieldNames.BeginningPlayer].Value;
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[LegFieldNames.BeginningPlayer].Value);
             set => FieldCollection[LegFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState LegState
         {
-            get => (PlayState)(int)FieldCollection[LegFieldNames.LegState].Value;        
+            get => (PlayState)Convert.ToInt32(FieldCollection[LegFieldNames.LegState].Value);        
             set => FieldCollection[LegFieldNames.LegState].Value = (int)value;
         }
 
         public uint Player1LegScore
         {
-            get => (uint)FieldCollection[LegFieldNames.Player1LegScore].Value;
+            get => Convert.ToUInt32(FieldCollection[LegFieldNames.Player1LegScore].Value);
             set => FieldCollection[LegFieldNames.Player1LegScore].Value = value;
         }
 
         public uint Player2LegScore
         {
-            get => (uint)FieldCollection[LegFieldNames.Player2LegScore].Value;
+            get => Convert.ToUInt32(FieldCollection[LegFieldNames.Player2LegScore].Value);
             set => FieldCollection[LegFieldNames.Player2LegScore].Value = value;
         }
 
@@ -96,6 +96,7 @@ namespace DARTS.Data.DataObjects
             }
         }
         #endregion
+
         private TurnFactory TurnFactory
         {
             get;
@@ -103,7 +104,6 @@ namespace DARTS.Data.DataObjects
         }
         public void Start()
         {
-            Turns = new BindingList<DataObjectBase>();
             TurnFactory = new TurnFactory();
             Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;

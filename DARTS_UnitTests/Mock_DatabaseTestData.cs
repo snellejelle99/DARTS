@@ -4,14 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using System.Windows.Markup;
-using System.Windows.Media;
 
-namespace DARTS.Data
+namespace DARTS_UnitTests
 {
-    public class DummyData
+    public static class Mock_DatabaseTestData
     {
-        public static List<Match> TempAddListItems()
+        public static void AddDatabaseTestData()
         {
             PlayerFactory playerFactory = new PlayerFactory();
             LegFactory legFactory = new LegFactory();
@@ -57,19 +55,21 @@ namespace DARTS.Data
             ((Throw)dummyThrows[2]).Score = 15;
             ((Throw)dummyThrows[2]).ScoreType = ScoreType.Double;
 
-            dummyTurn.Throws.Add(dummyThrows[0]);
-            dummyTurn.Throws.Add(dummyThrows[1]);
-            dummyTurn.Throws.Add(dummyThrows[2]);
+            dummyTurn.Throws = new BindingList<DataObjectBase>(dummyThrows);
 
-            dummyLeg.Turns.Add(dummyTurn);
-            
-            dummySet.Legs.Add(dummyLeg);
+            BindingList<DataObjectBase> dummyTurnList = new BindingList<DataObjectBase>();
+            dummyTurnList.Add(dummyTurn);
+            dummyLeg.Turns = dummyTurnList;
+
+            BindingList<DataObjectBase> dummyLegList = new BindingList<DataObjectBase>();
+            dummyLegList.Add(dummyLeg);
+            dummySet.Legs = dummyLegList;
 
             List<Match> dummyMatches = new List<Match>();
 
             for (int i = 0; i < 3; i++)
             {
-                Match match = matchFactory.Spawn() as Match;
+                Match match = (Match)matchFactory.Spawn();
                 match.Player1 = dummyPlayers[i];
                 match.Player2 = dummyPlayers[i + 3];
                 match.NumSets = 3;
@@ -77,51 +77,16 @@ namespace DARTS.Data
                 match.Player1SetsWon = 0;
                 match.Player2SetsWon = 3;
                 match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
-                
+                BindingList<DataObjectBase> dummySetList = new BindingList<DataObjectBase>();
+
                 for (int j = 0; j < 3; j++)
                 {
-                    match.Sets.Add(dummySet);
+                    dummySetList.Add(dummySet);
                 }
+                match.Sets = dummySetList;
                 dummyMatches.Add(match);
+                match.Post();
             }
-
-            return dummyMatches;
-        }
-
-        public static Match GetDummyMatch() 
-        {
-
-            PlayerFactory playerFactory = new PlayerFactory();
-            LegFactory legFactory = new LegFactory();
-            TurnFactory turnFactory = new TurnFactory();
-            MatchFactory matchFactory = new MatchFactory();
-            SetFactory setFactory = new SetFactory();
-
-            Player player1 = (Player)playerFactory.Spawn();
-            player1.Name = "Klaas";
-            
-            Player player2 = (Player)playerFactory.Spawn();
-            player2.Name = "Pieter";
-              
-            int numSets = 3;
-            int numLegs = 3;
-
-            PlayerEnum beginningPlayer = PlayerEnum.Player1;
-
-            Match match = (Match)matchFactory.Spawn();
-            match.Player1 = player1;
-            match.Player2 = player2;
-            match.NumSets = numSets;
-            match.NumLegs = numLegs;
-            match.Player1SetsWon = 0;
-            match.Player2SetsWon = 0;
-            match.WinningPlayer = PlayerEnum.None;          
-            match.BeginningPlayer = beginningPlayer;
-            match.MatchState = PlayState.InProgress;
-            match.Post();
-            match.Start();
-            
-            return match;
         }
     }
 }

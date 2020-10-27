@@ -82,6 +82,7 @@ namespace DARTS.Data.DataObjectFactories.DataObjectFieldTypes
                     DataObjectFactoryBase dataObjectFactory = (DataObjectFactoryBase)Activator.CreateInstance(TargetFactory, true);
 
                     Value = new BindingList<DataObjectBase>(dataObjectFactory.Get(TargetFieldName, ((CodeField)sender).Value));
+                    Value.ListChanged += _value_ListChanged;
                 }
         }
 
