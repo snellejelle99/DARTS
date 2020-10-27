@@ -30,5 +30,10 @@ namespace DARTS.Data.DataObjects
             get => (ScoreType)Convert.ToInt32(FieldCollection[ThrowFieldNames.ScoreType].Value);
             set => FieldCollection[ThrowFieldNames.ScoreType].Value = (int)value;
         }
+
+        private Throw() : base()
+        {
+
+        }
     }
 }

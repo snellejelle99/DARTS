@@ -57,15 +57,13 @@ namespace DARTS.Data
             ((Throw)dummyThrows[2]).Score = 15;
             ((Throw)dummyThrows[2]).ScoreType = ScoreType.Double;
 
-            dummyTurn.Throws = new BindingList<DataObjectBase>(dummyThrows);
+            dummyTurn.Throws.Add(dummyThrows[0]);
+            dummyTurn.Throws.Add(dummyThrows[1]);
+            dummyTurn.Throws.Add(dummyThrows[2]);
 
-            BindingList<DataObjectBase> dummyTurnList = new BindingList<DataObjectBase>();
-            dummyTurnList.Add(dummyTurn);
-            dummyLeg.Turns = dummyTurnList;
-
-            BindingList<DataObjectBase> dummyLegList = new BindingList<DataObjectBase>();
-            dummyLegList.Add(dummyLeg);
-            dummySet.Legs = dummyLegList;
+            dummyLeg.Turns.Add(dummyTurn);
+            
+            dummySet.Legs.Add(dummyLeg);
 
             List<Match> dummyMatches = new List<Match>();
 
@@ -79,13 +77,11 @@ namespace DARTS.Data
                 match.Player1SetsWon = 0;
                 match.Player2SetsWon = 3;
                 match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
-                BindingList<DataObjectBase> dummySetList = new BindingList<DataObjectBase>();
-
+                
                 for (int j = 0; j < 3; j++)
                 {
-                    dummySetList.Add(dummySet);
+                    match.Sets.Add(dummySet);
                 }
-                match.Sets = dummySetList;
                 dummyMatches.Add(match);
             }
 
@@ -111,29 +107,6 @@ namespace DARTS.Data
             int numLegs = 3;
 
             PlayerEnum beginningPlayer = PlayerEnum.Player1;
-
-
-            //BindingList<DataObjectBase> turns = new BindingList<DataObjectBase>();
-            //Turn turn = (Turn)turnFactory.Spawn();
-            //turn.PlayerTurn = PlayerEnum.Player2;
-            //turns.Add(turn);
-
-            //BindingList<DataObjectBase> legs = new BindingList<DataObjectBase>();
-            //Leg leg = (Leg)legFactory.Spawn();
-            //leg.Player1LegScore = 441;
-            //leg.Player2LegScore = 501;
-            //leg.BeginningPlayer = beginningPlayer;
-            //leg.LegState = PlayState.InProgress;
-            //leg.Turns = turns;
-            //legs.Add(leg);
-
-            //BindingList<DataObjectBase> sets = new BindingList<DataObjectBase>();
-            //Set set = (Set)setFactory.Spawn();
-            //set.NumLegs = numLegs;
-            //set.Player1LegsWon = 1;
-            //set.Player2LegsWon = 2;
-            //set.Legs = legs;
-            //sets.Add(set);
 
             Match match = (Match)matchFactory.Spawn();
             match.Player1 = player1;

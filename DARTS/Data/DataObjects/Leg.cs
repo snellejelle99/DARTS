@@ -92,7 +92,6 @@ namespace DARTS.Data.DataObjects
         }
         public void Start()
         {
-            Turns = new BindingList<DataObjectBase>();
             TurnFactory = new TurnFactory();
             Turn firstTurn = (Turn)TurnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
