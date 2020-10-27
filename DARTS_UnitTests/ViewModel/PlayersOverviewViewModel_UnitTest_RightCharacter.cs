@@ -8,7 +8,7 @@ namespace DARTS_UnitTests.ViewModel
     [TestClass]
     public class PlayersOverviewViewModel_UnitTest_RightCharacter
     {
-        private static PlayersOverviewViewModel overview;
+        static PlayersOverviewViewModel overview;
 
         [ClassInitialize]
         public static void InitializeClass(TestContext context)
@@ -35,7 +35,7 @@ namespace DARTS_UnitTests.ViewModel
         }
 
         [ClassCleanup]
-        public void Test_Cleanup()
+        public static void TestCleanup()
         {
             DataBaseProvider.Instance.Dispose();
         }
