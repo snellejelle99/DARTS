@@ -41,5 +41,18 @@ namespace DARTS_UnitTests.Data.DataObjects
             // Assert.
             Assert.IsNotNull(turn.LegId);
         }
+
+        [TestMethod]
+        public void Reading_Turn_Properties_Should_Not_Cause_Exceptions()
+        {
+            TurnFactory turnFactory = new TurnFactory();
+            Turn turn = (Turn)turnFactory.Spawn();
+            turn.PlayerTurn = PlayerEnum.Player1;
+
+            turn.Post();
+            turn = (Turn)turnFactory.Get(turn.Id);
+
+            Assert.IsNotNull(turn.PlayerTurn);
+        }
     }
 }

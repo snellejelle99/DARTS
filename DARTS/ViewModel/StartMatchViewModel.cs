@@ -70,7 +70,7 @@ namespace DARTS.ViewModel
             match.MatchState = PlayState.InProgress;
             match.NumSets = NumSets;
             match.NumLegs = NumLegs;
-            match.pointsPerLeg = Is501LegScore ? 501 : 301;
+            match.PointsPerLeg = Is501LegScore ? 501 : 301;
 
             match.Start();
             GameInstance.Instance.MainWindow.ChangeToScoreInputView(match);

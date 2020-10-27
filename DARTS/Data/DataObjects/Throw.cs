@@ -21,17 +21,13 @@ namespace DARTS.Data.DataObjects
 
         public int Score
         {
-            get => (int)FieldCollection[ThrowFieldNames.Score].Value;
+            get => Convert.ToInt32(FieldCollection[ThrowFieldNames.Score].Value);
             set => FieldCollection[ThrowFieldNames.Score].Value = value;
         }
 
         public ScoreType ScoreType
         {
-            get
-            {
-                int intVal = (int)FieldCollection[ThrowFieldNames.ScoreType].Value;
-                return (ScoreType)intVal;
-            }
+            get => (ScoreType)Convert.ToInt32(FieldCollection[ThrowFieldNames.ScoreType].Value);
             set => FieldCollection[ThrowFieldNames.ScoreType].Value = (int)value;
         }
 

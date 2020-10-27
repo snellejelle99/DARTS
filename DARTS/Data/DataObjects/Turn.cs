@@ -8,6 +8,7 @@ namespace DARTS.Data.DataObjects
 {
     public class Turn : DataObjectBase
     {
+        #region Properties
         public long Id
         {
             get => (long)FieldCollection[TurnFieldNames.Id].Value;
@@ -19,15 +20,10 @@ namespace DARTS.Data.DataObjects
             get => (long)FieldCollection[TurnFieldNames.LegId].Value;
             set => FieldCollection[TurnFieldNames.LegId].Value = value;
         }
-
-        #region Properties
+        
         public PlayerEnum PlayerTurn
         {
-            get
-            {
-                int intVal = (int)FieldCollection[TurnFieldNames.PlayerTurn].Value;
-                return (PlayerEnum)intVal;
-            }
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[TurnFieldNames.PlayerTurn].Value);
             set => FieldCollection[TurnFieldNames.PlayerTurn].Value = (int)value; 
         }
 

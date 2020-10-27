@@ -22,16 +22,19 @@ namespace DARTS.Data.DataObjects
             get => (long)FieldCollection[MatchFieldNames.Player1Id].Value;
             set => FieldCollection[MatchFieldNames.Player1Id].Value = value;
         }
+
         public long Player2Id
         {
             get => (long)FieldCollection[MatchFieldNames.Player2Id].Value;
             set => FieldCollection[MatchFieldNames.Player2Id].Value = value;
         }
-        public int pointsPerLeg
+
+        public int PointsPerLeg
         {
-            get => (int)FieldCollection[MatchFieldNames.PointsPerLeg].Value;
+            get => Convert.ToInt32(FieldCollection[MatchFieldNames.PointsPerLeg].Value);
             set => FieldCollection[MatchFieldNames.PointsPerLeg].Value = value;
         }
+
         public DataObjectBase Player1
         {
             get => (DataObjectBase)ObjectFieldCollection[MatchFieldNames.Player1].Value;
@@ -46,19 +49,19 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum WinningPlayer
         {
-            get => (PlayerEnum)((int)FieldCollection[MatchFieldNames.WinningPlayer].Value);
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[MatchFieldNames.WinningPlayer].Value);
             set => FieldCollection[MatchFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get => (PlayerEnum)((int)FieldCollection[MatchFieldNames.BeginningPlayer].Value);
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[MatchFieldNames.BeginningPlayer].Value);
             set => FieldCollection[MatchFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState MatchState
         {
-            get => (PlayState)((int)FieldCollection[MatchFieldNames.MatchState].Value);
+            get => (PlayState)Convert.ToInt32(FieldCollection[MatchFieldNames.MatchState].Value);
             set => FieldCollection[MatchFieldNames.MatchState].Value = (int)value;
         }
 
@@ -70,7 +73,7 @@ namespace DARTS.Data.DataObjects
 
         public int NumSets
         {
-            get => (int)FieldCollection[MatchFieldNames.NumSets].Value;
+            get => Convert.ToInt32(FieldCollection[MatchFieldNames.NumSets].Value);
             set
             {
                 if (value % 2 == 0)
@@ -83,7 +86,7 @@ namespace DARTS.Data.DataObjects
 
         public int NumLegs
         {
-            get => (int)FieldCollection[MatchFieldNames.NumLegs].Value;
+            get => Convert.ToInt32(FieldCollection[MatchFieldNames.NumLegs].Value);
             set
             {
                 if (value % 2 == 0)
@@ -96,7 +99,7 @@ namespace DARTS.Data.DataObjects
 
         public int Player1SetsWon
         {
-            get => (int)FieldCollection[MatchFieldNames.Player1SetsWon].Value;
+            get => Convert.ToInt32(FieldCollection[MatchFieldNames.Player1SetsWon].Value);
             set
             {
                 if (value > NumSets)
@@ -109,7 +112,7 @@ namespace DARTS.Data.DataObjects
 
         public int Player2SetsWon
         {
-            get => (int)FieldCollection[MatchFieldNames.Player2SetsWon].Value;
+            get => Convert.ToInt32(FieldCollection[MatchFieldNames.Player2SetsWon].Value);
             set
             {
                 if (value > NumSets)
@@ -133,27 +136,30 @@ namespace DARTS.Data.DataObjects
             newSet.SetState = PlayState.InProgress;
             newSet.Player1LegsWon = 0;
             newSet.Player2LegsWon = 0;
-            newSet.PlayerPoints = pointsPerLeg;
+            newSet.PlayerPoints = PointsPerLeg;
 
             return newSet;
         }
 
         public void Start()
         {
+            MatchState = PlayState.InProgress;
+            WinningPlayer = PlayerEnum.None;
             Player1SetsWon = 0;
             Player2SetsWon = 0;
+            
             SetFactory = new SetFactory();
             if (BeginningPlayer.Equals(PlayerEnum.None))
             {
                 BeginningPlayer = ChooseRandomPlayer();
             }
 
-            // TODO: impement factory pattern.
             Set firstSet = CreateNewSet();
             firstSet.BeginningPlayer = BeginningPlayer;
             Sets.Add(firstSet);
             firstSet.Start();
         }
+
         /// <summary>
         /// Called in ChangeTurn()
         /// Checks if the math has been won.
@@ -192,6 +198,7 @@ namespace DARTS.Data.DataObjects
 
             return WinningPlayer;
         }
+
         /// <summary>
         /// Starts the next turn and assigns the right player..
         /// Uses CheckWin methods to see if a new Leg or Set must be created and creates them if needed.
