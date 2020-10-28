@@ -35,7 +35,7 @@ namespace DARTS.Data.DataObjects
 
         public int ThrownPoints
         {
-            get => (int)FieldCollection[TurnFieldNames.ThrownPoints].Value;
+            get => Convert.ToInt32(FieldCollection[TurnFieldNames.ThrownPoints].Value);
             set => FieldCollection[TurnFieldNames.ThrownPoints].Value = value;
         }
         #endregion
