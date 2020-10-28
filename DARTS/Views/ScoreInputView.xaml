@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DARTS.Views"
-             xmlns:validationrules="clr-namespace:DARTS.ValidationRules"
+             xmlns:validationrules="clr-namespace:DARTS.ValidationRules" xmlns:local1="clr-namespace:DARTS.Functionality"
              mc:Ignorable="d" 
              d:DesignHeight="435" d:DesignWidth="800">
     <Grid>
@@ -84,33 +84,47 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-
-            <TextBox x:Name="tbScoreInput" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" MaxLength="2">
+            <TextBox x:Name="tbScoreInput" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" MaxLength="2" GotKeyboardFocus="SelectScore" GotMouseCapture="SelectScore">
                 <Binding Path="Throws[0]" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
+                <TextBox.InputBindings>
+                    <KeyBinding 
+                        Key="Return"
+                        Command="{Binding SubmitScoreButtonClickCommand}"/>
+                </TextBox.InputBindings>
             </TextBox>
             <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="15, 0, 15, 0" Grid.Column="2" ItemsSource="{Binding ScoreTypes}" SelectedValue="{Binding ThrowTypes[0]}" SelectedIndex="0"/>
             <Label Content="Worp 1:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontWeight="Bold"/>
 
-            <TextBox x:Name="tbScoreInput2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" MaxLength="2">
+            <TextBox x:Name="tbScoreInput2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" MaxLength="2" GotKeyboardFocus="SelectScore" GotMouseCapture="SelectScore">
                 <Binding Path="Throws[1]" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
+                <TextBox.InputBindings>
+                    <KeyBinding 
+                        Key="Return"
+                        Command="{Binding SubmitScoreButtonClickCommand}"/>
+                </TextBox.InputBindings>
             </TextBox>
             <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="15, 0, 15, 0" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding ScoreTypes}" SelectedValue="{Binding ThrowTypes[1]}" SelectedIndex="0"/>
             <Label Content="Worp 2:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 0, 0" Grid.Row="1" FontWeight="Bold"/>
 
-            <TextBox x:Name="tbScoreInput3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" MaxLength="2">
+            <TextBox x:Name="tbScoreInput3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" MaxLength="2" GotKeyboardFocus="SelectScore" GotMouseCapture="SelectScore">
                 <Binding Path="Throws[2]" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
                     </Binding.ValidationRules>
                 </Binding>
+                <TextBox.InputBindings>
+                    <KeyBinding 
+                        Key="Return"
+                        Command="{Binding SubmitScoreButtonClickCommand}"/>
+                </TextBox.InputBindings>
             </TextBox>
             <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="15, 0, 15, 0" Grid.Column="3" Grid.Row="2" ItemsSource="{Binding ScoreTypes}" SelectedValue="{Binding ThrowTypes[2]}" SelectedIndex="0"/>
             <Label Content="Worp 3:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 0, 0" Grid.Row="2" FontWeight="Bold"/>

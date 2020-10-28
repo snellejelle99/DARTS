@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using DARTS.Data.DataObjectFactories;
+using DARTS_UnitTests.ViewModel;
 
 namespace DARTS_UnitTests.Datastructuur
 {
@@ -39,7 +40,7 @@ namespace DARTS_UnitTests.Datastructuur
             match.NumLegs = numLegs;
             match.BeginningPlayer = beginningPlayer;
             match.MatchState = PlayState.InProgress;
-            match.pointsPerLeg = 501;
+            match.PointsPerLeg = 501;
 
             this.match = match;
         }
@@ -230,6 +231,30 @@ namespace DARTS_UnitTests.Datastructuur
 
             //Assert
             Assert.AreEqual(match.GetCurrentLeg().Player1LegScore, StartingLegScore);
+        }
+
+        [TestMethod]
+        public void Reading_Match_Properties_Should_Not_Cause_Exceptions()
+        {
+            match.Start();
+            match.Post();
+            MatchFactory fact = new MatchFactory();
+            match = (Match)fact.Get(match.Id);
+
+            Assert.IsNotNull(match.Id);
+            Assert.IsNotNull(match.Player1Id);
+            Assert.IsNotNull(match.Player2Id);
+            Assert.IsNotNull(match.PointsPerLeg);
+            Assert.IsNotNull(match.Player1);
+            Assert.IsNotNull(match.Player2);
+            Assert.IsNotNull(match.WinningPlayer);
+            Assert.IsNotNull(match.BeginningPlayer);
+            Assert.IsNotNull(match.MatchState);
+            Assert.IsNotNull(match.Sets);
+            Assert.IsNotNull(match.NumLegs);
+            Assert.IsNotNull(match.NumSets);
+            Assert.IsNotNull(match.Player1SetsWon);
+            Assert.IsNotNull(match.Player2SetsWon);
         }
     }
 }

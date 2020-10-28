@@ -168,7 +168,7 @@ namespace DARTS.Data.DataFactory
             else
             {
                 reader.Close();
-                return new List<DataObjectBase>(); ;
+                return new List<DataObjectBase>();
             }
         }
 

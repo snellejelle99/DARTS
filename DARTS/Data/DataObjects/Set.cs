@@ -30,25 +30,25 @@ namespace DARTS.Data.DataObjects
 
         public PlayerEnum WinningPlayer
         {
-            get => (PlayerEnum)((int)FieldCollection[SetFieldNames.WinningPlayer].Value);
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[SetFieldNames.WinningPlayer].Value);
             set => FieldCollection[SetFieldNames.WinningPlayer].Value = (int)value;
         }
 
         public PlayerEnum BeginningPlayer
         {
-            get => (PlayerEnum)((int)FieldCollection[SetFieldNames.BeginningPlayer].Value);
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[SetFieldNames.BeginningPlayer].Value);
             set => FieldCollection[SetFieldNames.BeginningPlayer].Value = (int)value;
         }
 
         public PlayState SetState
         {
-            get => (PlayState)((int)FieldCollection[SetFieldNames.SetState].Value);
+            get => (PlayState)Convert.ToInt32(FieldCollection[SetFieldNames.SetState].Value);
             set => FieldCollection[SetFieldNames.SetState].Value = (int)value;
         }
 
         public int NumLegs
         {
-            get => (int)FieldCollection[MatchFieldNames.NumLegs].Value;
+            get => Convert.ToInt32(FieldCollection[MatchFieldNames.NumLegs].Value);
             set
             {
                 if (value % 2 == 0)
@@ -120,7 +120,6 @@ namespace DARTS.Data.DataObjects
 
         public void Start()
         {
-            Legs = new BindingList<DataObjectBase>();
             LegFactory = new LegFactory();
         
             Leg firstLeg = CreateNewLeg();
