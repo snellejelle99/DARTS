@@ -30,7 +30,7 @@ namespace DARTS
 
         public void ChangeToMatchesOverview()
         {
-            DataContext = new MatchesOverviewViewModel(new BindingList<DataObjectBase>());
+            DataContext = new MatchesOverviewViewModel();
         }
 
         public void ChangeToOptionsMenuView()

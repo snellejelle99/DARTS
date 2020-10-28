@@ -59,6 +59,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SetsWon)));
             }
         }
+
         public int TotalAmount180s
         {
             get { return totalAmount180s; }
@@ -68,6 +69,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalAmount180s)));
             }
         }
+
         public int Player1Amount180s
         {
             get { return player1Amount180s; }
@@ -77,6 +79,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Player1Amount180s)));
             }
         }
+
         public int Player2Amount180s
         {
             get { return player2Amount180s; }
@@ -86,6 +89,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Player2Amount180s)));
             }
         }
+
         public int Player1AverageScore
         {
             get { return player1AverageScore; }
@@ -95,6 +99,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Player1AverageScore)));
             }
         }
+
         public int Player2AverageScore
         {
             get { return player2AverageScore; }
@@ -104,6 +109,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Player2AverageScore)));
             }
         }
+
         public string Player1Name
         {
             get { return player1Name; }
@@ -113,6 +119,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Player1Name));
             }
         }
+
         public string Player2Name
         {
             get { return player2Name; }
@@ -122,10 +129,12 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Player2Name));
             }
         }
+
         public Match SpecifiedMatch
         {
             get { return specifiedMatch; }
         }
+
         public BindingList<DataObjectBase> SpecifiedLegs
         {
             get { return _specifiedLegs; }
@@ -135,6 +144,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SpecifiedLegs)));
             }
         }
+
         public BindingList<DataObjectBase> SpecifiedTurns
         {
             get { return _specifiedTurns; }
@@ -144,6 +154,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SpecifiedTurns)));
             }
         }
+
         public Set SelectedSet
         {
             get { return _selectedSet; }
@@ -153,6 +164,7 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedSet)));
             }
         }
+
         public Leg SelectedLeg
         {
             get { return _selectedLeg; }
@@ -206,39 +218,48 @@ namespace DARTS.ViewModel
                 }
             }
         }
+
         private void BackToOverviewButton_Click()
         {
             GameInstance.Instance.MainWindow.ChangeToMatchesOverview();
         }
+
         private void OpenSetDetailsButton_Click()
         {
             SpecifiedLegs = _selectedSet.Legs;
         }
+
         private bool CanExecuteSetDetailsButtonClick()
         {
             return _selectedSet != null;
         }
+
         private void ClearLegsButton_Click()
         {
             SpecifiedLegs = new BindingList<DataObjectBase>();
             SpecifiedTurns = new BindingList<DataObjectBase>();
         }
+
         private bool CanExecuteClearLegsButtonClick()
         {
             return SpecifiedLegs.Count() != 0;
         }
+
         private void ClearTurnsButton_Click()
         {
             SpecifiedTurns = new BindingList<DataObjectBase>();
         }
+
         private bool CanExecuteClearTurnsButtonClick()
         {
             return SpecifiedTurns.Count() != 0;
         }
+
         private void OpenLegDetailsButton_Click()
         {
             SpecifiedTurns = _selectedLeg.Turns;
         }
+
         private bool CanExecuteLegDetailsButtonClick()
         {
             return _selectedLeg != null;

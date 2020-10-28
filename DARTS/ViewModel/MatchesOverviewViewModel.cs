@@ -71,55 +71,42 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AmountOfDisplayedMatches)));
             }
         }
-        public MatchesOverviewViewModel(BindingList<DataObjectBase> matches)
+
+        public MatchesOverviewViewModel()
         {
             BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
             OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
-            _unfilteredMatches = matches.ToList();
-            DisplayedMatches = _unfilteredMatches;
-
-            if (matches.Count == 0) GetMatchesOverviewData();
+            GetMatchesOverviewData();
         }
 
         private void GetMatchesOverviewData()
         {
-            //TODO: To be changed to get data from database: Function to add dummy data to matches overview:
-            DisplayedMatches = matchFactory.Get();
-            _unfilteredMatches = _displayedMatches;
+            _unfilteredMatches = matchFactory.Get();
+            DisplayedMatches = new List<DataObjectBase>(_unfilteredMatches);
         }
 
         private void FilterTextBox_TextChanged(string filterText)
         {
             if (filterText == "" || filterText == string.Empty)
             {
-                DisplayedMatches = _unfilteredMatches;
+                DisplayedMatches = new List<DataObjectBase>(_unfilteredMatches);
             }
             else
             {
-                FilterMatches(filterText);
-            }
-        }
-
-        private void FilterMatches(string filterText)
-        {
-            string loweredFilterText = filterText.ToLower();
-            for(int i = 0; i < _unfilteredMatches.Count; i++)
-            {
-                if (((Player)((Match)_unfilteredMatches[i]).Player1).Name.ToLower().Contains(loweredFilterText) ||
-                ((Player)((Match)_unfilteredMatches[i]).Player2).Name.ToLower().Contains(loweredFilterText) ||
-                ((Match)_unfilteredMatches[i]).Sets.Count.ToString().ToLower().Contains(loweredFilterText))
-                {
-                    DisplayedMatches.Add(_unfilteredMatches[i]);
-                }
+                DisplayedMatches = _unfilteredMatches.Where(
+                    match => ((Player)((Match)match).Player1).Name.ToLower().Contains(filterText.ToLower()) ||
+                             ((Player)((Match)match).Player2).Name.ToLower().Contains(filterText.ToLower()) ||
+                             ((Match)match).Sets.Count.ToString().ToLower().Contains(filterText.ToLower()))
+                    .ToList();
             }
         }
 
         private void ClearFilterButton_Click()
         {
             FilterText = "";
-            DisplayedMatches = _unfilteredMatches;
+            DisplayedMatches = new List<DataObjectBase>(_unfilteredMatches);
         }
 
         private bool CanExecuteClearFilterButtonClick()
