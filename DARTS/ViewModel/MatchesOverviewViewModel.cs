@@ -80,10 +80,7 @@ namespace DARTS.ViewModel
             _unfilteredMatches = matches;
             DisplayedMatches = new BindingList<DataObjectBase>(_unfilteredMatches);
 
-            if (matches.Count == 0)
-            {
-                GetMatchesOverviewData();
-            }
+            if (matches.Count == 0) GetMatchesOverviewData();
         }
 
         private void GetMatchesOverviewData()
