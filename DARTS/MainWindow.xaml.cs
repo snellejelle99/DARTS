@@ -28,9 +28,9 @@ namespace DARTS
             DataContext = new StartMatchViewModel();
         }
 
-        public void ChangeToMatchesOverview(BindingList<DataObjectBase> matches)
+        public void ChangeToMatchesOverview()
         {
-            DataContext = new MatchesOverviewViewModel(matches);
+            DataContext = new MatchesOverviewViewModel();
         }
 
         public void ChangeToOptionsMenuView()
@@ -48,7 +48,7 @@ namespace DARTS
             DataContext = new ScoreInputViewModel(match);
         }
 
-        public void ChangeToPlayerMatchStatisticsView(BindingList<DataObjectBase> matches)
+        public void ChangeToPlayerMatchStatisticsView(List<Match> matches)
         {
             DataContext = new PlayerMatchStatisticsViewModel(matches);
         }

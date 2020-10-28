@@ -4,14 +4,15 @@ using System.Windows.Input;
 using DARTS.Data.DataObjects;
 using DARTS.ViewModel.Command;
 using DARTS.Data.Singletons;
+using System.Collections.Generic;
 
 namespace DARTS.ViewModel
 {
     public class MatchDetailViewModel : INotifyPropertyChanged
     {
         private Match specifiedMatch;
-        private BindingList<DataObjectBase> _specifiedLegs = new BindingList<DataObjectBase>();
-        private BindingList<DataObjectBase> _specifiedTurns = new BindingList<DataObjectBase>();
+        private List<Leg> _specifiedLegs = new List<Leg>();
+        private List<Turn> _specifiedTurns = new List<Turn>();
         private Set _selectedSet;
         private Leg _selectedLeg;
 
@@ -133,7 +134,7 @@ namespace DARTS.ViewModel
             get { return specifiedMatch; }
         }
 
-        public BindingList<DataObjectBase> SpecifiedLegs
+        public List<Leg> SpecifiedLegs
         {
             get { return _specifiedLegs; }
             set
@@ -143,7 +144,7 @@ namespace DARTS.ViewModel
             }
         }
 
-        public BindingList<DataObjectBase> SpecifiedTurns
+        public List<Turn> SpecifiedTurns
         {
             get { return _specifiedTurns; }
             set
@@ -219,12 +220,12 @@ namespace DARTS.ViewModel
 
         private void BackToOverviewButton_Click()
         {
-            GameInstance.Instance.MainWindow.ChangeToMatchesOverview(new BindingList<DataObjectBase>());
+            GameInstance.Instance.MainWindow.ChangeToMatchesOverview();
         }
 
         private void OpenSetDetailsButton_Click()
         {
-            SpecifiedLegs = _selectedSet.Legs;
+            SpecifiedLegs = _selectedSet.Legs.Cast<Leg>().ToList();
         }
 
         private bool CanExecuteSetDetailsButtonClick()
@@ -234,8 +235,8 @@ namespace DARTS.ViewModel
 
         private void ClearLegsButton_Click()
         {
-            SpecifiedLegs = new BindingList<DataObjectBase>();
-            SpecifiedTurns = new BindingList<DataObjectBase>();
+            SpecifiedLegs = new List<Leg>();
+            SpecifiedTurns = new List<Turn>();
         }
 
         private bool CanExecuteClearLegsButtonClick()
@@ -245,7 +246,7 @@ namespace DARTS.ViewModel
 
         private void ClearTurnsButton_Click()
         {
-            SpecifiedTurns = new BindingList<DataObjectBase>();
+            SpecifiedTurns = new List<Turn>();
         }
 
         private bool CanExecuteClearTurnsButtonClick()
@@ -255,7 +256,7 @@ namespace DARTS.ViewModel
 
         private void OpenLegDetailsButton_Click()
         {
-            SpecifiedTurns = _selectedLeg.Turns;
+            SpecifiedTurns = _selectedLeg.Turns.Cast<Turn>().ToList();
         }
 
         private bool CanExecuteLegDetailsButtonClick()

@@ -16,7 +16,7 @@
             <TextBox Text="{Binding FilterTextBoxText, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" x:Name="FilterTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="24" Width="261"/>
             <Button Command="{Binding ClearFilterButtonClickCommand}" Margin="5,0,0,0" x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="24" Width="35"/>
             <Label Content="{Binding AmountOfResultsLabelText}" VerticalContentAlignment="Center" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel"  HorizontalAlignment="Right" HorizontalContentAlignment="Left" Height="30" VerticalAlignment="Stretch" Width="91"/>
-            <Label Content="Amout of displayed players:" VerticalContentAlignment="Center" DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="150" VerticalAlignment="Stretch" Height="30"/>
+            <Label Content="Amount of displayed matches:" VerticalContentAlignment="Center" DockPanel.Dock="Right"  HorizontalAlignment="Right" Width="150" VerticalAlignment="Stretch" Height="30"/>
         </DockPanel>
         <ListView ItemsSource="{Binding DisplayedMatches}" x:Name="ListViewPlayersOverview"  VerticalAlignment="Stretch">
             <ListView.View>

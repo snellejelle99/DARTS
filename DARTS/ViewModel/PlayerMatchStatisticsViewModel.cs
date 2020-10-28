@@ -16,8 +16,8 @@ namespace DARTS.ViewModel
 {
     public class PlayerMatchStatisticsViewModel : INotifyPropertyChanged
     {
-        private BindingList<DataObjectBase> _displayedMatches = new BindingList<DataObjectBase>();
-        private BindingList<DataObjectBase> _unfilteredMatches = new BindingList<DataObjectBase>();
+        private List<Match> _displayedMatches = new List<Match>();
+        private List<Match> _unfilteredMatches = new List<Match>();
         private string _amountOfResultsLabelText = "";
         private string _filterTextBoxText = "";
 
@@ -26,7 +26,7 @@ namespace DARTS.ViewModel
         public ICommand BackButtonClickCommand { get; }
         public ICommand ClearFilterButtonClickCommand { get; }
 
-        public BindingList<DataObjectBase> DisplayedMatches
+        public List<Match> DisplayedMatches
         {
             get { return _displayedMatches; }
             set
@@ -62,7 +62,7 @@ namespace DARTS.ViewModel
             }
         } 
 
-        public PlayerMatchStatisticsViewModel(BindingList<DataObjectBase> matches)
+        public PlayerMatchStatisticsViewModel(List<Match> matches)
         {
             // view commands:
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(), canExecute => CanExecuteBackButtonClick());
@@ -95,7 +95,7 @@ namespace DARTS.ViewModel
             }
             else
             {
-                DisplayedMatches = new BindingList<DataObjectBase>(_unfilteredMatches.Where(match => ((Player)((Match)match).Player1).Name.ToLower().Contains(filterText.ToLower()) || ((Player)((Match)match).Player2).Name.ToLower().Contains(filterText.ToLower())).ToList());
+                DisplayedMatches = new List<Match>(_unfilteredMatches.Where(match => ((Player)match.Player1).Name.ToLower().Contains(filterText.ToLower()) || ((Player)match.Player2).Name.ToLower().Contains(filterText.ToLower())).ToList());
             }
         }
 
