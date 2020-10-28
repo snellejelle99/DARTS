@@ -40,7 +40,7 @@ namespace DARTS.ViewModel
 
         private void MatchOverviewButton_Click()
         {
-            GameInstance.Instance.MainWindow.ChangeToMatchesOverview();
+            GameInstance.Instance.MainWindow.ChangeToMatchesOverview(new BindingList<DataObjectBase>());
         }
 
         private void OptionsButton_Click()

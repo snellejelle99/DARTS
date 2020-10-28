@@ -219,7 +219,7 @@ namespace DARTS.ViewModel
 
         private void BackToOverviewButton_Click()
         {
-            GameInstance.Instance.MainWindow.ChangeToMatchesOverview();
+            GameInstance.Instance.MainWindow.ChangeToMatchesOverview(new BindingList<DataObjectBase>());
         }
 
         private void OpenSetDetailsButton_Click()

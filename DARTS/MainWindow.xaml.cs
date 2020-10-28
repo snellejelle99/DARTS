@@ -28,9 +28,9 @@ namespace DARTS
             DataContext = new StartMatchViewModel();
         }
 
-        public void ChangeToMatchesOverview()
+        public void ChangeToMatchesOverview(BindingList<DataObjectBase> matches)
         {
-            DataContext = new MatchesOverviewViewModel();
+            DataContext = new MatchesOverviewViewModel(matches);
         }
 
         public void ChangeToOptionsMenuView()

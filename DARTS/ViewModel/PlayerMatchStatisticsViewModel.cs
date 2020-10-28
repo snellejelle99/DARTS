@@ -68,22 +68,8 @@ namespace DARTS.ViewModel
             BackButtonClickCommand = new RelayCommand(execute => BackButtonClick(), canExecute => CanExecuteBackButtonClick());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButtonClick(), canExecute => CanExecuteClearFilterButtonClick());
 
-            // TEMP: SetListItems #29
             _unfilteredMatches = matches;
             DisplayedMatches = matches;
-
-            // view data:
-            if (matches.Count == 0) GetPlayersMatchStatisticsData();
-            // TODO: Retrieve players to display #29:
-            //_unfilteredPlayers = get list of players to display...;
-            //DisplayedPlayers = _unfilteredPlayers;
-        }
-
-        // TEMP: until data retrieval implementation is finished.
-        private void GetPlayersMatchStatisticsData()
-        {
-            _unfilteredMatches = DummyData.TempAddListItems();
-            DisplayedMatches = _unfilteredMatches;
         }
 
         private void BackButtonClick()

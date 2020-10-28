@@ -78,6 +78,7 @@ namespace DARTS.Data
                 match.NumLegs = 5;
                 match.Player1SetsWon = 0;
                 match.Player2SetsWon = 3;
+                match.PointsPerLeg = 301;
                 match.MatchState = PlayState.Finished;
                 match.BeginningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
                 match.WinningPlayer = (PlayerEnum)playerEnumsValues.GetValue(random.Next(1, playerEnumsValues.Length));
