@@ -35,7 +35,7 @@ namespace DARTS.Data.DataObjects
 
         public int ThrownPoints
         {
-            get => Convert.ToInt32(FieldCollection[TurnFieldNames.ThrownPoints].Value);
+            get => (int)FieldCollection[TurnFieldNames.ThrownPoints].Value;
             set => FieldCollection[TurnFieldNames.ThrownPoints].Value = value;
         }
         #endregion
@@ -44,6 +44,7 @@ namespace DARTS.Data.DataObjects
         {
 
         }
+
         public string TurnDetails
         {
             get
@@ -51,6 +52,7 @@ namespace DARTS.Data.DataObjects
                 return string.Format("Turn: {0}: thrown {1}", PlayerTurn, ThrownPoints);
             }
         }
+
         public void CalculateThrownPoints()
         {
             foreach (Throw thrownDart in Throws)

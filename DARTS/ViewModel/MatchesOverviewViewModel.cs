@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using DARTS.Data;
 using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;

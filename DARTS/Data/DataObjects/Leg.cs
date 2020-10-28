@@ -139,7 +139,7 @@ namespace DARTS.Data.DataObjects
             // TODO: impement factory pattern.(?)
             // Create the next turn and assign the other player.
             Turn nextTurn = (Turn)TurnFactory.Spawn();
-            Turn currentTurn = (Turn)Turns[Turns.Count - 1];
+            Turn currentTurn = Turns[Turns.Count - 1] as Turn;
             nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
             nextTurn.ThrownPoints = 0;
             

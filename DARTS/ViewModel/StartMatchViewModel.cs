@@ -68,7 +68,6 @@ namespace DARTS.ViewModel
             match.Player2 = player2;
             match.BeginningPlayer = SelectedPlayerEnum;
             match.MatchState = PlayState.InProgress;
-            match.WinningPlayer = PlayerEnum.None;
             match.NumSets = NumSets;
             match.NumLegs = NumLegs;
             match.PointsPerLeg = Is501LegScore ? 501 : 301;
