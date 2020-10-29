@@ -30,6 +30,9 @@
         <DataTemplate x:Name="PlayerMatchStatisticsViewTemplate" DataType="{x:Type viewmodels:PlayerMatchStatisticsViewModel}">
             <views:PlayerMatchStatisticsView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="MatchDetailViewTemplate" DataType="{x:Type viewmodels:MatchDetailViewModel}">
+            <views:MatchDetailView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <ContentControl Content="{Binding}"/>

@@ -85,6 +85,23 @@ namespace DARTS.Data.DataObjects
             }
         }
 
+        public string SetDetails
+        {
+            get
+            {
+                int totalThrown = 0, amountOfThrows = 0;
+                for (int i = 0; i < Legs.Count; i++)
+                {
+                    for (int j = 0; j < ((Leg)Legs[i]).Turns.Count; j++)
+                    {
+                        totalThrown += ((Turn)((Leg)Legs[i]).Turns[j]).ThrownPoints;
+                        amountOfThrows += 1;
+                    }
+                }
+                return string.Format("Set: {0}-{1}: avg. thrown {2}", Player1LegsWon, Player2LegsWon, totalThrown / amountOfThrows);
+            }
+        }
+
         private LegFactory LegFactory
         {
             get;

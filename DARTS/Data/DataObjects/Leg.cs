@@ -81,9 +81,23 @@ namespace DARTS.Data.DataObjects
                         Player2LegScore = value;
                         break;
                 }
-            }            
+            }
         }
         #endregion
+        
+        public string LegDetails
+        {
+            get
+            {
+                int totalThrown = 0, amountOfThrows = 0;
+                for (int i = 0; i < Turns.Count; i++)
+                {
+                    totalThrown += ((Turn)Turns[i]).ThrownPoints;
+                    amountOfThrows += 1;
+                }
+                return string.Format("Leg: {0}-{1}: avg. thrown {2}", Player1LegScore, Player2LegScore, totalThrown / amountOfThrows);
+            }
+        }
 
         private TurnFactory TurnFactory
         {

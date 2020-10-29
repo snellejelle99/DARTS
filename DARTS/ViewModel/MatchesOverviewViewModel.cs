@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using DARTS.Data;
+using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;
 using DARTS.ViewModel.Command;
@@ -19,6 +17,8 @@ namespace DARTS.ViewModel
         private string _filterText = "";
         private Match _selectedItem;
         private int _amountOfDisplayedMatches;
+
+        private MatchFactory matchFactory = new MatchFactory();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -70,23 +70,15 @@ namespace DARTS.ViewModel
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(AmountOfDisplayedMatches)));
             }
         }
-        public MatchesOverviewViewModel(List<Match> matches)
+
+        public MatchesOverviewViewModel()
         {
             BackToMainMenuButtonClickCommand = new RelayCommand(execute => BackToMainMenuButton_Click());
             ClearFilterButtonClickCommand = new RelayCommand(execute => ClearFilterButton_Click(), canExecute => CanExecuteClearFilterButtonClick());
             OpenMatchClickCommand = new RelayCommand(execute => OpenMatchButton_Click(), canExecute => CanExecuteOpenMatchButtonClick());
 
-            _unfilteredMatches = matches;
+            _unfilteredMatches = matchFactory.Get().Cast<Match>().ToList();
             DisplayedMatches = _unfilteredMatches;
-
-            if (matches.Count == 0) GetMatchesOverviewData();
-        }
-
-        private void GetMatchesOverviewData()
-        {
-            //TODO: To be changed to get data from database: Function to add dummy data to matches overview:
-            DisplayedMatches = DummyData.TempAddListItems();
-            _unfilteredMatches = _displayedMatches;
         }
 
         private void FilterTextBox_TextChanged(string filterText)
@@ -97,18 +89,12 @@ namespace DARTS.ViewModel
             }
             else
             {
-                FilterMatches(filterText);
+                DisplayedMatches = _unfilteredMatches.Where(
+                    match => ((Player)match.Player1).Name.ToLower().Contains(filterText.ToLower()) ||
+                             ((Player)match.Player2).Name.ToLower().Contains(filterText.ToLower()) ||
+                             match.Sets.Count.ToString().ToLower().Contains(filterText.ToLower()))
+                    .ToList();
             }
-        }
-
-        private void FilterMatches(string filterText)
-        {
-            string loweredFilterText = filterText.ToLower();
-            DisplayedMatches = _unfilteredMatches.Where(Match =>
-                ((Player)Match.Player1).Name.ToLower().Contains(loweredFilterText) || 
-                ((Player)Match.Player2).Name.ToLower().Contains(loweredFilterText) || 
-                Match.Sets.Count.ToString().ToLower().Contains(loweredFilterText)
-            ).ToList();
         }
 
         private void ClearFilterButton_Click()
@@ -129,7 +115,7 @@ namespace DARTS.ViewModel
 
         private void OpenMatchButton_Click()
         {
-            //TODO: Create a new window for match detail information
+            GameInstance.Instance.MainWindow.ChangeToMatchDetailView(SelectedItem);
         }
 
         private bool CanExecuteOpenMatchButtonClick()
