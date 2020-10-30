@@ -33,11 +33,7 @@ namespace DARTS.ViewModel
             {
                 _displayedMatches = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayedMatches)));
-
-                string newAmountOfResultsLabelText = Convert.ToString(_displayedMatches.Count);
-                if (_displayedMatches.Count != _unfilteredMatches.Count)
-                    newAmountOfResultsLabelText += " out of " + Convert.ToString(_unfilteredMatches.Count);
-                AmountOfResultsLabelText = newAmountOfResultsLabelText;
+                AmountOfResultsLabelText = Convert.ToString(_displayedMatches.Count);
             }
         }
 

@@ -7,9 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="435" d:DesignWidth="800">
     <Grid>
-        <Button Name="StartMatchButton" Content="Open Start Match screen" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top" Command="{Binding StartMatchButtonClickCommand}"/>
-        <Button Name="PlayerOverviewButton" Content="Open Player Overview screen" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top" Command="{Binding PlayerOverviewButtonClickCommand}"/>
-        <Button Name="MatchOverviewButton" Content="Open Match Overview screen" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top" Command="{Binding MatchOverviewButtonClickCommand}"/>
+        <Button Name="StartMatchButton" Content="Start Match" HorizontalAlignment="Center" Margin="0,110,0,0" VerticalAlignment="Top" Command="{Binding StartMatchButtonClickCommand}"/>
+        <Button Name="PlayerOverviewButton" Content="Players Overview" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top" Command="{Binding PlayerOverviewButtonClickCommand}"/>
+        <Button Name="MatchOverviewButton" Content="Match Overview" HorizontalAlignment="Center" Margin="0,230,0,0" VerticalAlignment="Top" Command="{Binding MatchOverviewButtonClickCommand}"/>
         <Button Name="OptionsButtonClick" Content="Options" HorizontalAlignment="Center" Margin="0,290,0,0" VerticalAlignment="Top" Command="{Binding OptionsButtonClickCommand}"/>
     </Grid>
 </UserControl>

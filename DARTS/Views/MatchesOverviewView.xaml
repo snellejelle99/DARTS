@@ -14,12 +14,12 @@
         <DockPanel DockPanel.Dock="Bottom" Height="40">
             <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="Filter:" Margin="7" />
             <TextBox x:Name="FilterTextBox" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="7" FontSize="16"/>
-            <Button x:Name="ClearFilterButton" Content="Clear" Command="{Binding ClearFilterButtonClickCommand}"/>
-            <TextBlock DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" Text="{Binding AmountOfDisplayedMatches}" Margin="7"/>
-            <TextBlock DockPanel.Dock="Right" Text="Amount" Width="162" Margin="7"/>
-            <Button Content="Open Match" Width="131" Height="24" Command="{Binding OpenMatchClickCommand}"/>
+            <Button x:Name="ClearFilterButton" Content="Clear" Command="{Binding ClearFilterButtonClickCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" Text="{Binding AmountOfDisplayedMatches}"  Margin="7" Width="30"/>
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="Amount:" DockPanel.Dock="Right" Margin="7"/>
+            <Button Content="Open Match" Width="120" Command="{Binding OpenMatchClickCommand}"/>
         </DockPanel>
-        <ListView x:Name="ListViewMatchesOverview"  ItemsSource="{Binding DisplayedMatches}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
+        <ListView x:Name="ListViewMatchesOverview"  ItemsSource="{Binding DisplayedMatches}" SelectedItem="{Binding SelectedItem}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player 1" Width="180"></GridViewColumn>

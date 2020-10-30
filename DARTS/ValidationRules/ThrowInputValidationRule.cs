@@ -22,7 +22,7 @@ namespace DARTS.ValidationRules
                 }
 
                 if (throwValue >= 0 && throwValue <= 20 || throwValue == 50 || throwValue == 25) return ValidationResult.ValidResult;
-                else return new ValidationResult(false, "Between 1-20, 25 for bull or 50 for bulseye");
+                else return new ValidationResult(false, "Between 1-20, 25 for bull or 50 for bullseye");
             }
             return new ValidationResult(false, "Between 1-20, 25 for bull or 50 for bulseye");
         }

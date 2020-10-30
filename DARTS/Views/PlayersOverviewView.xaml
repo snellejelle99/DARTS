@@ -14,8 +14,8 @@
         <DockPanel DockPanel.Dock="Bottom" Height="40">
             <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="Filter:" Margin="7" />
             <TextBox Text="{Binding FilterTextBoxText, UpdateSourceTrigger=PropertyChanged}" x:Name="FilterTextBox" Width="200" Margin="7" FontSize="16"/>
-            <Button Command="{Binding ClearFilterButtonClickCommand}" x:Name="ClearFilterButton" Content="Clear"/>
-            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="{Binding AmountOfResultsLabelText}" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" Margin="7"/>
+            <Button Command="{Binding ClearFilterButtonClickCommand}" x:Name="ClearFilterButton" Content="Clear" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="{Binding AmountOfResultsLabelText}" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" Margin="7" Width="30"/>
             <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="Amount:" DockPanel.Dock="Right" Margin="7"/>
             <Button Command="{Binding OpenPlayerMatchClickCommand}" CommandParameter="{Binding ElementName=PlayersOverviewWindow}" Content="Open Player" Width="120"/>
         </DockPanel>
