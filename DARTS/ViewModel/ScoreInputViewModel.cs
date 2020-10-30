@@ -1,4 +1,5 @@
 ﻿using DARTS.Data.DataObjects;
+using DARTS.Data.Singletons;
 using DARTS.Functionality;
 using DARTS.ViewModel.Command;
 using System;
@@ -135,7 +136,7 @@ namespace DARTS.ViewModel
 
         private void StopMatchButtonClick()
         {
-            throw new NotImplementedException();
+            GameInstance.Instance.MainWindow.ChangeToMainMenu();
         }
 
         private void PreviousTurnButtonClick()
@@ -157,6 +158,11 @@ namespace DARTS.ViewModel
             AsyncPostTask.Start();
 
             ResetScreen();
+
+            if(Match.WinningPlayer != PlayerEnum.None)
+            {
+                GameInstance.Instance.MainWindow.ChangeToMatchDetailView(Match);
+            }
         }
 
         #region CanExecute Functions

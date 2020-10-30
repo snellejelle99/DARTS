@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjectFactories;
+﻿using DARTS.Data.DataBase;
+using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -53,6 +54,12 @@ namespace DARTS_UnitTests.Data.DataObjects
             turn = (Turn)turnFactory.Get(turn.Id);
 
             Assert.IsNotNull(turn.PlayerTurn);
+        }
+
+        [ClassCleanup]
+        public static void TestCleanup()
+        {
+            DataBaseProvider.Instance.Dispose();
         }
     }
 }
