@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows;
 using DARTS.Data.DataObjectFactories;
 using DARTS_UnitTests.ViewModel;
+using DARTS.Data.DataBase;
 
 namespace DARTS_UnitTests.Datastructuur
 {
@@ -255,6 +256,12 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.IsNotNull(match.NumSets);
             Assert.IsNotNull(match.Player1SetsWon);
             Assert.IsNotNull(match.Player2SetsWon);
+        }
+
+        [ClassCleanup]
+        public static void TestCleanup()
+        {
+            DataBaseProvider.Instance.Dispose();
         }
     }
 }

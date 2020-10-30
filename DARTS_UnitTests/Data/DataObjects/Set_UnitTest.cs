@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjectFactories;
+﻿using DARTS.Data.DataBase;
+using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -63,6 +64,12 @@ namespace DARTS_UnitTests.Data.DataObjects
             Assert.IsNotNull(set.NumLegs);
             Assert.IsNotNull(set.Player1LegsWon);
             Assert.IsNotNull(set.Player2LegsWon);
+        }
+
+        [ClassCleanup]
+        public static void TestCleanup()
+        {
+            DataBaseProvider.Instance.Dispose();
         }
     }
 }
