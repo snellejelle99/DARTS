@@ -7,7 +7,11 @@
         xmlns:viewmodels="clr-namespace:DARTS.ViewModel"
         xmlns:views="clr-namespace:DARTS.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        Title="Darts" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate x:Name="MainMenuViewTemplate" DataType="{x:Type viewmodels:MainMenuViewModel}">
             <views:MainMenuView DataContext="{Binding}"/>
