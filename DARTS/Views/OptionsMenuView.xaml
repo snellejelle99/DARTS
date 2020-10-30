@@ -9,10 +9,10 @@
     <Canvas>
         <Label Content="Options" Canvas.Top="10" FontSize="20" Width="800" HorizontalContentAlignment="Center"/>
 
-        <TextBlock Canvas.Left="285" Canvas.Top="109" Text="Database" TextWrapping="Wrap"/>
-        <Button Content="Reset" Width="100" Height="20" Canvas.Left="420" Canvas.Top="107" Command="{Binding ResetDatabaseButtonClickCommand}" />
+        <TextBlock Canvas.Left="324" Canvas.Top="116" Text="Database" TextWrapping="Wrap"/>
+        <Button Content="Reset" Canvas.Left="420" Canvas.Top="107" Command="{Binding ResetDatabaseButtonClickCommand}" />
 
-        <Button Content="Go back" Canvas.Left="473" Canvas.Top="350" Command="{Binding GoBackButtonClickCommand}"/>
+        <Button Content="Back to main menu" Canvas.Left="24" Canvas.Top="9" Command="{Binding GoBackButtonClickCommand}"/>
 
     </Canvas>
 </UserControl>
