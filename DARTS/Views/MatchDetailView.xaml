@@ -4,44 +4,63 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:DARTS.Views"
         mc:Ignorable="d"
         d:DesignHeight="435" d:DesignWidth="800">
-    <Grid>
-        <Button Content="Back to overview" HorizontalAlignment="Left" Margin="14,14,0,0" VerticalAlignment="Top" Command="{Binding BackToOverviewButtonClickCommand}"/>
-        <Label Content="{Binding Player1Name}" FontSize="24" HorizontalAlignment="Left" Margin="122,48,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.496,1.353"/>
-        <Label Content="{Binding Player2Name}" FontSize="24" HorizontalAlignment="Left" Margin="593,48,0,0" VerticalAlignment="Top"/>
-        <Label Content="Sets won:" FontSize="14" HorizontalAlignment="Left" Margin="373,9,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding SetsWon}" FontSize="24" HorizontalAlignment="Left" Margin="373,48,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Player1AverageScore}" ContentStringFormat="Average thrown: {0}" FontSize="14" HorizontalAlignment="Left" Margin="85,100,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Player2AverageScore}" ContentStringFormat="Average thrown: {0}" FontSize="14" Margin="605,95,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding TotalAmount180s}" ContentStringFormat="Total amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="337,109,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Player1Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="113,129,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Player2Amount180s}" ContentStringFormat="Amount of 180s: {0}" FontSize="14" HorizontalAlignment="Left" Margin="584,129,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="ListViewSetsOverview"  ItemsSource="{Binding SpecifiedMatch.Sets}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedSet}" Margin="10,184,574,10">
+    <Canvas>
+        <Button Content="Back to overview"  Canvas.Left="24" Canvas.Top="9" Command="{Binding BackToOverviewButtonClickCommand}"/>
+        <TextBlock Text="Match statistics" Style="{StaticResource MaterialDesignHeadline4TextBlock}" Canvas.Left="280" Canvas.Top="2"/>
+
+        <materialDesign:Flipper Canvas.Left="37" Canvas.Top="56" Style="{StaticResource MaterialDesignCardFlipper}" materialDesign:ShadowAssist.ShadowDepth="Depth0">
+            <materialDesign:Flipper.FrontContent>
+                <Grid Height="150" Width="716">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <materialDesign:ColorZone Mode="PrimaryDark" Height="50"/>
+                </Grid>
+            </materialDesign:Flipper.FrontContent>
+        </materialDesign:Flipper>
+
+        <TextBlock Text="{Binding Player1Name}" Canvas.Left="117" Canvas.Top="72" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+        <TextBlock Text="{Binding Player2Name}" Canvas.Right="117" Canvas.Top="72" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+        <TextBlock Text="{Binding SetsWon}" Canvas.Left="380" Canvas.Top="72" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+        <TextBlock Text="{Binding Player1AverageScore, StringFormat=Average thrown: {0}}" Canvas.Left="75" Canvas.Top="120" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+        <TextBlock Text="{Binding Player2AverageScore, StringFormat=Average thrown: {0}}" Canvas.Right="80" Canvas.Top="120" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+        <TextBlock Text="{Binding TotalAmount180s, StringFormat=Total amount of 180s: {0}}" Canvas.Left="320" Canvas.Top="140" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+        <TextBlock Text="{Binding Player1Amount180s, StringFormat=Amount of 180s: {0}}" Canvas.Left="75" Canvas.Top="150" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+        <TextBlock Text="{Binding Player2Amount180s, StringFormat=Amount of 180s: {0}}" Canvas.Right="80" Canvas.Top="150" Style="{StaticResource MaterialDesignSubtitle1TextBlock}"/>
+
+        <ListView x:Name="ListViewSetsOverview"  ItemsSource="{Binding SpecifiedMatch.Sets}" SelectedItem="{Binding SelectedSet}" Canvas.Left="37" Canvas.Top="200" MaxHeight="150">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Set" Width="Auto" DisplayMemberBinding="{Binding SetDetails}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="ListViewLegsOverview"  ItemsSource="{Binding SpecifiedLegs}" SelectedItem="{Binding SelectedLeg}" Margin="292,184,292,35">
+        <ListView x:Name="ListViewLegsOverview"  ItemsSource="{Binding SpecifiedLegs}" SelectedItem="{Binding SelectedLeg}" Canvas.Left="300" Canvas.Top="200" MaxHeight="150">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Leg" Width="Auto" DisplayMemberBinding="{Binding LegDetails}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <ListView x:Name="ListViewTurnsOverview"  ItemsSource="{Binding SpecifiedTurns}" Margin="574,184,10,35">
+        <ListView x:Name="ListViewTurnsOverview"  ItemsSource="{Binding SpecifiedTurns}" Canvas.Left="590" Canvas.Top="200" MaxHeight="150">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Turn" Width="Auto" DisplayMemberBinding="{Binding TurnDetails}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="->" HorizontalAlignment="Left" Margin="243,289,0,0" VerticalAlignment="Top" Width="28" Command="{Binding OpenSetDetailsClickCommand}"/>
-        <Button Content="-&gt;" HorizontalAlignment="Left" Margin="529,289,0,0" VerticalAlignment="Top" Width="28" Command="{Binding OpenLegDetailsClickCommand}"/>
-        <Button Content="Clear Legs" HorizontalAlignment="Center" Margin="0,390,0,0" VerticalAlignment="Top" Command="{Binding ClearLegsClickCommand}"/>
-        <Button Content="Clear Turns" HorizontalAlignment="Left" Margin="650,390,0,0" VerticalAlignment="Top" Command="{Binding ClearTurnsClickCommand}"/>
-    </Grid>
+        <Button Command="{Binding OpenSetDetailsClickCommand}" Style="{StaticResource MaterialDesignIconButton}" Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"  Canvas.Left="225" Canvas.Top="270">
+            <materialDesign:PackIcon Kind = "ArrowRight"/>
+        </Button>
+        <Button Command="{Binding OpenLegDetailsClickCommand}" Style="{StaticResource MaterialDesignIconButton}" Background="{DynamicResource MaterialDesignTextFieldBoxBackground}"  Canvas.Right="220" Canvas.Top="270">
+            <materialDesign:PackIcon Kind = "ArrowRight"/>
+        </Button>
+        <Button Content="Clear Legs" Command="{Binding ClearLegsClickCommand}" Canvas.Left="320" Canvas.Top="360" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+        <Button Content="Clear Turns" Command="{Binding ClearTurnsClickCommand}" Canvas.Left="600" Canvas.Top="360" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+    </Canvas>
 </UserControl>

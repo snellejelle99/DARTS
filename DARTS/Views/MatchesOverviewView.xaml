@@ -7,19 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="435" d:DesignWidth="800">
     <DockPanel Margin="10,0,10,0">
-        <DockPanel DockPanel.Dock="Top" Height="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button DockPanel.Dock="Left" Height="24" x:Name="BackButton" Content="Back to main menu" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Stretch" Command="{Binding BackToMainMenuButtonClickCommand}" CommandParameter="{Binding ElementName=MatchesOverviewWindow}"/>
-            <Label VerticalContentAlignment="Center" Height="40" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Matches Overview" HorizontalContentAlignment="Center" FontSize="18" FontWeight="Bold"/>
+        <DockPanel DockPanel.Dock="Top" Height="50">
+            <Button DockPanel.Dock="Left" x:Name="BackButton" Content="Back to main menu" Margin="10,0,0,0" Command="{Binding BackToMainMenuButtonClickCommand}" CommandParameter="{Binding ElementName=MatchesOverviewWindow}"/>
+            <TextBlock Text="Matches Overview" Style="{StaticResource MaterialDesignHeadline4TextBlock}" Margin="90,0,0,0"/>
         </DockPanel>
-        <DockPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40">
-            <Label VerticalContentAlignment="Center" Content="Filter:" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="53" Height="30" FontWeight="Normal" FontStyle="Normal"/>
-            <TextBox VerticalContentAlignment="Center" x:Name="FilterTextBox" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Stretch" Height="24" Width="261" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Margin="5,0,0,0" x:Name="ClearFilterButton" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="24" Width="35" Command="{Binding ClearFilterButtonClickCommand}"/>
-            <Label VerticalContentAlignment="Center" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" HorizontalContentAlignment="Left" Height="30" Width="40" Content="{Binding AmountOfDisplayedMatches}"/>
-            <Label VerticalContentAlignment="Center" DockPanel.Dock="Right" Content="Amount of resulted matches:" Width="162" Height="30"/>
-            <Button Content="Open Match" Width="131" Height="24" Command="{Binding OpenMatchClickCommand}"/>
+        <DockPanel DockPanel.Dock="Bottom" Height="40">
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="Filter:" Margin="7" />
+            <TextBox x:Name="FilterTextBox" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="7" FontSize="16"/>
+            <Button x:Name="ClearFilterButton" Content="Clear" Command="{Binding ClearFilterButtonClickCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" Text="{Binding AmountOfDisplayedMatches}"  Margin="7" Width="30"/>
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="Amount:" DockPanel.Dock="Right" Margin="7"/>
+            <Button Content="Open Match" Width="120" Command="{Binding OpenMatchClickCommand}"/>
         </DockPanel>
-        <ListView x:Name="ListViewMatchesOverview"  ItemsSource="{Binding DisplayedMatches}" VerticalAlignment="Stretch" SelectedItem="{Binding SelectedItem}">
+        <ListView x:Name="ListViewMatchesOverview"  ItemsSource="{Binding DisplayedMatches}" SelectedItem="{Binding SelectedItem}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player 1" Width="180"></GridViewColumn>
