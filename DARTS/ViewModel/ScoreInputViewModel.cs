@@ -5,7 +5,6 @@ using DARTS.ViewModel.Command;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DARTS.ViewModel
@@ -23,7 +22,6 @@ namespace DARTS.ViewModel
         public ScoreType[] ScoreTypes { get; }
 
         private Match Match { get; }
-        private Task AsyncPostTask { get; set; }
 
         #region Match object bindings
         public string Player1Name
@@ -154,8 +152,7 @@ namespace DARTS.ViewModel
             Match.GetCurrentTurn().CalculateThrownPoints();
             Match.GetCurrentLeg().SubtractScore();
             Match.ChangeTurn();
-            AsyncPostTask = new Task(() => Match.Post());
-            AsyncPostTask.Start();
+            Match.Post();
 
             ResetScreen();
 
@@ -181,8 +178,6 @@ namespace DARTS.ViewModel
         /// <returns>True when all the throws have the correct ScoreType.</returns>
         private bool CanExecuteSubmitScoreButtonClick()
         {
-            if (AsyncPostTask != null && !AsyncPostTask.IsCompleted) return false;
-
             for (int i = 0; i < Throws.Length; i++)
             {
                 switch (ThrowTypes[i])
