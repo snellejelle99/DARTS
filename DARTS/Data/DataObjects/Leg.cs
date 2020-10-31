@@ -150,7 +150,7 @@ namespace DARTS.Data.DataObjects
         {
             foreach (Throw dart in ((Turn)Turns.Last()).Throws)
             {
-                if (CurrentPlayerLegScore > dart.Score) CurrentPlayerLegScore -= (uint)dart.Score;
+                if (CurrentPlayerLegScore > dart.Score && CurrentPlayerLegScore - (uint)dart.Score != 1) CurrentPlayerLegScore -= (uint)dart.Score;
                 else if (CurrentPlayerLegScore == dart.Score)
                 {
                     if (dart.ScoreType == ScoreType.Double || dart.ScoreType == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
