@@ -18,13 +18,13 @@ namespace DARTS.ValidationRules
                 }
                 catch
                 {
-                    return new ValidationResult(false, "Between 1-20, 25 for bull or 50 for bulseye");
+                    return new ValidationResult(false, "Between 1-20, 25 for bull or 50 for bullseye");
                 }
 
                 if (throwValue >= 0 && throwValue <= 20 || throwValue == 50 || throwValue == 25) return ValidationResult.ValidResult;
                 else return new ValidationResult(false, "Between 1-20, 25 for bull or 50 for bullseye");
             }
-            return new ValidationResult(false, "Between 1-20, 25 for bull or 50 for bulseye");
+            return new ValidationResult(false, "Between 1-20, 25 for bull or 50 for bullseye");
         }
     }
 }

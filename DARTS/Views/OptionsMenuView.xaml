@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="435" d:DesignWidth="800">
     <Canvas>
-        <Label Content="Options" Canvas.Top="10" FontSize="20" Width="800" HorizontalContentAlignment="Center"/>
+        <TextBlock Text="Options" TextAlignment="Center" Style="{StaticResource MaterialDesignHeadline4TextBlock}" Margin="75,0,0,0" Canvas.Top="4" Width="785" Canvas.Left="-69"/>
 
         <TextBlock Canvas.Left="324" Canvas.Top="116" Text="Database" TextWrapping="Wrap"/>
         <Button Content="Reset" Canvas.Left="420" Canvas.Top="107" Command="{Binding ResetDatabaseButtonClickCommand}" />

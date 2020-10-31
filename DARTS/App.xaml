@@ -5,7 +5,6 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Startup="Application_Startup">
     <Application.Resources>
-        <!--Change StartupUri to StartupUri="MainWindow.xaml" when commiting> -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
