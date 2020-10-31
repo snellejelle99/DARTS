@@ -11,7 +11,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Title="Darts" Height="450" Width="800">
+        Title="Darts" Height="450" Width="800" ResizeMode="NoResize">
     <Window.Resources>
         <DataTemplate x:Name="MainMenuViewTemplate" DataType="{x:Type viewmodels:MainMenuViewModel}">
             <views:MainMenuView DataContext="{Binding}"/>
