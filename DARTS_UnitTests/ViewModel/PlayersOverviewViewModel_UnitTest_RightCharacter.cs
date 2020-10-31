@@ -8,13 +8,19 @@ namespace DARTS_UnitTests.ViewModel
     [TestClass]
     public class PlayersOverviewViewModel_UnitTest_RightCharacter
     {
-        static PlayersOverviewViewModel overview;
+        private PlayersOverviewViewModel overview;
 
         [ClassInitialize]
         public static void InitializeClass(TestContext context)
         {
             //Arrange
-            Mock_DatabaseTestData.AddDatabaseTestData();
+            Mock_DatabaseTestData.AddDatabaseTestData();           
+        }
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            //Arrange
             overview = new PlayersOverviewViewModel();
         }
 

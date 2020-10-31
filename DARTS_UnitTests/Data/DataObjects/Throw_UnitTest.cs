@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjectFactories;
+﻿using DARTS.Data.DataBase;
+using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -20,6 +21,12 @@ namespace DARTS_UnitTests.Data.DataObjects
 
             Assert.IsNotNull(dartThrow.Score);
             Assert.IsNotNull(dartThrow.ScoreType);
+        }
+
+        [ClassCleanup]
+        public static void TestCleanup()
+        {
+            DataBaseProvider.Instance.Dispose();
         }
     }
 }

@@ -11,13 +11,19 @@ namespace DARTS_UnitTests.ViewModel
     [TestClass]
     public class MatchesOverviewViewModel_UnitTest_RightCharacter
     {
-        private static MatchesOverviewViewModel overview;
+        private MatchesOverviewViewModel overview;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
             // Arrange
             Mock_DatabaseTestData.AddDatabaseTestData();
+        }
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            // Arrange
             overview = new MatchesOverviewViewModel();
         }
 
