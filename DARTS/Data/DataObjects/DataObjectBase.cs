@@ -78,6 +78,9 @@ namespace DARTS.Data.DataObjects
             ParentFactory.Post(this);
         }
 
+        /// <summary>
+        /// Deletes this record through its ParentFactory
+        /// </summary>
         public void Delete()
         {
             ParentFactory.Delete(this);
