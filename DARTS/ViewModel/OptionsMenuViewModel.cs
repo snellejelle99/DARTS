@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using DARTS.Data;
-using DARTS.Data.DataObjects;
+using DARTS.Data.DataBase;
 using DARTS.Data.Singletons;
 using DARTS.ViewModel.Command;
 
@@ -20,30 +14,22 @@ namespace DARTS.ViewModel
 
         public OptionsMenuViewModel()
         {
-            ResetDatabaseButtonClickCommand = new RelayCommand(execute => ResetDatabaseButton_Click(), canExecute => CanExecuteResetDatabaseButtonClick());
+            ResetDatabaseButtonClickCommand = new RelayCommand(execute => ResetDatabaseButton_Click(), canExecute => File.Exists(DataBaseProvider.DBFileName));
             GoBackButtonClickCommand = new RelayCommand(execute => GoBackButton_Click());
         }
 
         private void ResetDatabaseButton_Click()
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to reset the database? \nThis action will delete all saved data.", "Reset database", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show(GameInstance.Instance.MainWindow, "Are you sure you want to reset the database? \nThis action will delete all saved data.", "Reset database", MessageBoxButton.OKCancel);
             switch(result)
             {
                 case MessageBoxResult.OK:
-                    //TO DO:
-                    //Add database reset action. 
-                    MessageBox.Show("Database has been reset.");
+                    DataBaseProvider.Instance.DeleteDatabase();
+                    MessageBox.Show(GameInstance.Instance.MainWindow, "Database has been reset.", "Operation Completed");
                     break;
                 case MessageBoxResult.Cancel:
                     break;
             }
-        }
-
-        public bool CanExecuteResetDatabaseButtonClick()
-        {
-            //TO DO:
-            //Disable button when database is empty.
-            return false;
         }
 
         private void GoBackButton_Click()

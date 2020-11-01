@@ -258,8 +258,8 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.IsNotNull(match.Player2SetsWon);
         }
 
-        [ClassCleanup]
-        public static void TestCleanup()
+        [TestCleanup]
+        public void TestCleanup()
         {
             DataBaseProvider.Instance.Dispose();
         }
