@@ -9,19 +9,21 @@ using DARTS.Data.DataObjectFactories;
 using DARTS_UnitTests.ViewModel;
 using DARTS.Data.DataBase;
 
-namespace DARTS_UnitTests.Datastructuur
+namespace DARTS_UnitTests.Data.DataObjects
 {
     [TestClass]
     public class Match_UnitTest
     {
         private Match match;
+        private PlayerFactory playerFactory;
+        private MatchFactory matchFactory;
 
         [TestInitialize]
         public void TestInitialize()
         {
             // Arrange
-            PlayerFactory playerFactory = new PlayerFactory();
-            MatchFactory matchFactory = new MatchFactory();
+            playerFactory = new PlayerFactory();
+            matchFactory = new MatchFactory();
 
             Player player1 = (Player)playerFactory.Spawn();
             player1.Name = "Klaas";
@@ -235,6 +237,30 @@ namespace DARTS_UnitTests.Datastructuur
         }
 
         [TestMethod]
+        public void Match_Delete_Should_Delete_All_Nested_Components_Except_Players()
+        {
+            //ARRANGE
+            match.Start();
+            match.Post();
+
+            //ACT
+            match.Delete();
+
+            //ASSERT
+            Assert.AreEqual(ObjectState.Deleted, match.ObjectState);
+            Assert.IsNull(matchFactory.Get(match.Id));
+            foreach(Set set in match.Sets)
+            {
+                Assert.AreEqual(ObjectState.Deleted, set.ObjectState);
+                Assert.IsNull(new SetFactory().Get(set.Id));
+            }
+            Assert.AreEqual(ObjectState.Synced, match.Player1.ObjectState);
+            Assert.AreEqual(ObjectState.Synced, match.Player2.ObjectState);
+            Assert.IsNotNull(playerFactory.Get(((Player)match.Player1).Id));
+            Assert.IsNotNull(playerFactory.Get(((Player)match.Player2).Id));
+        }
+
+        [TestMethod]
         public void Reading_Match_Properties_Should_Not_Cause_Exceptions()
         {
             match.Start();
@@ -258,8 +284,8 @@ namespace DARTS_UnitTests.Datastructuur
             Assert.IsNotNull(match.Player2SetsWon);
         }
 
-        [ClassCleanup]
-        public static void TestCleanup()
+        [TestCleanup]
+        public void TestCleanup()
         {
             DataBaseProvider.Instance.Dispose();
         }
