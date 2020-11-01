@@ -12,13 +12,13 @@ namespace DARTS.Data.DataBase
         private static DataBaseProvider _instance = null;
         private static readonly object padLock = new object();
 
-        public string DBFileName { get; } = "DARTS_DATABASE.sqlite";
         private SQLiteConnection _dbConnection;        
 
         private static readonly bool IsRunningFromUnittest =
             IsRunningFromUnittest = AppDomain.CurrentDomain.GetAssemblies().Any(
             a => a.FullName.ToLowerInvariant().StartsWith("testhost"));
 
+        public const string DBFileName = "DARTS_DATABASE.sqlite";
         private DataBaseProvider()
         {
             

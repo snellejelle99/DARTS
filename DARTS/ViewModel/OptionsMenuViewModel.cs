@@ -14,7 +14,7 @@ namespace DARTS.ViewModel
 
         public OptionsMenuViewModel()
         {
-            ResetDatabaseButtonClickCommand = new RelayCommand(execute => ResetDatabaseButton_Click(), canExecute => File.Exists(DataBaseProvider.Instance.DBFileName));
+            ResetDatabaseButtonClickCommand = new RelayCommand(execute => ResetDatabaseButton_Click(), canExecute => File.Exists(DataBaseProvider.DBFileName));
             GoBackButtonClickCommand = new RelayCommand(execute => GoBackButton_Click());
         }
 

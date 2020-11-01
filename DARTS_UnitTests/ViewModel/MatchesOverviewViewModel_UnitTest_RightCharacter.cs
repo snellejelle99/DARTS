@@ -17,7 +17,6 @@ namespace DARTS_UnitTests.ViewModel
         public static void ClassInitialize(TestContext testContext)
         {
             // Arrange
-            DataBaseProvider.Instance.Dispose();
             Mock_DatabaseTestData.AddDatabaseTestData();
         }
 
