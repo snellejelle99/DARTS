@@ -82,8 +82,7 @@ namespace DARTS.Data.DataObjects
                         break;
                 }
             }
-        }
-        #endregion
+        }        
         
         public string LegDetails
         {
@@ -98,16 +97,13 @@ namespace DARTS.Data.DataObjects
                 return string.Format("Leg: {0}-{1}: avg. thrown {2}", Player1LegScore, Player2LegScore, totalThrown / amountOfThrows);
             }
         }
+        #endregion
 
-        private TurnFactory TurnFactory
-        {
-            get;
-            set;
-        }
+        private TurnFactory turnFactory = new TurnFactory();
+
         public void Start()
         {
-            TurnFactory = new TurnFactory();
-            Turn firstTurn = (Turn)TurnFactory.Spawn();
+            Turn firstTurn = (Turn)turnFactory.Spawn();
             firstTurn.PlayerTurn = BeginningPlayer;
             firstTurn.ThrownPoints = 0;
 
@@ -138,8 +134,8 @@ namespace DARTS.Data.DataObjects
         {
             // TODO: impement factory pattern.(?)
             // Create the next turn and assign the other player.
-            Turn nextTurn = (Turn)TurnFactory.Spawn();
-            Turn currentTurn = Turns[Turns.Count - 1] as Turn;
+            Turn nextTurn = (Turn)turnFactory.Spawn();
+            Turn currentTurn = (Turn)Turns[Turns.Count - 1];
             nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
             nextTurn.ThrownPoints = 0;
             

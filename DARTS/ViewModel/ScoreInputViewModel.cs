@@ -5,6 +5,7 @@ using DARTS.ViewModel.Command;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace DARTS.ViewModel
@@ -134,7 +135,12 @@ namespace DARTS.ViewModel
 
         private void StopMatchButtonClick()
         {
-            GameInstance.Instance.MainWindow.ChangeToMainMenu();
+            MessageBoxResult result = MessageBox.Show(GameInstance.Instance.MainWindow, "Are you sure you want to stop the match? \nThis action will delete the match.", "Reset database", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                Match.Delete();
+                GameInstance.Instance.MainWindow.ChangeToMainMenu();
+            }            
         }
 
         private void PreviousTurnButtonClick()

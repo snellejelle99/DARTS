@@ -1,10 +1,6 @@
 ﻿using DARTS.Data.DataObjectFactories;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Windows.Media;
 
 namespace DARTS.Data.DataObjects
 {
@@ -123,15 +119,11 @@ namespace DARTS.Data.DataObjects
             }
         }
 
-        private SetFactory SetFactory
-        {
-            get;
-            set;
-        }
+        private SetFactory setFactory = new SetFactory();
 
         public Set CreateNewSet()
         {
-            Set newSet = (Set)SetFactory.Spawn();
+            Set newSet = (Set)setFactory.Spawn();
             newSet.NumLegs = NumLegs;
             newSet.SetState = PlayState.InProgress;
             newSet.Player1LegsWon = 0;
@@ -148,7 +140,6 @@ namespace DARTS.Data.DataObjects
             Player1SetsWon = 0;
             Player2SetsWon = 0;
             
-            SetFactory = new SetFactory();
             if (BeginningPlayer.Equals(PlayerEnum.None))
             {
                 BeginningPlayer = ChooseRandomPlayer();
