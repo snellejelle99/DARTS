@@ -107,6 +107,17 @@ namespace DARTS.Data.DataObjectFactories.DataObjectFieldTypes
         }
 
         /// <summary>
+        /// Deletes the DataObjects contained in this CollectionField
+        /// </summary>
+        public void DeleteValues()
+        {
+            foreach (DataObjectBase dataObject in Value)
+            {
+                if (dataObject.ObjectState != ObjectState.New) dataObject.Delete();
+            }
+        }
+
+        /// <summary>
         /// Checks if the Values contained in this CollectionField are synchronised with the database
         /// </summary>
         /// <returns>true if synchronised or collection is empty or collection is null</returns>

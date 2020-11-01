@@ -17,11 +17,10 @@ namespace DARTS.Data.DataObjectFactories
 
         protected override void InitializeFields()
         {
-            CodeField idField = new CodeField("Id", true);
-            CodeField setIdField = new CodeField(LegFieldNames.SetId);
-            _fieldCollection.Add("Id", idField);
-            _fieldCollection.Add(LegFieldNames.SetId, setIdField);
-
+            CodeField idField = new CodeField(LegFieldNames.Id, true);
+            _fieldCollection.Add(LegFieldNames.Id, idField);   
+            
+            _fieldCollection.Add(LegFieldNames.SetId, new CodeField(LegFieldNames.SetId));
             _fieldCollection.Add(LegFieldNames.WinningPlayer, new DataField(LegFieldNames.WinningPlayer, SQLiteType.INTEGER));
             _fieldCollection.Add(LegFieldNames.BeginningPlayer, new DataField(LegFieldNames.BeginningPlayer, SQLiteType.INTEGER));
             _fieldCollection.Add(LegFieldNames.LegState, new DataField(LegFieldNames.LegState, SQLiteType.INTEGER));
@@ -37,6 +36,12 @@ namespace DARTS.Data.DataObjectFactories
             TargetObject = typeof(Leg);
         }
 
+        public override void Delete(DataObjectBase objectBase)
+        {
+            Leg leg = (Leg)objectBase;
+            leg.CollectionFieldCollection[LegFieldNames.Turns].DeleteValues();
+            base.Delete(objectBase);
+        }
     }
 
     public static class LegFieldNames

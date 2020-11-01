@@ -78,6 +78,11 @@ namespace DARTS.Data.DataObjects
             ParentFactory.Post(this);
         }
 
+        public void Delete()
+        {
+            ParentFactory.Delete(this);
+        }
+
         /// <summary>
         /// Gets the primarykeyField for this DataObject
         /// </summary>

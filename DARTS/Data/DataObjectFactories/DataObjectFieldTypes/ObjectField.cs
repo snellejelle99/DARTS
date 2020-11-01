@@ -82,6 +82,11 @@ namespace DARTS.Data.DataObjectFactories.DataObjectFieldTypes
             SourceField.Value = Value.GetPrimaryKeyField().Value;
         }
 
+        public virtual void DeleteValue()
+        {
+            if (Value.ObjectState != ObjectState.New) Value.Delete();
+        }
+
         /// <summary>
         /// Checks if the Value contained in this Field is synchronised with the database
         /// </summary>
