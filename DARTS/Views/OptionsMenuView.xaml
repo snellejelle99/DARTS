@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="DARTS.Views.OptionsMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DARTS.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="435" d:DesignWidth="800">
+    <Canvas>
+        <TextBlock Text="Options" TextAlignment="Center" Style="{StaticResource MaterialDesignHeadline4TextBlock}" Margin="75,0,0,0" Canvas.Top="4" Width="785" Canvas.Left="-69"/>
+
+        <TextBlock Canvas.Left="324" Canvas.Top="116" Text="Database" TextWrapping="Wrap"/>
+        <Button Content="Reset" Canvas.Left="420" Canvas.Top="107" Command="{Binding ResetDatabaseButtonClickCommand}" />
+
+        <Button Content="Back to main menu" Canvas.Left="24" Canvas.Top="9" Command="{Binding GoBackButtonClickCommand}"/>
+
+    </Canvas>
+</UserControl>

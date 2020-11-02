@@ -1,45 +1,39 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Player
+    public class Player : DataObjectBase
     {
-        #region BackingStores
-        private string _name;
-
-        private int _id;
-
-        #endregion
-
         #region Properties
         public string Name
         {
-            get => _name;
-            set => _name = value;
+            get => (string)FieldCollection["Name"].Value;
+            set => FieldCollection["Name"].Value = value;
         }
 
-        public int ID
+        public long Id
         {
-            get => _id;
-            set => _id = value;
+            get => (long)FieldCollection["Id"].Value;
+            set => FieldCollection["Id"].Value = value;
         }
 
         #endregion
 
-        public Player()
+        private Player() : base()
         {
 
         }
-    }
 
-    #region Enums
-    public enum PlayerEnum
-    {
-        None,
-        Player1,
-        Player2
+        public List<DataObjectBase> GetMatches()
+        {
+            MatchFactory matchFactory = new MatchFactory();
+            List<DataObjectBase> result = matchFactory.Get(MatchFieldNames.Player1Id, this.Id);
+            result = result.Concat(matchFactory.Get(MatchFieldNames.Player2Id, this.Id)).ToList();
+            return result;
+        }
     }
-    #endregion
 }

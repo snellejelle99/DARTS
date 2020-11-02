@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+    <ApplicationIcon>bullseye-arrow.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,5 +20,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.113.1" />
+  </ItemGroup>
 
 </Project>

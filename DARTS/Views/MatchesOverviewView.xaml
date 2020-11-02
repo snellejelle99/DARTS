@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="DARTS.Views.MatchesOverviewView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DARTS.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="435" d:DesignWidth="800">
+    <DockPanel Margin="10,0,10,0">
+        <DockPanel DockPanel.Dock="Top" Height="50">
+            <Button DockPanel.Dock="Left" x:Name="BackButton" Content="Back to main menu" Margin="10,0,0,0" Command="{Binding BackToMainMenuButtonClickCommand}" CommandParameter="{Binding ElementName=MatchesOverviewWindow}"/>
+            <TextBlock Text="Matches Overview" Style="{StaticResource MaterialDesignHeadline4TextBlock}" Margin="90,0,0,0"/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Bottom" Height="40">
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="Filter:" Margin="7" />
+            <TextBox x:Name="FilterTextBox" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="7" FontSize="16"/>
+            <Button x:Name="ClearFilterButton" Content="Clear" Command="{Binding ClearFilterButtonClickCommand}" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" DockPanel.Dock="Right" x:Name="AmountOfResultsLabel" Text="{Binding AmountOfDisplayedMatches}"  Margin="7" Width="30"/>
+            <TextBlock Style="{StaticResource  MaterialDesignBody1TextBlock}" Text="Amount:" DockPanel.Dock="Right" Margin="7"/>
+            <Button Content="Open Match" Width="120" Command="{Binding OpenMatchClickCommand}"/>
+        </DockPanel>
+        <ListView x:Name="ListViewMatchesOverview"  ItemsSource="{Binding DisplayedMatches}" SelectedItem="{Binding SelectedItem}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player 1" Width="180"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player2.Name}" Header="Player 2" Width="180"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Sets.Count}" Header="Amount of sets" Width="180"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding WinningPlayerObject.Name}" Header="Winning Player" Width="180"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </DockPanel>
+</UserControl>

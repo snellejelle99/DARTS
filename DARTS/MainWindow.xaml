@@ -4,9 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DARTS"
+        xmlns:viewmodels="clr-namespace:DARTS.ViewModel"
+        xmlns:views="clr-namespace:DARTS.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        Title="Darts" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <DataTemplate x:Name="MainMenuViewTemplate" DataType="{x:Type viewmodels:MainMenuViewModel}">
+            <views:MainMenuView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="StartMatchViewTemplate" DataType="{x:Type viewmodels:StartMatchViewModel}">
+            <views:StartMatchView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="MatchesOverviewViewViewTemplate" DataType="{x:Type viewmodels:MatchesOverviewViewModel}">
+            <views:MatchesOverviewView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="OptionsMenuViewTemplate" DataType="{x:Type viewmodels:OptionsMenuViewModel}">
+            <views:OptionsMenuView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="PlayersOverviewViewTemplate" DataType="{x:Type viewmodels:PlayersOverviewViewModel}">
+            <views:PlayersOverviewView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="ScoreInputViewTemplate" DataType="{x:Type viewmodels:ScoreInputViewModel}">
+            <views:ScoreInputView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="PlayerMatchStatisticsViewTemplate" DataType="{x:Type viewmodels:PlayerMatchStatisticsViewModel}">
+            <views:PlayerMatchStatisticsView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="MatchDetailViewTemplate" DataType="{x:Type viewmodels:MatchDetailViewModel}">
+            <views:MatchDetailView DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-
+        <ContentControl Content="{Binding}"/>
     </Grid>
 </Window>

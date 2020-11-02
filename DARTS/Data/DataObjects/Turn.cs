@@ -1,52 +1,64 @@
-﻿using System;
+﻿using DARTS.Data.DataObjectFactories;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
-    public class Turn
+    public class Turn : DataObjectBase
     {
-        #region BackingStores
-        private PlayerEnum _playerTurn;
-
-        private List<Tuple<int, ScoreType>> _throws;
-
-        private int _thrownPoints;
-        #endregion
-
         #region Properties
-        public PlayerEnum PlayerTurn
+        public long Id
         {
-            get => _playerTurn;
-            set => _playerTurn = value;
+            get => (long)FieldCollection[TurnFieldNames.Id].Value;
+            set => FieldCollection[TurnFieldNames.Id].Value = value;
         }
 
-        public List<Tuple<int, ScoreType>> Throws
+        public long LegId
         {
-            get => _throws;
-            set => _throws = value;
+            get => (long)FieldCollection[TurnFieldNames.LegId].Value;
+            set => FieldCollection[TurnFieldNames.LegId].Value = value;
+        }
+        
+        public PlayerEnum PlayerTurn
+        {
+            get => (PlayerEnum)Convert.ToInt32(FieldCollection[TurnFieldNames.PlayerTurn].Value);
+            set => FieldCollection[TurnFieldNames.PlayerTurn].Value = (int)value; 
+        }
+
+        public BindingList<DataObjectBase> Throws
+        {
+            get => CollectionFieldCollection[TurnFieldNames.Throws].Value;
+            set => CollectionFieldCollection[TurnFieldNames.Throws].Value = value;
         }
 
         public int ThrownPoints
         {
-            get => _thrownPoints;
-            set => _thrownPoints = value;
+            get => Convert.ToInt32(FieldCollection[TurnFieldNames.ThrownPoints].Value);
+            set => FieldCollection[TurnFieldNames.ThrownPoints].Value = value;
         }
         #endregion
 
-        public Turn()
+        private Turn() : base()
         {
-            
-        }        
-    }
 
-    #region Enums
-    public enum ScoreType
-    {
-        Single,
-        Double,
-        Triple,
-        Bull
+        }
+
+        public string TurnDetails
+        {
+            get
+            {
+                return string.Format("Turn: {0}: thrown {1}", PlayerTurn, ThrownPoints);
+            }
+        }
+
+        public void CalculateThrownPoints()
+        {
+            foreach (Throw thrownDart in Throws)
+            {
+                ThrownPoints += thrownDart.Score;
+            }
+        }
     }
-    #endregion
 }

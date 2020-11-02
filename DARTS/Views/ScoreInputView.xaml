@@ -1,0 +1,157 @@
+﻿<UserControl x:Class="DARTS.Views.ScoreInputView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:DARTS.Views"
+             xmlns:validationrules="clr-namespace:DARTS.ValidationRules" xmlns:local1="clr-namespace:DARTS.Functionality"
+             mc:Ignorable="d" 
+             d:DesignHeight="435" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TurnData" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.12*" />
+                <ColumnDefinition Width="0.12*" />
+                <ColumnDefinition Width="0.15*" />
+                <ColumnDefinition Width="0.06*" />
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.25*" />
+                <RowDefinition Height="0.25*" />
+                <RowDefinition Height="0.25*" />
+                <RowDefinition Height="0.25*" />
+            </Grid.RowDefinitions>
+
+            <Rectangle Grid.ColumnSpan="5"  Fill="{DynamicResource PrimaryHueDarkBrush}"/>
+            <TextBlock Text="{Binding Path=CurrentLeg}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="5" FontWeight="Bold"/>
+            <Rectangle Grid.ColumnSpan="5" Grid.Row="1" Fill="{DynamicResource MaterialDesignBodyLight}"/>
+            <TextBlock Text="{Binding Path=SetsToWin}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" Margin="10 0 0 0"/>
+            <TextBlock Text="Sets" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" FontWeight="Bold"/>
+            <TextBlock Text="Legs" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" FontWeight="Bold"/>
+            <TextBlock Text="Score" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="1" FontWeight="Bold"/>
+
+            <Rectangle Grid.Row="2" Grid.RowSpan="2" Fill="{DynamicResource MaterialDesignSnackbarMouseOver}"/>
+            <TextBlock Text="{Binding Path=Player1Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" FontWeight="Bold" Margin="10 0 0 0"/>
+            <TextBlock Text="{Binding Path=Player2Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" FontWeight="Bold" Margin="10 0 0 0"/>
+
+            <Rectangle Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Grid.RowSpan="2" Fill="{DynamicResource PrimaryHueLightBrush}"/>
+            <TextBlock Text="{Binding Path=Player1SetsWon}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Path=Player2SetsWon}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Path=Player1LegsWon}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Path=Player2LegsWon}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Path=Player1Score}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="2" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Path=Player2Score}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="3" Grid.Row="3" FontWeight="Bold"/>
+
+            <Rectangle Grid.Column="5" Grid.Row="2" Grid.RowSpan="2" Fill="{DynamicResource PrimaryHueDarkForegroundBrush}"/>
+            <Rectangle Grid.Column="5" Grid.Row="2" Visibility="{Binding Path=IsPlayer1Turn}" Fill="{DynamicResource SecondaryHueMidBrush}"/>
+            <Rectangle Grid.Column="5" Grid.Row="3" Visibility="{Binding Path=IsPlayer2Turn}" Fill="{DynamicResource SecondaryHueMidBrush}"/>
+            <TextBlock Text="&#x003C;" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" Grid.Row="2" Visibility="{Binding Path=IsPlayer1Turn}" FontWeight="Bold"/>
+            <TextBlock Text="&#x003C;" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="4" Grid.Row="3" Visibility="{Binding Path=IsPlayer2Turn}" FontWeight="Bold"/>
+        </Grid>
+
+        <Grid x:Name="UserInput" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Grid.RowSpan="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <TextBox x:Name="tbScoreInput" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" MaxLength="2" GotKeyboardFocus="SelectScore" GotMouseCapture="SelectScore">
+                <Binding Path="Throws[0]" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+                <TextBox.InputBindings>
+                    <KeyBinding 
+                        Key="Return"
+                        Command="{Binding SubmitScoreButtonClickCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="15, 0, 15, 0" Grid.Column="2" ItemsSource="{Binding ScoreTypes}" SelectedValue="{Binding ThrowTypes[0]}" SelectedIndex="0"/>
+            <TextBlock Text="Worp 1:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 0, 0" FontWeight="Bold"/>
+
+            <TextBox x:Name="tbScoreInput2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" MaxLength="2" GotKeyboardFocus="SelectScore" GotMouseCapture="SelectScore">
+                <Binding Path="Throws[1]" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+                <TextBox.InputBindings>
+                    <KeyBinding 
+                        Key="Return"
+                        Command="{Binding SubmitScoreButtonClickCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="15, 0, 15, 0" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding ScoreTypes}" SelectedValue="{Binding ThrowTypes[1]}" SelectedIndex="0"/>
+            <TextBlock Text="Worp 2:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 0, 0" Grid.Row="1" FontWeight="Bold"/>
+
+            <TextBox x:Name="tbScoreInput3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" MaxLength="2" GotKeyboardFocus="SelectScore" GotMouseCapture="SelectScore">
+                <Binding Path="Throws[2]" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validationrules:ThrowInputValidationRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+                <TextBox.InputBindings>
+                    <KeyBinding 
+                        Key="Return"
+                        Command="{Binding SubmitScoreButtonClickCommand}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+            <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="15, 0, 15, 0" Grid.Column="3" Grid.Row="2" ItemsSource="{Binding ScoreTypes}" SelectedValue="{Binding ThrowTypes[2]}" SelectedIndex="0"/>
+            <TextBlock Text="Worp 3:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15, 0, 0, 0" Grid.Row="2" FontWeight="Bold"/>
+
+            <Button Name="SubmitScore" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15, 5, 15, 5" Grid.Column="3" Grid.Row="9" Content="Next turn" Command="{Binding SubmitScoreButtonClickCommand}">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}"  BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <!-- Hier worden de validation dingen verbonden aan de button, zodat de button alleen geactiveerd wordt 
+                        zodra alle vier de elementen met de juiste data zijn ingevuld. -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=tbScoreInput, Path=(Validation.HasError)}" Value="false"/>
+                                    <Condition Binding="{Binding ElementName=tbScoreInput2, Path=(Validation.HasError)}" Value="false"/>
+                                    <Condition Binding="{Binding ElementName=tbScoreInput3, Path=(Validation.HasError)}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Name="PreviousTurn" Margin="15, 5, 15, 5" Grid.Row="3" Content="Previous turn" Command="{Binding PreviousTurnButtonClickCommand}"/>
+            <Button Name="StopMatch" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15, 5, 15, 5" Grid.Column="1" Grid.Row="3" Content="Stop Match" Command="{Binding StopMatchButtonClickCommand}"/>
+        </Grid>
+    </Grid>
+</UserControl>

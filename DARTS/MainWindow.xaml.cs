@@ -1,17 +1,9 @@
-﻿using System;
+﻿using DARTS.Data;
+using DARTS.Data.DataObjects;
+using DARTS.ViewModel;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DARTS
 {
@@ -23,6 +15,47 @@ namespace DARTS
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainMenuViewModel();
+        }
+
+        public void ChangeToMainMenu()
+        {
+            DataContext = new MainMenuViewModel();
+        }
+
+        public void ChangeToStartMatch()
+        {
+            DataContext = new StartMatchViewModel();
+        }
+
+        public void ChangeToMatchesOverview()
+        {
+            DataContext = new MatchesOverviewViewModel();
+        }
+
+        public void ChangeToOptionsMenuView()
+        {
+            DataContext = new OptionsMenuViewModel();
+        }
+
+        public void ChangeToPlayerOverviewView()
+        {
+            DataContext = new PlayersOverviewViewModel();
+        }
+
+        public void ChangeToScoreInputView(Match match)
+        {
+            DataContext = new ScoreInputViewModel(match);
+        }
+
+        public void ChangeToPlayerMatchStatisticsView(List<Match> matches)
+        {
+            DataContext = new PlayerMatchStatisticsViewModel(matches);
+        }
+
+        public void ChangeToMatchDetailView(Match match)
+        {
+            DataContext = new MatchDetailViewModel(match);
         }
     }
 }
