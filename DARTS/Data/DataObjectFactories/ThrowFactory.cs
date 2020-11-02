@@ -11,9 +11,7 @@ namespace DARTS.Data.DataObjectFactories
     {
         protected override void InitializeFields()
         {
-            CodeField idField = new CodeField(ThrowFieldNames.Id, true);
-            _fieldCollection.Add(ThrowFieldNames.Id, idField);
-
+            _fieldCollection.Add(ThrowFieldNames.Id, new CodeField(ThrowFieldNames.Id, true));
             _fieldCollection.Add(ThrowFieldNames.TurnId, new CodeField(ThrowFieldNames.TurnId));
             _fieldCollection.Add(ThrowFieldNames.Score, new DataField(ThrowFieldNames.Score, SQLiteType.INTEGER));
             _fieldCollection.Add(ThrowFieldNames.ScoreType, new DataField(ThrowFieldNames.ScoreType, SQLiteType.INTEGER));

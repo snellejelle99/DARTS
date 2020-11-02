@@ -23,8 +23,8 @@ namespace DARTS_UnitTests.Data.DataObjects
             Assert.IsNotNull(dartThrow.ScoreType);
         }
 
-        [ClassCleanup]
-        public static void TestCleanup()
+        [TestCleanup]
+        public void TestCleanup()
         {
             DataBaseProvider.Instance.Dispose();
         }

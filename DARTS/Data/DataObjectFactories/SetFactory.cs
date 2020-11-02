@@ -13,10 +13,7 @@ namespace DARTS.Data.DataObjectFactories
         {
             CodeField idField = new CodeField(SetFieldNames.Id, true);
             _fieldCollection.Add(SetFieldNames.Id, idField);
-
             
-            _collectionFieldCollection.Add(SetFieldNames.Legs, new CollectionField(SetFieldNames.Legs, typeof(LegFactory), LegFieldNames.SetId, idField));
-
             _fieldCollection.Add(SetFieldNames.MatchId, new CodeField(SetFieldNames.MatchId));
             _fieldCollection.Add(SetFieldNames.NumLegs, new DataField(SetFieldNames.NumLegs, SQLiteType.INTEGER));
             _fieldCollection.Add(SetFieldNames.Player1LegsWon, new DataField(SetFieldNames.Player1LegsWon, SQLiteType.INTEGER));
@@ -24,12 +21,22 @@ namespace DARTS.Data.DataObjectFactories
             _fieldCollection.Add(SetFieldNames.SetState, new DataField(SetFieldNames.SetState, SQLiteType.INTEGER));
             _fieldCollection.Add(SetFieldNames.BeginningPlayer, new DataField(SetFieldNames.BeginningPlayer, SQLiteType.INTEGER));
             _fieldCollection.Add(SetFieldNames.WinningPlayer, new DataField(SetFieldNames.WinningPlayer, SQLiteType.INTEGER));
+
+            _collectionFieldCollection.Add(SetFieldNames.Legs, new CollectionField(SetFieldNames.Legs, typeof(LegFactory), LegFieldNames.SetId, idField));
+
         }
 
         protected override void SetNameAndTarget()
         {
             TableName = "SET";
             TargetObject = typeof(Set);
+        }
+
+        public override void Delete(DataObjectBase objectBase)
+        {
+            Set set = (Set)objectBase;
+            set.CollectionFieldCollection[SetFieldNames.Legs].DeleteValues();
+            base.Delete(objectBase);
         }
     }
 
