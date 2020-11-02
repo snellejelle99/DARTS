@@ -1,6 +1,7 @@
 ﻿using DARTS.Data.DataObjectFactories;
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace DARTS.Data.DataObjects
 {
@@ -222,6 +223,99 @@ namespace DARTS.Data.DataObjects
             }
         }
 
+        public void PreviousTurn()
+        {
+            Leg currentLeg = GetCurrentLeg();
+            Set currentSet = GetCurrentSet();
+            Turn currentTurn = GetCurrentTurn();
+
+            Leg previousLeg = null;
+            Set previousSet = null;
+            Turn previousTurn = null;
+
+
+            if (currentLeg.Turns.Count > 1)
+            {
+                previousTurn = (Turn)currentLeg.Turns[currentLeg.Turns.Count - 2];
+            }
+
+            else if (currentSet.Legs.Count > 1)
+            {
+                previousLeg = (Leg)currentSet.Legs[currentSet.Legs.Count - 2];
+                previousTurn = (Turn)previousLeg.Turns.Last();
+
+                previousLeg.LegState = PlayState.InProgress;
+                previousLeg.WinningPlayer = PlayerEnum.None;
+                currentLeg.LegState = PlayState.NotStarted;
+
+                currentLeg = previousLeg;
+
+                switch (previousTurn.PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        currentSet.Player1LegsWon -= 1;
+                        break;
+
+                    case PlayerEnum.Player2:
+                        currentSet.Player2LegsWon -= 1;
+                        break;
+                }
+            }
+
+            else if (Sets.Count > 1)
+            {
+                previousSet = (Set)Sets[Sets.Count - 2];
+                previousLeg = (Leg)previousSet.Legs.Last();
+                previousTurn = (Turn)previousLeg.Turns.Last();
+
+                currentSet.SetState = PlayState.NotStarted;
+                currentLeg.LegState = PlayState.NotStarted;
+
+                previousSet.SetState = PlayState.InProgress;
+                previousLeg.LegState = PlayState.InProgress;
+
+                currentLeg = previousLeg;
+
+                switch (previousTurn.PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        previousSet.Player1LegsWon -= 1;
+                        Player1SetsWon -= 1;
+                        break;
+
+                    case PlayerEnum.Player2:
+                        previousSet.Player2LegsWon -= 1;
+                        Player2SetsWon -= 1;
+                        break;
+                }
+            }
+
+            if (previousTurn != null)
+            {
+                switch (previousTurn.PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        currentLeg.Player1LegScore += (uint)previousTurn.ThrownPoints;
+                        break;
+                    case PlayerEnum.Player2:
+                        currentLeg.Player2LegScore += (uint)previousTurn.ThrownPoints;
+                        break;
+                }
+
+                foreach (Throw Throw in previousTurn.Throws)
+                {
+                    Throw.Score = 0;
+                    Throw.ScoreType = ScoreType.Miss;
+                }
+
+                previousTurn.ThrownPoints = 0;
+                previousTurn.TurnState = PlayState.InProgress;
+                currentTurn.ThrownPoints = 0;
+                currentTurn.TurnState = PlayState.NotStarted;
+
+                ChangeTurn();
+            }
+        }
         private PlayerEnum ChooseRandomPlayer()
         {
             // Choose randomly between PlayerEnum.Player1 and PlayerEnum.Player2.

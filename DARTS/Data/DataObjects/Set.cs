@@ -173,7 +173,6 @@ namespace DARTS.Data.DataObjects
                 GetCurrentLeg().ChangeTurn();
             }
 
-            //If someone has won it start a new Leg and let the other player begin. Then start the leg.
             else if (GetCurrentLeg().LegState == PlayState.NotStarted)
             {
                 GetCurrentLeg().Start();
