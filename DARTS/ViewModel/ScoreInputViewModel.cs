@@ -22,6 +22,8 @@ namespace DARTS.ViewModel
         public ScoreType[] ThrowTypes { get; set; }
         public ScoreType[] ScoreTypes { get; }
 
+        private bool CanGoToPreviousTurn = true;
+
         private Match Match { get; }
 
         #region Match object bindings
@@ -140,12 +142,15 @@ namespace DARTS.ViewModel
             {
                 Match.Delete();
                 GameInstance.Instance.MainWindow.ChangeToMainMenu();
-            }            
+            }
         }
 
         private void PreviousTurnButtonClick()
         {
-            throw new NotImplementedException();
+            Match.PreviousTurn();
+            CanGoToPreviousTurn = false;
+            ResetScreen();
+            //throw new NotImplementedException();
         }
 
         private void SubmitScoreButtonClick()
@@ -159,10 +164,11 @@ namespace DARTS.ViewModel
             Match.GetCurrentLeg().SubtractScore();
             Match.ChangeTurn();
             Match.Post();
+            CanGoToPreviousTurn = true;
 
             ResetScreen();
 
-            if(Match.WinningPlayer != PlayerEnum.None)
+            if (Match.WinningPlayer != PlayerEnum.None)
             {
                 GameInstance.Instance.MainWindow.ChangeToMatchDetailView(Match);
             }
@@ -175,7 +181,7 @@ namespace DARTS.ViewModel
         /// <returns>True when there are more than one turn in the current leg.</returns>
         private bool CanExecutePreviousTurnButtonClick()
         {
-            return (Match.GetCurrentLeg().Turns.Count > 1);
+            return (Match.GetCurrentLeg().Turns.Count > 1 || Match.GetCurrentSet().Legs.Count > 1 || Match.Sets.Count > 1) && CanGoToPreviousTurn;
         }
 
         /// <summary>

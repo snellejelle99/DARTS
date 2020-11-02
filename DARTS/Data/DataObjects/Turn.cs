@@ -60,5 +60,11 @@ namespace DARTS.Data.DataObjects
                 ThrownPoints += thrownDart.Score;
             }
         }
+
+        public void ResetTurn()
+        {
+            Throws.Clear();
+            ThrownPoints = 0;
+        }
     }
 }

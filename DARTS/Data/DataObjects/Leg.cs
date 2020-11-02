@@ -132,8 +132,6 @@ namespace DARTS.Data.DataObjects
 
         public void ChangeTurn()
         {
-            // TODO: impement factory pattern.(?)
-            // Create the next turn and assign the other player.
             Turn nextTurn = (Turn)turnFactory.Spawn();
             Turn currentTurn = (Turn)Turns[Turns.Count - 1];
             nextTurn.PlayerTurn = currentTurn.PlayerTurn == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
@@ -144,15 +142,21 @@ namespace DARTS.Data.DataObjects
 
         public void SubtractScore()
         {
-            foreach (Throw dart in ((Turn)Turns.Last()).Throws)
+            if (CurrentPlayerLegScore > ((Turn)Turns.Last()).ThrownPoints && CurrentPlayerLegScore - ((Turn)Turns.Last()).ThrownPoints != 1)
             {
-                if (CurrentPlayerLegScore > dart.Score && CurrentPlayerLegScore - (uint)dart.Score != 1) CurrentPlayerLegScore -= (uint)dart.Score;
-                else if (CurrentPlayerLegScore == dart.Score)
-                {
-                    if (dart.ScoreType == ScoreType.Double || dart.ScoreType == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
-                }
-                else break;
+                CurrentPlayerLegScore -= (uint)((Turn)Turns.Last()).ThrownPoints;
             }
+            else if (CurrentPlayerLegScore - (uint)((Turn)Turns.Last()).ThrownPoints == 0)
+            {
+                foreach (Throw dart in ((Turn)Turns.Last()).Throws.Reverse())
+                {
+                    if (dart.ScoreType != ScoreType.Miss)
+                    {
+                        if (dart.ScoreType == ScoreType.Double || dart.ScoreType == ScoreType.Bullseye) CurrentPlayerLegScore = 0;
+                    }
+                }
+            }
+            else ((Turn)Turns.Last()).ThrownPoints = 0;
         }
 
         private Leg() : base()

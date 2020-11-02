@@ -1,6 +1,7 @@
 ﻿using DARTS.Data.DataObjectFactories;
 using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace DARTS.Data.DataObjects
 {
@@ -212,6 +213,91 @@ namespace DARTS.Data.DataObjects
                     Sets.Add(nextSet);
                     nextSet.Start();
                 }
+            }
+        }
+
+        public void PreviousTurn()
+        {
+            if (GetCurrentLeg().Turns.Count() > 1)
+            {
+                Turn currentTurn = GetCurrentTurn();
+                Turn previousTurn = (Turn)GetCurrentLeg().Turns[GetCurrentLeg().Turns.Count - 2];
+                int thrownPoints = previousTurn.ThrownPoints;
+
+                currentTurn.Delete();
+                GetCurrentLeg().Turns.RemoveAt(GetCurrentLeg().Turns.Count - 1);
+
+                switch (GetCurrentTurn().PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        GetCurrentLeg().Player1LegScore += (uint)thrownPoints;
+                        break;
+                    case PlayerEnum.Player2:
+                        GetCurrentLeg().Player2LegScore += (uint)thrownPoints;
+                        break;
+                }
+
+                GetCurrentTurn().ResetTurn();
+            }
+            else if (GetCurrentSet().Legs.Count() > 1)
+            {
+                Leg currentleg = GetCurrentLeg();
+                Leg previousLeg = (Leg)GetCurrentSet().Legs[GetCurrentSet().Legs.Count - 2];
+
+                Turn previousTurn = (Turn)previousLeg.Turns.Last();
+                int thrownPoints = previousTurn.ThrownPoints;
+
+                switch (previousTurn.PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        previousLeg.Player1LegScore += (uint)thrownPoints;
+                        GetCurrentSet().Player1LegsWon -= 1;
+                        break;
+                    case PlayerEnum.Player2:
+                        previousLeg.Player2LegScore += (uint)thrownPoints;
+                        GetCurrentSet().Player2LegsWon -= 1;
+                        break;
+                }
+
+                previousLeg.WinningPlayer = PlayerEnum.None;
+                previousLeg.LegState = PlayState.InProgress;
+                previousTurn.ResetTurn();
+
+                currentleg.Delete();
+                GetCurrentSet().Legs.RemoveAt(GetCurrentSet().Legs.Count - 1);
+            }
+            else if (Sets.Count > 1)
+            {
+                Set previousSet = (Set)Sets[Sets.Count - 2];
+
+                Leg previousLeg = (Leg)previousSet.Legs.Last();
+
+                Turn previousTurn = (Turn)previousLeg.Turns.Last();
+                int thrownPoints = previousTurn.ThrownPoints;
+
+                switch (previousTurn.PlayerTurn)
+                {
+                    case PlayerEnum.Player1:
+                        previousLeg.Player1LegScore += (uint)thrownPoints;
+                        previousSet.Player1LegsWon -= 1;
+                        Player1SetsWon -= 1;
+                        break;
+                    case PlayerEnum.Player2:
+                        previousLeg.Player2LegScore += (uint)thrownPoints;
+                        previousSet.Player2LegsWon -= 1;
+                        Player2SetsWon -= 1;
+                        break;
+                }
+
+                previousLeg.WinningPlayer = PlayerEnum.None;
+                previousLeg.LegState = PlayState.InProgress;
+
+                previousSet.WinningPlayer = PlayerEnum.None;
+                previousSet.SetState = PlayState.InProgress;
+                previousTurn.ResetTurn();
+
+                previousSet.Delete();
+                Sets.RemoveAt(Sets.Count - 1);
             }
         }
 
