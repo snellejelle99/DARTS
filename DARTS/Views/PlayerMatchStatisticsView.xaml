@@ -22,18 +22,23 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player Name" Width="150" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Player2.Name}" Header="Opponent Name" Width="150"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player2.Name}" Header="Opponent Name" Width="170"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding NumLegs}" Header="Legs" Width="150"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding NumSets}" Header="Sets" Width="150"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Player1SetsWon}" Header="Score" Width="150"></GridViewColumn>
-                    <GridViewColumn Header="Score" Width="50">
+                    <GridViewColumn Width="150" Header="Score" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Label Content="-" ></Label>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0} - {1}">
+                                            <Binding Path="Player1SetsWon" />
+                                            <Binding Path="Player2SetsWon" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Player2SetsWon}" Header="" Width="50"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
