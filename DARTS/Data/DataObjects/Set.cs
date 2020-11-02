@@ -107,6 +107,7 @@ namespace DARTS.Data.DataObjects
             Leg newLeg = (Leg)legFactory.Spawn();
             newLeg.Player1LegScore = (uint)PlayerPoints;
             newLeg.Player2LegScore = (uint)PlayerPoints;
+            newLeg.WinningPlayer = PlayerEnum.None;
 
             return newLeg;
         }
@@ -114,15 +115,22 @@ namespace DARTS.Data.DataObjects
         public void Start()
         {
             SetState = PlayState.InProgress;
-            Leg firstLeg = CreateNewLeg();
-            firstLeg.BeginningPlayer = BeginningPlayer;
-            Legs.Add(firstLeg);
-            firstLeg.Start();
+            if (Legs.Count == 0)
+            {
+                Leg firstLeg = CreateNewLeg();
+                firstLeg.BeginningPlayer = BeginningPlayer;
+                Legs.Add(firstLeg);
+                firstLeg.Start();
+            }
+            else if(GetCurrentLeg().LegState == PlayState.NotStarted)
+            {
+                GetCurrentLeg().Start();
+            }
         }
 
         public PlayerEnum CheckWin()
         {
-            PlayerEnum winner = ((Leg)Legs[Legs.Count - 1]).CheckWin();
+            PlayerEnum winner = GetCurrentLeg().CheckWin();
 
             if (winner != PlayerEnum.None)
             {
@@ -151,26 +159,36 @@ namespace DARTS.Data.DataObjects
 
         public void ChangeTurn()
         {
+            if (((Leg)Legs[Legs.Count - 1]).LegState == PlayState.Finished && GetCurrentLeg() == null)
+            {
+                Leg nextLeg = CreateNewLeg();
+                nextLeg.BeginningPlayer = ((Leg)Legs[Legs.Count - 1]).BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+                Legs.Add(nextLeg);
+                nextLeg.Start();
+            }
+
             //If nobody has won the leg yet change the turn.
-            if (GetCurrentLeg().LegState == PlayState.InProgress)
+            else if (GetCurrentLeg().LegState == PlayState.InProgress)
             {
                 GetCurrentLeg().ChangeTurn();
             }
 
             //If someone has won it start a new Leg and let the other player begin. Then start the leg.
-            else
+            else if (GetCurrentLeg().LegState == PlayState.NotStarted)
             {
-                // TODO: impement factory pattern.
-                Leg nextLeg = CreateNewLeg();
-                nextLeg.BeginningPlayer = GetCurrentLeg().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-                Legs.Add(nextLeg);
-                nextLeg.Start();
+                GetCurrentLeg().Start();
             }
         }
 
         public Leg GetCurrentLeg()
         {
-            return (Leg)Legs[Legs.Count - 1];
+            foreach (Leg leg in Legs)
+            {
+                if (leg.LegState != PlayState.Finished)
+                    return leg;
+            }
+
+            return null;
         }
 
         private Set() : base()

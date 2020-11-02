@@ -125,7 +125,8 @@ namespace DARTS.Data.DataObjects
         {
             Set newSet = (Set)setFactory.Spawn();
             newSet.NumLegs = NumLegs;
-            newSet.SetState = PlayState.NotStarted;
+            newSet.SetState = PlayState.InProgress;
+            newSet.WinningPlayer = PlayerEnum.None;
             newSet.Player1LegsWon = 0;
             newSet.Player2LegsWon = 0;
             newSet.PlayerPoints = PointsPerLeg;
@@ -139,7 +140,7 @@ namespace DARTS.Data.DataObjects
             WinningPlayer = PlayerEnum.None;
             Player1SetsWon = 0;
             Player2SetsWon = 0;
-            
+
             if (BeginningPlayer.Equals(PlayerEnum.None))
             {
                 BeginningPlayer = ChooseRandomPlayer();
@@ -196,22 +197,27 @@ namespace DARTS.Data.DataObjects
         /// </summary>
         public void ChangeTurn()
         {
-            
+
             if (CheckWin() == PlayerEnum.None)
             {
-                if (GetCurrentSet().SetState == PlayState.InProgress) //If newest set still in progress, change the turn.
+                if (GetNewestSet().SetState == PlayState.Finished && GetCurrentSet() == null) //If newest set already finished, start another one 
+                {
+
+                    Set nextSet = CreateNewSet();
+                    nextSet.BeginningPlayer = GetNewestSet().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
+
+                    Sets.Add(nextSet);
+                    nextSet.Start();
+
+                }
+                else if (GetCurrentSet().SetState == PlayState.InProgress) //If theres still a set in progress, change the turn.
                 {
                     GetCurrentSet().ChangeTurn();
                 }
 
-                else //If newest set already finished, start another one 
+                else if (GetCurrentSet().SetState == PlayState.NotStarted) //Start the non-started set.
                 {
-                    Set nextSet = CreateNewSet();
-                    nextSet.BeginningPlayer = GetCurrentSet().BeginningPlayer == PlayerEnum.Player1 ? PlayerEnum.Player2 : PlayerEnum.Player1;
-                    GetCurrentSet().SetState = PlayState.Finished;
-
-                    Sets.Add(nextSet);
-                    nextSet.Start();
+                    GetCurrentSet().Start();
                 }
             }
         }
@@ -243,22 +249,49 @@ namespace DARTS.Data.DataObjects
         #region Helper functions
         public Set GetCurrentSet()
         {
+            foreach (Set set in Sets)
+            {
+                if (set.SetState != PlayState.Finished)
+                    return set;
+            }
+
+            return null;
+        }
+
+        public Set GetNewestSet()
+        {
             return (Set)Sets[Sets.Count - 1];
         }
 
         public Leg GetCurrentLeg()
         {
-            return (Leg)GetCurrentSet().Legs[GetCurrentSet().Legs.Count - 1];
+            foreach (Leg leg in GetCurrentSet().Legs)
+            {
+                if (leg.LegState != PlayState.Finished)
+                    return leg;
+            }
+
+            return GetNewestLeg();
+        }
+
+        public Leg GetNewestLeg()
+        {
+            return (Leg)GetNewestSet().Legs[GetNewestSet().Legs.Count - 1];
         }
 
         public Turn GetCurrentTurn()
         {
-            foreach(Turn turn in GetCurrentLeg().Turns)
+            foreach (Turn turn in GetCurrentLeg().Turns)
             {
                 if (turn.TurnState != PlayState.Finished)
                     return turn;
             }
-            return null;
+            return GetNewestTurn();
+        }
+
+        public Turn GetNewestTurn()
+        {
+            return (Turn)GetNewestLeg().Turns[GetNewestLeg().Turns.Count - 1];
         }
         #endregion
 

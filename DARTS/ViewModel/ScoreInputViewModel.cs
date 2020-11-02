@@ -22,6 +22,7 @@ namespace DARTS.ViewModel
         public int[] Throws { get; set; }
         public ScoreType[] ThrowTypes { get; set; }
         public ScoreType[] ScoreTypes { get; }
+        public bool CanGoToPreviousTurn { get; set; }
 
         private Match Match { get; }
 
@@ -110,7 +111,7 @@ namespace DARTS.ViewModel
         {
             get
             {
-                return string.Format("Leg {0} of {1} in Set {2} of {3}", Match.GetCurrentSet().Legs.Count(), Match.NumLegs, Match.Sets.Count(), Match.NumSets);
+                return string.Format("Leg {0} of {1} in Set {2} of {3}", Match.GetCurrentSet().Legs.Where(leg => ((Leg)leg).LegState != PlayState.NotStarted).Count(), Match.NumLegs, Match.Sets.Where(set => ((Set)set).SetState != PlayState.NotStarted).Count(), Match.NumSets);
             }
         }
         #endregion
@@ -170,8 +171,8 @@ namespace DARTS.ViewModel
 
                     previousLeg.LegState = PlayState.InProgress;
                     previousLeg.WinningPlayer = PlayerEnum.None;
-
                     currentLeg.LegState = PlayState.NotStarted;
+
                     currentLeg = previousLeg;
 
                     switch (previousTurn.PlayerTurn)
@@ -193,9 +194,11 @@ namespace DARTS.ViewModel
                     previousLeg = (Leg)previousSet.Legs.Last();
 
                     currentSet.SetState = PlayState.NotStarted;
+                    currentLeg.LegState = PlayState.NotStarted;
+
                     previousSet.SetState = PlayState.InProgress;
                     previousLeg.LegState = PlayState.InProgress;
-                    currentLeg.LegState = PlayState.NotStarted;
+
                     currentLeg = previousLeg;
 
                     switch (previousTurn.PlayerTurn)
@@ -232,8 +235,11 @@ namespace DARTS.ViewModel
 
                     previousTurn.ThrownPoints = 0;
                     previousTurn.TurnState = PlayState.InProgress;
+
+                    currentTurn.ThrownPoints = 0;
                     currentTurn.TurnState = PlayState.NotStarted;
 
+                    CanGoToPreviousTurn = false;
                     Match.ChangeTurn();
                     ResetScreen();
                 }          
@@ -253,8 +259,9 @@ namespace DARTS.ViewModel
             Match.ChangeTurn();
             Match.Post();
             ResetScreen();
+            CanGoToPreviousTurn = true;
 
-            if(Match.WinningPlayer != PlayerEnum.None)
+            if (Match.WinningPlayer != PlayerEnum.None)
             {
                 GameInstance.Instance.MainWindow.ChangeToMatchDetailView(Match);
             }
@@ -267,7 +274,7 @@ namespace DARTS.ViewModel
         /// <returns>True when there are more than one turn/leg/set in the current leg/set/match.</returns>
         private bool CanExecutePreviousTurnButtonClick()
         {
-            return Match.GetCurrentLeg().Turns.Count > 1 || Match.GetCurrentSet().Legs.Count > 1 || Match.Sets.Count > 1;
+            return (Match.GetCurrentLeg().Turns.Count > 1 || Match.GetCurrentSet().Legs.Count > 1 || Match.Sets.Count > 1) && CanGoToPreviousTurn;
         }
 
         /// <summary>

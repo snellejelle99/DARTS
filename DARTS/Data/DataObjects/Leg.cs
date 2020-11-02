@@ -116,13 +116,16 @@ namespace DARTS.Data.DataObjects
         public void Start()
         {
             LegState = PlayState.InProgress;
-            Turn firstTurn = (Turn)TurnFactory.Spawn();
 
-            firstTurn.PlayerTurn = BeginningPlayer;
-            firstTurn.ThrownPoints = 0;
-            firstTurn.TurnState = PlayState.InProgress;
+            if(Turns.Count == 0 || GetOldestUnfinishedTurn() == null)
+            {
+                Turn firstTurn = (Turn)turnFactory.Spawn();
+                firstTurn.PlayerTurn = BeginningPlayer;
+                firstTurn.ThrownPoints = 0;
+                firstTurn.TurnState = PlayState.InProgress;
 
-            Turns.Add(firstTurn);
+                Turns.Add(firstTurn);
+            }       
         }
 
         public PlayerEnum CheckWin()
@@ -140,6 +143,7 @@ namespace DARTS.Data.DataObjects
             else
             {
                 WinningPlayer = PlayerEnum.None;
+                LegState = PlayState.InProgress;
             }
 
             return WinningPlayer;
