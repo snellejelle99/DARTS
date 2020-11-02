@@ -1,8 +1,6 @@
 ﻿using DARTS.Data.DataObjectFactories;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
@@ -102,15 +100,11 @@ namespace DARTS.Data.DataObjects
             }
         }
 
-        private LegFactory LegFactory
-        {
-            get;
-            set;
-        }
+        private LegFactory legFactory = new LegFactory();
 
         public Leg CreateNewLeg()
         {
-            Leg newLeg = (Leg)LegFactory.Spawn();
+            Leg newLeg = (Leg)legFactory.Spawn();
             newLeg.Player1LegScore = (uint)PlayerPoints;
             newLeg.Player2LegScore = (uint)PlayerPoints;
             newLeg.LegState = PlayState.InProgress;
@@ -120,8 +114,6 @@ namespace DARTS.Data.DataObjects
 
         public void Start()
         {
-            LegFactory = new LegFactory();
-        
             Leg firstLeg = CreateNewLeg();
             firstLeg.BeginningPlayer = BeginningPlayer;
             Legs.Add(firstLeg);
