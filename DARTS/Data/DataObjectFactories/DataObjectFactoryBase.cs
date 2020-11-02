@@ -245,7 +245,7 @@ namespace DARTS.Data.DataFactory
                 cmd.Parameters.Add(new SQLiteParameter($"@{entry.Value.Name}", entry.Value.Value));
             }
 
-                    int affectedRows = cmd.ExecuteNonQuery();
+            int affectedRows = cmd.ExecuteNonQuery();
 
             if (affectedRows == 1)
             {
@@ -323,7 +323,7 @@ namespace DARTS.Data.DataFactory
                 }
 
                 objectBase.ObjectState = ObjectState.Deleted;
-            }            
+            }
         }
     }
 }

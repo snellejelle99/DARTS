@@ -101,6 +101,7 @@ namespace DARTS_UnitTests.Data.DataObjects
             match.Start();
 
             //Act
+            match.GetCurrentTurn().TurnState = PlayState.Finished;
             match.ChangeTurn();
 
             //Assert
