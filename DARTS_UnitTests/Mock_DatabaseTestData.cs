@@ -55,7 +55,6 @@ namespace DARTS_UnitTests
             ((Throw)dummyThrows[2]).Score = 15;
             ((Throw)dummyThrows[2]).ScoreType = ScoreType.Double;
 
-            dummyTurn.Throws = new BindingList<DataObjectBase>(dummyThrows);
 
             BindingList<DataObjectBase> dummyTurnList = new BindingList<DataObjectBase>();
             dummyTurnList.Add(dummyTurn);

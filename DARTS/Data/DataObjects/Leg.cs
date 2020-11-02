@@ -97,18 +97,6 @@ namespace DARTS.Data.DataObjects
                 return string.Format("Leg: {0}-{1}: avg. thrown {2}", Player1LegScore, Player2LegScore, totalThrown / amountOfThrows);
             }
         }
-
-        public bool HasUnfinishedTurns
-        {
-            get
-            {
-                foreach (Turn turn in Turns)
-                    if (turn.TurnState != PlayState.Finished)
-                        return true;
-
-                return false;
-            }
-        }
         #endregion
 
         private TurnFactory turnFactory = new TurnFactory();
