@@ -158,6 +158,7 @@ namespace DARTS_UnitTests.Data.DataObjects
             match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(throwScore, scoreType));
 
             //Act
+            match.GetCurrentTurn().CalculateThrownPoints();
             match.GetCurrentLeg().SubtractScore();
 
             //Assert
@@ -198,6 +199,7 @@ namespace DARTS_UnitTests.Data.DataObjects
             match.GetCurrentTurn().Throws.Add(ProcessThrow.CalculateThrowScore(ThrowScore, ScoreType.Double));
 
             //Act
+            match.GetCurrentTurn().CalculateThrownPoints();
             match.GetCurrentLeg().SubtractScore();
 
             //Assert
