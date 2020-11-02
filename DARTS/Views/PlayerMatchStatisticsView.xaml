@@ -22,7 +22,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Player1.Name}" Header="Player Name" Width="150" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Player2.Name}" Header="Opponent Name" Width="150"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Player2.Name}" Header="Opponent Name" Width="170"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding NumLegs}" Header="Legs" Width="150"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding NumSets}" Header="Sets" Width="150"></GridViewColumn>
                     <GridViewColumn Width="150" Header="Score" >
