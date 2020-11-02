@@ -225,7 +225,7 @@ namespace DARTS.Data.DataObjects
                 int thrownPoints = previousTurn.ThrownPoints;
 
                 currentTurn.Delete();
-                GetCurrentLeg().Turns.Remove(currentTurn);
+                GetCurrentLeg().Turns.RemoveAt(GetCurrentLeg().Turns.Count - 1);
 
                 switch (GetCurrentTurn().PlayerTurn)
                 {
