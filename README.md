@@ -33,18 +33,18 @@ The following wizard will open.
 3.  At the next step select the "Local Machine" radio button.
 
 ![Image](https://i.ibb.co/vZq6YWP/install-Cert2.jpg)  
-*3*
+*Second step of the Certficate Import Wizard*
 
 4. At the next step select the second radio button and click browse.  
 Then select "*Trusted People*"
 
 ![Image](https://i.ibb.co/c8WxDgV/install-Cert3.jpg)  
-*4*
+*Third step of the Certficate Import Wizard*
 
 5. Now the Certificate is installed, install the app by double-clicking the "*DARTS_WAP_1.0.1.0_x86_x64.msixbundle*" file.
 
 ![Image](https://i.ibb.co/9sYYWyT/install-App.jpg)  
-*5*
+*Installation screen, click the blue button on the right to proceed* 
 
 6. The app is now ready to use!
 
