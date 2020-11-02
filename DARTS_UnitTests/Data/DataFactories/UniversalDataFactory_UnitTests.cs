@@ -74,6 +74,21 @@ namespace DARTS_UnitTests.Data.DataFactories
         }
 
         [TestMethod]
+        public void DataFactory_Should_Delete()
+        {
+            //ARRANGE
+            DataObjectBase order = _orderFactory.Spawn();
+            order.Post();
+
+            //ACT
+            order.Delete();
+
+            //ASSERT
+            Assert.AreEqual(ObjectState.Deleted, order.ObjectState);
+            Assert.IsNull(_orderFactory.Get(((Mock_OrderObject)order).Id));
+        }
+
+        [TestMethod]
         public void DataFactory_Should_Retrieve()
         {
             //ARRANGE

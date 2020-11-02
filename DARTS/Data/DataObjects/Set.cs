@@ -1,8 +1,6 @@
 ﻿using DARTS.Data.DataObjectFactories;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace DARTS.Data.DataObjects
 {
@@ -85,30 +83,41 @@ namespace DARTS.Data.DataObjects
             }
         }
 
-        private LegFactory LegFactory
+        public string SetDetails
         {
-            get;
-            set;
+            get
+            {
+                int totalThrown = 0, amountOfThrows = 0;
+                for (int i = 0; i < Legs.Count; i++)
+                {
+                    for (int j = 0; j < ((Leg)Legs[i]).Turns.Count; j++)
+                    {
+                        totalThrown += ((Turn)((Leg)Legs[i]).Turns[j]).ThrownPoints;
+                        amountOfThrows += 1;
+                    }
+                }
+                return string.Format("Set: {0}-{1}: avg. thrown {2}", Player1LegsWon, Player2LegsWon, totalThrown / amountOfThrows);
+            }
         }
+
+        private LegFactory legFactory = new LegFactory();
 
         public Leg CreateNewLeg()
         {
-            Leg newLeg = (Leg)LegFactory.Spawn();
+            Leg newLeg = (Leg)legFactory.Spawn();
             newLeg.Player1LegScore = (uint)PlayerPoints;
             newLeg.Player2LegScore = (uint)PlayerPoints;
-           
+
             return newLeg;
         }
 
         public void Start()
         {
             SetState = PlayState.InProgress;
-            LegFactory = new LegFactory();
-        
             Leg firstLeg = CreateNewLeg();
             firstLeg.BeginningPlayer = BeginningPlayer;
             Legs.Add(firstLeg);
-            firstLeg.Start();       
+            firstLeg.Start();
         }
 
         public PlayerEnum CheckWin()

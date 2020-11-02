@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjectFactories;
+﻿using DARTS.Data.DataBase;
+using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -26,6 +27,34 @@ namespace DARTS_UnitTests.Data.DataObjects
             Assert.IsNotNull(leg.LegState);
             Assert.IsNotNull(leg.Player1LegScore);
             Assert.IsNotNull(leg.Player2LegScore);
+        }
+
+        [TestMethod]
+        public void Leg_Delete_Should_Delete_All_Nested_Components()
+        {
+            //ARRANGE
+            LegFactory legFactory = new LegFactory();
+            Leg leg = (Leg)legFactory.Spawn();
+            leg.Start();
+            leg.Post();
+
+            //ACT
+            leg.Delete();
+
+            //ASSERT
+            Assert.AreEqual(ObjectState.Deleted, leg.ObjectState);
+            Assert.IsNull(legFactory.Get(leg.Id));
+            foreach (Turn turn in leg.Turns)
+            {
+                Assert.AreEqual(ObjectState.Deleted, turn.ObjectState);
+                Assert.IsNull(new TurnFactory().Get(turn.Id));
+            }
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            DataBaseProvider.Instance.Dispose();
         }
     }
 }

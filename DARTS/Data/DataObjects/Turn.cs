@@ -51,6 +51,14 @@ namespace DARTS.Data.DataObjects
 
         }
 
+        public string TurnDetails
+        {
+            get
+            {
+                return string.Format("Turn: {0}: thrown {1}", PlayerTurn, ThrownPoints);
+            }
+        }
+
         public void CalculateThrownPoints()
         {
             foreach (Throw thrownDart in Throws)

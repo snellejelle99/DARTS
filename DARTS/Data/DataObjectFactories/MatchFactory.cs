@@ -38,6 +38,13 @@ namespace DARTS.Data.DataObjectFactories
             TableName = "MATCH";
             TargetObject = typeof(Match);
         }
+
+        public override void Delete(DataObjectBase objectBase)
+        {
+            Match match = (Match)objectBase;
+            match.CollectionFieldCollection[MatchFieldNames.Sets].DeleteValues();
+            base.Delete(objectBase);
+        }
     }
 
     public static class MatchFieldNames

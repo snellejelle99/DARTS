@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Linq;
 using System.Windows.Input;
-using DARTS.Data;
+using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using DARTS.Data.Singletons;
 using DARTS.ViewModel.Command;
@@ -30,7 +24,11 @@ namespace DARTS.ViewModel
 
         private void StartMatchButton_Click()
         {
-            GameInstance.Instance.MainWindow.ChangeToStartMatch();
+            MatchFactory factory = new MatchFactory();
+            Match notFinished = (Match)factory.Get(MatchFieldNames.MatchState, PlayState.InProgress).FirstOrDefault();
+
+            if (notFinished != null) GameInstance.Instance.MainWindow.ChangeToScoreInputView(notFinished);
+            else GameInstance.Instance.MainWindow.ChangeToStartMatch();
         }
 
         private void PlayerOverviewButton_Click()

@@ -9,7 +9,7 @@ namespace DARTS.Data.DataObjectFactories
         protected override void InitializeFields()
         {
             CodeField idField = new CodeField(TurnFieldNames.Id, true);
-            _fieldCollection.Add(TurnFieldNames.Id,idField);
+            _fieldCollection.Add(TurnFieldNames.Id, idField);
 
             _fieldCollection.Add(TurnFieldNames.LegId, new CodeField(TurnFieldNames.LegId));
             _fieldCollection.Add(TurnFieldNames.TurnState, new DataField(TurnFieldNames.TurnState, SQLiteType.INTEGER));
@@ -17,13 +17,19 @@ namespace DARTS.Data.DataObjectFactories
             _fieldCollection.Add(TurnFieldNames.ThrownPoints, new DataField(TurnFieldNames.ThrownPoints, SQLiteType.INTEGER));
 
             _collectionFieldCollection.Add(TurnFieldNames.Throws, new CollectionField(TurnFieldNames.Throws, typeof(ThrowFactory), ThrowFieldNames.TurnId, idField));
-
         }
 
         protected override void SetNameAndTarget()
         {
             TableName = "TURN";
             TargetObject = typeof(Turn);
+        }
+
+        public override void Delete(DataObjectBase objectBase)
+        {
+            Turn turn = (Turn)objectBase;
+            turn.CollectionFieldCollection[TurnFieldNames.Throws].DeleteValues();
+            base.Delete(objectBase);
         }
     }
 

@@ -278,5 +278,52 @@ namespace DARTS.Data.DataFactory
                 SQLTransactionMustEndHere = false;
             }
         }
+
+        /// <summary>
+        /// Deletes an object from the database
+        /// </summary>
+        /// <param name="objectBase">The DataObject to Delete</param>
+        public virtual void Delete(DataObjectBase objectBase)
+        {
+            if (objectBase.ObjectState != ObjectState.New)
+            {
+                SQLiteConnection dbConnection = DataBaseProvider.Instance.GetDataBaseConnection();
+
+                //start sql transaction
+                if (!IsSQLTransactionActive)
+                {
+                    SQLiteCommand beginCommand = new SQLiteCommand("begin", dbConnection);
+                    beginCommand.ExecuteNonQuery();
+                    IsSQLTransactionActive = true;
+                    SQLTransactionMustEndHere = true;
+                }
+
+                foreach (KeyValuePair<string, DataField> entry in objectBase.FieldCollection)
+                {
+                    if (entry.Value.PrimaryKey == true)
+                    {
+                        string primaryKeyField = entry.Value.Name;
+                        string primaryKeyValue = entry.Value.Value.ToString();
+
+                        SQLiteCommand cmd = dbConnection.CreateCommand();
+                        cmd.CommandText = string.Format("DELETE FROM \"{0}\" WHERE {1}={2}", TableName, primaryKeyField, primaryKeyValue);
+
+                        cmd.ExecuteNonQuery();
+                        break;
+                    }
+                }
+
+                //end sql transaction
+                if (SQLTransactionMustEndHere)
+                {
+                    SQLiteCommand endCommand = new SQLiteCommand("end", dbConnection);
+                    endCommand.ExecuteNonQuery();
+                    IsSQLTransactionActive = false;
+                    SQLTransactionMustEndHere = false;
+                }
+
+                objectBase.ObjectState = ObjectState.Deleted;
+            }            
+        }
     }
 }

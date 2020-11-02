@@ -79,6 +79,14 @@ namespace DARTS.Data.DataObjects
         }
 
         /// <summary>
+        /// Deletes this record through its ParentFactory
+        /// </summary>
+        public void Delete()
+        {
+            ParentFactory.Delete(this);
+        }
+
+        /// <summary>
         /// Gets the primarykeyField for this DataObject
         /// </summary>
         /// <returns>A DataField object represeniting a primary key</returns>

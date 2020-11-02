@@ -24,7 +24,6 @@ namespace DARTS.ViewModel
         public ScoreType[] ScoreTypes { get; }
 
         private Match Match { get; }
-        private Task AsyncPostTask { get; set; }
 
         #region Match object bindings
         public string Player1Name
@@ -137,7 +136,12 @@ namespace DARTS.ViewModel
 
         private void StopMatchButtonClick()
         {
-            GameInstance.Instance.MainWindow.ChangeToMainMenu();
+            MessageBoxResult result = MessageBox.Show(GameInstance.Instance.MainWindow, "Are you sure you want to stop the match? \nThis action will delete the match.", "Reset database", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                Match.Delete();
+                GameInstance.Instance.MainWindow.ChangeToMainMenu();
+            }            
         }
 
 
@@ -245,11 +249,15 @@ namespace DARTS.ViewModel
 
             Match.GetCurrentTurn().CalculateThrownPoints();
             Match.GetCurrentLeg().SubtractScore();
-            AsyncPostTask = new Task(() => Match.Post());
-            AsyncPostTask.Start();
-            Match.ChangeTurn();
 
+            Match.ChangeTurn();
+            Match.Post();
             ResetScreen();
+
+            if(Match.WinningPlayer != PlayerEnum.None)
+            {
+                GameInstance.Instance.MainWindow.ChangeToMatchDetailView(Match);
+            }
         }
 
         #region CanExecute Functions
@@ -268,8 +276,6 @@ namespace DARTS.ViewModel
         /// <returns>True when all the throws have the correct ScoreType.</returns>
         private bool CanExecuteSubmitScoreButtonClick()
         {
-            if (AsyncPostTask != null && !AsyncPostTask.IsCompleted) return false;
-
             for (int i = 0; i < Throws.Length; i++)
             {
                 switch (ThrowTypes[i])

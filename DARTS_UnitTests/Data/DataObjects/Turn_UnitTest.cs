@@ -1,4 +1,5 @@
-﻿using DARTS.Data.DataObjectFactories;
+﻿using DARTS.Data.DataBase;
+using DARTS.Data.DataObjectFactories;
 using DARTS.Data.DataObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -53,6 +54,35 @@ namespace DARTS_UnitTests.Data.DataObjects
             turn = (Turn)turnFactory.Get(turn.Id);
 
             Assert.IsNotNull(turn.PlayerTurn);
+        }
+
+        [TestMethod]
+        public void Turn_Delete_Should_Delete_All_Nested_Components()
+        {
+            //ARRANGE
+            TurnFactory TurnFactory = new TurnFactory();
+            ThrowFactory throwFactory = new ThrowFactory();
+            Turn turn = (Turn)TurnFactory.Spawn();
+            for (int i = 0; i < 3; i++) turn.Throws.Add(throwFactory.Spawn());
+            turn.Post();
+
+            //ACT
+            turn.Delete();
+
+            //ASSERT
+            Assert.AreEqual(ObjectState.Deleted, turn.ObjectState);
+            Assert.IsNull(TurnFactory.Get(turn.Id));
+            foreach (Throw @throw in turn.Throws)
+            {
+                Assert.AreEqual(ObjectState.Deleted, @throw.ObjectState);
+                Assert.IsNull(throwFactory.Get(@throw.Id));
+            }
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            DataBaseProvider.Instance.Dispose();
         }
     }
 }

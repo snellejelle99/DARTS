@@ -81,7 +81,21 @@ namespace DARTS.Data.DataObjects
                         Player2LegScore = value;
                         break;
                 }
-            }            
+            }
+        }        
+        
+        public string LegDetails
+        {
+            get
+            {
+                int totalThrown = 0, amountOfThrows = 0;
+                for (int i = 0; i < Turns.Count; i++)
+                {
+                    totalThrown += ((Turn)Turns[i]).ThrownPoints;
+                    amountOfThrows += 1;
+                }
+                return string.Format("Leg: {0}-{1}: avg. thrown {2}", Player1LegScore, Player2LegScore, totalThrown / amountOfThrows);
+            }
         }
 
         public bool HasUnfinishedTurns
@@ -97,16 +111,13 @@ namespace DARTS.Data.DataObjects
         }
         #endregion
 
-        private TurnFactory TurnFactory
-        {
-            get;
-            set;
-        }
+        private TurnFactory turnFactory = new TurnFactory();
+
         public void Start()
         {
             LegState = PlayState.InProgress;
-            TurnFactory = new TurnFactory();
             Turn firstTurn = (Turn)TurnFactory.Spawn();
+
             firstTurn.PlayerTurn = BeginningPlayer;
             firstTurn.ThrownPoints = 0;
             firstTurn.TurnState = PlayState.InProgress;
@@ -147,7 +158,7 @@ namespace DARTS.Data.DataObjects
         {
             if (GetOldestUnfinishedTurn() == null)
             {
-                Turn nextTurn = (Turn)TurnFactory.Spawn();
+                Turn nextTurn = (Turn)turnFactory.Spawn();
                 nextTurn.ThrownPoints = 0;
                 nextTurn.TurnState = PlayState.InProgress;
                 if (Turns.Count > 0)
@@ -165,7 +176,7 @@ namespace DARTS.Data.DataObjects
         {
             foreach (Throw dart in GetOldestUnfinishedTurn().Throws)
             {
-                if (CurrentPlayerLegScore > dart.Score) CurrentPlayerLegScore -= (uint)dart.Score;
+                if (CurrentPlayerLegScore > dart.Score && CurrentPlayerLegScore - (uint)dart.Score != 1) CurrentPlayerLegScore -= (uint)dart.Score;
                 else if (CurrentPlayerLegScore == dart.Score)
                 {
                     if (dart.ScoreType == ScoreType.Double || dart.ScoreType == ScoreType.Bullseye) CurrentPlayerLegScore = 0;

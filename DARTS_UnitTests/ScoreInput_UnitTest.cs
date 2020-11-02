@@ -9,6 +9,7 @@ using System.Globalization;
 using DARTS.ValidationRules;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Controls;
+using DARTS.Data.DataBase;
 
 namespace DARTS_UnitTests
 {
@@ -83,6 +84,10 @@ namespace DARTS_UnitTests
             Assert.IsFalse(validator.Validate(23, null).IsValid);
         }
 
-
+        [ClassCleanup]
+        public static void TestCleanup()
+        {
+            DataBaseProvider.Instance.Dispose();
+        }
     }
 }
