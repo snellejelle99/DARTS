@@ -136,7 +136,7 @@
                         <Setter Property="IsEnabled" Value="False"/>
                         <Style.Triggers>
                             <!-- Hier worden de validation dingen verbonden aan de button, zodat de button alleen geactiveerd wordt 
-                        zodra alle vier de elementen met de juiste data zijn ingevuld. -->
+                        zodra alle vier de elementen met de correcte data zijn ingevuld. -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding ElementName=tbScoreInput, Path=(Validation.HasError)}" Value="false"/>
