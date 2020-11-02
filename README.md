@@ -27,23 +27,23 @@ This dart tracking application is built with the following rules and requirement
 To do so double-click the "*DARTS_WAP_1.0.1.0_x86_x64.cer*" file.  
 The following wizard will open.
 
-![Certificate wizzard](https://i.ibb.co/vsrVdyc/install-Cert.jpg)  
+![Certificate wizard](https://i.ibb.co/vsrVdyc/install-Cert.jpg)  
 *Downloaded folder in file explorer and the opened wizard to add certificate*
 
 3.  At the next step select the "Local Machine" radio button.
 
-![Image](https://i.ibb.co/vZq6YWP/install-Cert2.jpg)  
+![Image Second step CIW](https://i.ibb.co/vZq6YWP/install-Cert2.jpg)  
 *Second step of the Certficate Import Wizard*
 
 4. At the next step select the second radio button and click browse.  
 Then select "*Trusted People*"
 
-![Image](https://i.ibb.co/c8WxDgV/install-Cert3.jpg)  
+![Image Third step CIW](https://i.ibb.co/c8WxDgV/install-Cert3.jpg)  
 *Third step of the Certficate Import Wizard*
 
 5. Now the Certificate is installed, install the app by double-clicking the "*DARTS_WAP_1.0.1.0_x86_x64.msixbundle*" file.
 
-![Image](https://i.ibb.co/9sYYWyT/install-App.jpg)  
+![Image Windows installation screen](https://i.ibb.co/9sYYWyT/install-App.jpg)  
 *Installation screen, click the blue button on the right to proceed* 
 
 6. The app is now ready to use!
