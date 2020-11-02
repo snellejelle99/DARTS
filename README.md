@@ -17,33 +17,53 @@ This dart tracking application is built with the following rules and requirement
   - 5.4. Scoring
 
 ## Getting started
-Download the MSIX package: https://github.com/snellejelle99/DARTS/suites/1437939280/artifacts/24331587 
+
+### Installation
+1. Download the MSIX package: https://github.com/snellejelle99/DARTS/suites/1437939280/artifacts/24331587 
 
 **After downloading and extracting:**
-- Install the provided certificate. To do so double-click the "DARTS_WAP_1.0.1.0_x86_x64.cer" file. A wizard will open.
-![Image](https://i.ibb.co/vsrVdyc/install-Cert.jpg )
-- At the next step select the "Local Machine" radio button
-![Image](https://i.ibb.co/vZq6YWP/install-Cert2.jpg)
-- At the next step select the second radio button and click browse. Then select "Trusted People"
-![Image](https://i.ibb.co/c8WxDgV/install-Cert3.jpg)
 
-- Now the Certificate is installed. To install the app double-click the "DARTS_WAP_1.0.1.0_x86_x64.msixbundle" file.
-![Image](https://i.ibb.co/9sYYWyT/install-App.jpg)
+2. Install the provided certificate.   
+To do so double-click the "*DARTS_WAP_1.0.1.0_x86_x64.cer*" file.  
+The folowing wizard will open.
 
-The app is now ready to use!
-![Image](https://i.ibb.co/pZ2B0mN/installed.jpg)
+![Certificate wizzard](https://i.ibb.co/vsrVdyc/install-Cert.jpg)  
+*Downloaded folder in file explorer and the opend wizzard to add certificate*
+
+3.  At the next step select the "Local Machine" radio button.
+
+![Image](https://i.ibb.co/vZq6YWP/install-Cert2.jpg)  
+*3*
+
+4. At the next step select the second radio button and click browse.  
+Then select "*Trusted People*"
+
+![Image](https://i.ibb.co/c8WxDgV/install-Cert3.jpg)  
+*4*
+
+5. Now the Certificate is installed, install the app by double-click the "*DARTS_WAP_1.0.1.0_x86_x64.msixbundle*" file.
+
+![Image](https://i.ibb.co/9sYYWyT/install-App.jpg)  
+*5*
+
+6. The app is now ready to use!
+
+![Image of homescreen](https://i.ibb.co/pZ2B0mN/installed.jpg)  
+*Image of the darting home screen after opening the app for the first time*
 
 **Note:** without the certificate it's not possible to install the app, so install the certificate first.
 
-**Using the app**
-The usage of this app is straight forward. 
+### Start Using the app
+The usage of this app is straight forward.
+
 - Start a match
 - Fill in player names, 
 - Fill in amount of sets and legs, the amount of sets and legs must be an odd number.
 - Choose starting player or random
-- Choose amount of points per leg: 301 or 501.
-![Image](https://i.ibb.co/JjJrHtn/enterdata.jpg)
+- Choose amount of points per leg: 301 or 501.  
 
+![Start match screen](https://i.ibb.co/JjJrHtn/enterdata.jpg)  
+*Start match screen where a match can be configured*
 
 ## Contributors
 - [Jelle Jan Bleeker](https://github.com/snellejelle99)
