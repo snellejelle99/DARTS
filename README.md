@@ -29,7 +29,7 @@ This dart tracking application is built with the following rules and requirement
 ## Getting started
 
 ### Installation
-1. Download the MSIX package: https://github.com/snellejelle99/DARTS/suites/1437939280/artifacts/24331587 
+1. Download the Release or Debug zip file from the latest release package: https://github.com/snellejelle99/DARTS/releases
 
 **After downloading and extracting:**
 
