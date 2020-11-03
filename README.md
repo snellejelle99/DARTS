@@ -91,4 +91,4 @@ The usage of this app is straight forward.
 - [Kbloowit1](https://github.com/Kbloowit1)
 
 ## License
-Coming soon
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
