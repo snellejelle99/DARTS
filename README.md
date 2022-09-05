@@ -87,7 +87,7 @@ The usage of this app is straight forward.
 - [Jan van Tuin](https://github.com/Janvdtuin)
 - [Jorden B.](https://github.com/jorden-b)
 - [Hiddde](https://github.com/hiddedv9)
-- [Babboozeld](https://github.com/Babboozeld)
+- [Maarten van der Meulen](https://github.com/maartenvdmeulen)
 - [Kbloowit1](https://github.com/Kbloowit1)
 
 ## License
